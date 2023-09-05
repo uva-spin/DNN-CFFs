@@ -1,81 +1,16 @@
+# DNN-CFFs
 
-ComparisonPlot README
-The ComparisonPlot class is designed to create a comparison plot for data located in CSV files in a specified folder path. The plot will show both the fitted values and the true values for a given column in the CSV files.
+The goal of this study is to find a method to accurately predict the values of functions called Compton Form Factors (CFFs) using data from Deep-Virtual Compton Scattering (DVCS) experiments. Each experiment, or set, consists of measuring the cross-section (F) as an angle (phi) is changed. Since phi is an angle measurement, its range is from 0° to 360°. At each angle that is used, the cross-section is measured multiple times. The mean of these values is recorded in the ‘F’ column of the data file, and the standard deviation is recorded in the ‘errF’ column.
 
-PARAMETERS
+Different experiments represent different environments in which these measurements are performed. The environment of an experiment is determined by the kinematic variables k, QQ, $x_b$, and t. Each set of values of these variables represents an environment (also called a kinematic setting) for an experiment to be runing.
 
-cff: The column name of the variable being plotted.
-x_range: The range of x-axis values to plot. default set from 1 to whatever the length of the column is
-y_range: The range of y-axis values to plot.
-folder_path: The folder path containing the CSV files. 
-true_color: The color of the true values points. default set to red
-fit_color: The color of the fitted values points and error bars. default set to blue
-point_size: The size of the points in the plot. default set to 5
-show_error_bars: Boolean indicating whether to show error bars on the fitted values points. default set to True
-show_mean_points: Boolean indicating whether to show the fitted values points. default set to True
-save_path: The folder path to save the plot in. default set to None
-show_plot: Boolean indicating whether to display the plot. default set to True
-file_name: The default name of the plot file. If save_path is provided, the plot will be saved using this name with additional information appended. default set to "compare_plot" if save_path is not None
-true_value_path: the location of the file that the true values are being read from. if not specified then assumes within same folder.
+The cross-section is a known function of the Compton Form Factors, the kinematic variables, $\phi$, and a couple other values. The other values are F1, F2, and dvcs, which are all known functions of the kinematic variables, and their values are provided in each data file. The CFFs are all unknown functions of the kinematic variables: we know that they are functions of the kinematic variables, but we do not know their exact formulations. In each experiment, we are fixing the kinematic variables, varying $\phi$, and measuring $F$.
 
-METHODS
+The values of F1, F2, and dvcs are known, so the only unknowns left are the Compton Form Factors. Our goal in this experiment is to determine the values of the CFFs using the other values. We are focusing on three Compton Form Factors: $ReH$, $ReE$, and $Re\tilde{H}$. \\
 
-plot(): Plots the comparison plot based on the provided parameters.
+There are two kinds of fits that are used to determine the Compton Form Factors: local fits and global fits. A local fit’s end goal is to find the numerical value of one of the CFFs in a certain kinematic setting. A global fit’s end goal is to find the equation that relates the values of the kinematic variables to the value of one of the Compton Form Factors. A local fit is a guess of the value of a CFF in a certain kinematic setting, while a global fit is a guess of the equation for a CFF that can be used to calculate the value of the CFF in any kinematic setting.
+One important aspect of this exploration is correctly propagating the error from the cross- section to the Compton Form Factors. We are not given exact values for F, so we cannot possibly get exact values for the CFFs. Every output from our models is given as a guess and an error range. Our goal is to have the guesses be as close as possible to the true values of the CFFs, but it is also important that the error ranges consistently enclose the true values.
 
-EXAMPLE USAGE
+The most popular way of propagating error is to use the replica method. In this method, the F value from the data file is not inputted directly into the model. Instead, we use several values that are sampled from a Gaussian distribution with mean equal to F and standard deviation equal to errF. By using input values that represent the distribution of the cross-section, we hope to be able to get outputs that represent the distributions of the Compton Form Factors (meaning that the true value of the CFF should lie in the error bars produced by the model).
 
-python
-Copy code
-
---
-
-SIMPLE PLOT
-
-from ComparisonPlot import ComparisonPlot
-
-# Create ComparisonPlot object
-plot = ComparisonPlot(cff='dvcs', folder_path='data/')
-
-# Plot the comparison plot
-plot.plot()
-
-In this example above, a comparison plot will be created for the dvcs column, using the fitted values from the csv files in data/ folder.
-The plot will use the true values from the default file name "pseudo_KM15" within the current folder.
-The plot will default filter the data between x range of 1 to whatever the length of file is that is being read. 
-The True value will default to red. The fitted value will defual to blue, and it will show error bars.
-The size of the points will be set to 5 as default.
-The plot will be displayed on the screen.
-The plot will not save the file to any specific folder, nor will it have any filtering for the y range.
-
---
-
-SPECIFC PLOT
-
-from ComparisonPlot import ComparisonPlot
-
-# Create ComparisonPlot object
-plot = ComparisonPlot(cff='ReH', 
-                      x_range=[20, 80], 
-                      y_range=(-1, 1), 
-                      folder_path='data/', 
-                      true_color='yellow', 
-                      fit_color='green', 
-                      point_size=1, 
-                      show_error_bars=False, 
-                      show_mean_points=True, 
-                      save_path='plots/', 
-                      show_plot=True, 
-                      file_name="comparison_plot"
-		      true_value_path='true_data/')
-
-# Plot the comparison plot
-plot.plot()
-
-In this example, a comparison plot will be created for the ReH column using the fitted values from the CSV files located in the data/ folder. 
-It will use the true values from the specified folder true_data.
-The plot will be filtered to include only x-axis values between 1 and 195. 
-The y-axis will only show the range -1 to 1 as specified by y_range. 
-The true values points will be displayed in yellow and the fitted values points and will be displayed in green. the error bars will not be displayed. 
-The size of the points will be 1 and both the fitted values points and error bars will be shown. 
-The plot will be saved in the plots/ folder with the default name comparison_plot_{cff}_{num_files}_replicas_range{x_range}.png, 
-where num_files is the number of CSV files in the folder. Finally, the plot will be displayed on screen.
+Right now, we are using pseudo-data where we know the true values of the CFFs instead of real experimental data where we don’t. This way, we can compare the CFF guesses to their true values and have a good idea of a model’s performance. Once we develop a method that can consistently and accurately predict the CFFs, we will move on to experimental data.
