@@ -2,7 +2,7 @@
 
 The goal of this study is to find a method to accurately predict the values of functions called Compton Form Factors (CFFs) using data from Deep-Virtual Compton Scattering (DVCS) experiments. Each experiment, or set, consists of measuring the cross-section (F) as an angle (phi) is changed. Since phi is an angle measurement, its range is from 0° to 360°. At each angle that is used, the cross-section is measured multiple times. The mean of these values is recorded in the ‘F’ column of the data file, and the standard deviation is recorded in the ‘errF’ column.
 
-Different experiments represent different environments in which these measurements are performed. The environment of an experiment is determined by the kinematic variables k, QQ, $x_b$, and t. Each set of values of these variables represents an environment (also called a kinematic setting) for an experiment to be runing.
+Different experiments represent different environments in which these measurements are performed. The environment of an experiment is determined by the kinematic variables $k$, $QQ$, $x_b$, and $t$. Each set of values of these variables represents an environment (also called a kinematic setting) for an experiment to be runing.
 
 The cross-section is a known function of the Compton Form Factors, the kinematic variables, $\phi$, and a couple other values. The other values are F1, F2, and dvcs, which are all known functions of the kinematic variables, and their values are provided in each data file. The CFFs are all unknown functions of the kinematic variables: we know that they are functions of the kinematic variables, but we do not know their exact formulations. In each experiment, we are fixing the kinematic variables, varying $\phi$, and measuring $F$.
 
