@@ -4,6 +4,11 @@ The goal of this study is to find a method to accurately predict the values of f
 
 Each experiment, or data set, consists of measurements of the total cross-section ($F$) as an angle ($\phi$) is changed. Since $\phi$ is an angle measurement, its range is from 0° to 360°. At each angle that is used.  The experiment configuration and the organization of the data results in a limited number of angle bins, so angles of close proximity end up being in the same angle bin with the same total cross-section value for '$F$'. The ‘F’ column of the data file and the standard deviation are recorded in the ‘errF’ column.  Here the 'errF' represents the experimental uncertainty which we assume a Gaussian distribution for. Table shows a sample data structure.
 
+
+| #Set | index | $k$ | $QQ$ | $x_b$ | $t$ | $\phi$ | $F$ | $errF$ | $F1$ | $F2$ |	$dvcs$ |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| - | - | - | - | - | - | - | - | - | - | - | - |
+
 Different experiments experimental goals and configurations lead to different values of the kinematic variables $k$, $Q^2$, $x_b$, and $t$. Each set of values of these variables is called a kinematic setting.  These variables, other than $k$, the incoming beam energy, also have bins, so each numerical value for each of these kinematic variables is an average of many DVCS processes acquired within each bin.  The extraction of the DVCS cross-section and CFFs at any $Q^2$, $x_b$, and $t$ is our ultimate goal.  The CFFs are a non-linear multidimensional function of these three kinematic values.
 
 The total cross-section '$F$' is a combination of the DVCS cross-section, the interference, and the Bethe-Heitler and is a known function of the CFFs, the kinematic variables, as well as $\phi$, $k$, F1, F2, which are all known and their values are provided in each data file.
