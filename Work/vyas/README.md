@@ -25,7 +25,7 @@
 
 * c++ code to calculate *F1* and *F2* is translated to python
 
-## Models - Chinmay and Ani
+### Models - Chinmay and Ani
 
 * model from localfit_v2.py is added here as one model
 * input shape is 3 (to exclude *k*)
