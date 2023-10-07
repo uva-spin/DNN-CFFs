@@ -25,7 +25,7 @@ models = Models()
 
 early_stopping_callback = tf.keras.callbacks.EarlyStopping(monitor='loss', min_delta=0.0000005, patience=100)
 
-tfModel = models.tf_model1() 
+tfModel = models.tf_model1(len(df)) 
 Wsave = tfModel.get_weights()
 tfModel.set_weights(Wsave)
 

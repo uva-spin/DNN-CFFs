@@ -4,7 +4,7 @@ from utils import F1F2, F_calc
 
 file_name = 'data.csv'
 
-df = pd.read_csv(file_name)
+df = pd.read_csv(file_name, dtype=np.float32)
 df.set_index('index')
 
 fns = F1F2()
