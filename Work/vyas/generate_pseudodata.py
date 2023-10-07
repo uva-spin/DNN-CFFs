@@ -25,4 +25,4 @@ for i in range(len(df)):
 
 df = pd.DataFrame(rows, columns=['experiment', 'k', 'QQ', 'x_b', 't', 'phi_x', 'F', 'sigmaF', 'F1', 'F2', 'dvcs'])
 
-df.to_csv('pseudodata.csv', index_label='index')
+df.to_csv('BKM_pseudodata.csv', index_label='index')
