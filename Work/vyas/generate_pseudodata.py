@@ -1,7 +1,8 @@
 import pandas as pd
 import numpy as np
 
-from utils import F1F2, F_calc
+from non_model_utils import F1F2
+from model_utils import F_calc
 
 file_name = 'data.csv'
 

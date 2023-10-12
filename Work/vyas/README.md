@@ -13,19 +13,25 @@
 * *phi* is varied to produce different values of *F* depending on angle measure
 * resulting pseudodata is written to csv
 
-## utils.py
+## model_utils.py
 
 * class structure allows for multiple models/methods to be implemented
+* utility classes that need classes from *BHDVCS_tf.py*
 
 ### F_calc - Vyas and Nuwan
 
 * function from *BHDVCS_tf.py* is copy-pasted as a function to calculate *F*
 
-### F1F2 - Chinmay and Ani
-
-* c++ code to calculate *F1* and *F2* is translated to python
-
-## Models - Chinmay and Ani
+### Models - Chinmay and Ani
 
 * model from localfit_v2.py is added here as one model
 * input shape is 3 (to exclude *k*)
+
+## non_model_utils.py
+
+* class structure allows for multiple models/methods to be implemented
+* utility classes that do not need classes from *BHDVCS_tf.py*
+
+### F1F2 - Chinmay and Ani
+
+* c++ code to calculate *F1* and *F2* is translated to python
