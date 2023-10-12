@@ -6,5 +6,6 @@ The training.sh is used to run the Python script. It will create the training an
 
 The push.sh is used to push the updates on your GitHub in real time. I am generating the SSH key every time I use this script2.sh but not writing this SSH key. You can comment on these lines and use the remaining script. 
 
+To run the shell script file execute the line: chmod +x push.sh. After this, execute the line ./push.sh. 
 
 .................................
