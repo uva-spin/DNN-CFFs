@@ -23,3 +23,50 @@ One important aspect of this exploration is correctly propagating the error from
 The most popular way of propagating error is to use the replica method. In this method, the F value from the data file is not inputted directly into the model. Instead, we use several values that are sampled from a Gaussian distribution with mean equal to F and standard deviation equal to errF. By using input values that represent the distribution of the cross-section, we hope to be able to get outputs that represent the distributions of the Compton Form Factors (meaning that the true value of the CFF should lie in the error bars produced by the model).
 
 Right now, we are using pseudo-data where we know the true values of the CFFs instead of real experimental data where we don’t. This way, we can compare the CFF guesses to their true values and have a good idea of a model’s performance. Once we develop a method that can consistently and accurately predict the CFFs, we will move on to experimental data.
+
+
+## Prerequisites
+
+To run the code and reproduce the environment, you need to have Anaconda installed.
+
+## Installing Anaconda
+
+Follow the steps below to install Anaconda:
+
+1. **Download Anaconda**:
+wget https://repo.anaconda.com/archive/Anaconda3-2023.09-0-Linux-x86_64.sh
+
+
+2. **Run the Installation Script**:
+bash Anaconda3-2023.09-0-Linux-x86_64.sh
+
+3. **Follow the On-Screen Prompts**: 
+Accept the license, and choose the installation location (or accept the default).
+
+4. **Close and Reopen Your Terminal**: 
+This ensures that Anaconda is initialized and added to your `PATH`.
+
+5. **Verify Installation**:
+To confirm that Anaconda was installed successfully, run:
+conda --version
+
+## Setting Up the Environment
+
+Once Anaconda is installed, you can set up the environment using the provided `env.yml` file.
+
+1. **Clone the Repository**:
+If you haven't already, clone this repository to your local machine:
+git clone https://github.com/uva-spin/DNN-CFFs.git
+cd DNN-CFFs
+
+2. **Create the Conda Environment**:
+Use the `env.yml` file to create a new Conda environment:
+conda env create -f env.yml
+
+
+3. **Activate the Environment**:
+conda activate env
+
+
+Now, you're all set. You can run the project code within this environment. each time you wish
+to run a .py file in rivanna run conda activate env first
