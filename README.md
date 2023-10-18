@@ -59,20 +59,20 @@ conda --version
 
 Once Anaconda is installed, you can set up the environment using the provided `env.yml` file.
 
-1. **Clone the Repository**
-```bash
+1. **Clone the Repository**:
 If you haven't already, clone this repository to your local machine:
 git clone https://github.com/uva-spin/DNN-CFFs.git
+```bash
 cd DNN-CFFs
 ```
 
-2. **Create the Conda Environment**
-```bash
+2. **Create the Conda Environment**:
 Use the `env.yml` file to create a new Conda environment:
+```bash
 conda env create -f env.yml
 ```
 
-3. **Activate the Environment**
+3. **Activate the Environment**:
 ```bash
 conda activate env
 ```
