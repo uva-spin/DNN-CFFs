@@ -18,7 +18,7 @@ class Models:
 
         TotalF = TotalFLayer()(total_FInputs) # get rid of f1 and f2
 
-        tfModel = tf.keras.Model(inputs=[kinematics,XnoCFF], outputs = TotalF, name="tfmodel")
+        tfModel = tf.keras.Model(inputs=[kinematics,noncffInputs], outputs = TotalF, name="tfmodel")
 
         lr = tf.keras.optimizers.schedules.ExponentialDecay(
             0.0085, data_length, 0.96, staircase=False, name=None
