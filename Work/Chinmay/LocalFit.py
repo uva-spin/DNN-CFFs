@@ -50,11 +50,11 @@ tfModel = models.tf_model1(len(trainKin[["QQ","x_b","t","phi_x","k"]]))
 Wsave = tfModel.get_weights()
 tfModel.set_weights(Wsave)
 
-tfModel.fit([trainKin[["QQ","x_b","t"]],trainKin[["phi_x","k"]]], trainOut,
-            epochs=10, verbose=1, batch_size=16, callbacks=[early_stopping_callback],
-            validation_data=([testKin[["QQ","x_b","t"]],testKin[["phi_x","k"]]], testOut)) # validation loss
+tfModel.fit(trainKin[["QQ","x_b","t", "phi_x", "k"]], trainOut,
+            epochs=20, verbose=1, batch_size=16, callbacks=[early_stopping_callback],
+            validation_data=(testKin[["QQ","x_b","t", "phi_x", "k"]], testOut)) # validation loss
 
-cffs = cffs_from_globalModel(tfModel, trainKin[["QQ","x_b","t"]], numHL=2)
+cffs = cffs_from_globalModel(tfModel, trainKin[["QQ","x_b","t", "phi_x", "k"]], numHL=2)
 
 df = pd.DataFrame(cffs)
 
