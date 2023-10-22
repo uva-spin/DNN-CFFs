@@ -6,8 +6,7 @@ eval "$(ssh-agent -s)"
 ssh-add ~/.ssh/id_rsa
 git remote set-url origin git@github.com:uva-spin/DNN-CFFs.git
 git status
-git add . 
-git add —a
+git add --a
 git commit -m "change"
 git push origin main
 
