@@ -51,14 +51,26 @@ Wsave = tfModel.get_weights()
 tfModel.set_weights(Wsave)
 
 tfModel.fit(trainKin[["QQ","x_b","t", "phi_x", "k"]], trainOut,
-            epochs=20, verbose=1, batch_size=16, callbacks=[early_stopping_callback],
+            epochs=50, verbose=1, batch_size=16, callbacks=[early_stopping_callback],
             validation_data=(testKin[["QQ","x_b","t", "phi_x", "k"]], testOut)) # validation loss
 
-cffs = cffs_from_globalModel(tfModel, trainKin[["QQ","x_b","t", "phi_x", "k"]], numHL=2)
+tfModel.save('cffs_model.h5') # saves model to .h5
 
-df = pd.DataFrame(cffs)
+# cffs = cffs_from_globalModel(tfModel, trainKin[["QQ","x_b","t", "phi_x", "k"]], numHL=2)
 
-if len(sys.argv) > 1:
-    df.to_csv('bySetCFFs' + sys.argv[1] + '.csv')
-else:
-    df.to_csv('bySetCFFs.csv')
+# df = pd.DataFrame(cffs)
+
+# if len(sys.argv) > 1:
+#     df.to_csv('bySetCFFs' + sys.argv[1] + '.csv')
+# else:
+#     df.to_csv('bySetCFFs.csv')
+
+# displays results for train/validation loss
+plt.plot(tfModel.history.history['loss'])
+plt.plot(tfModel.history.history['val_loss'])
+plt.title('Model loss')
+plt.ylabel('Loss')
+plt.xlabel('Epoch')
+plt.legend(['Train', 'Val'], loc='upper right')
+plt.savefig('sample_BKM.png')
+plt.show()
