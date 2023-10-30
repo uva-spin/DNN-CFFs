@@ -23,54 +23,57 @@ from scipy.stats import chisquare
 
 from model_utils import Models
 
-data_file = 'BKM_pseudodata.csv'
+for i in range(5):
 
-df = pd.read_csv(data_file, dtype=np.float64)
-df = df.rename(columns={"sigmaF": "errF"})
+  data_file = f'BKM_pseudodata_{i}.csv'
 
-# Changed splitting
-def split_data(Kinematics,output,split=0.1):
-  temp =np.random.choice(list(range(len(output))), size=int(len(output)*split), replace = False)
+  df = pd.read_csv(data_file, dtype=np.float64)
+  df = df.rename(columns={"sigmaF": "errF"})
 
-  test_X = pd.DataFrame.from_dict({k: v[temp] for k,v in Kinematics.items()})
-  train_X = pd.DataFrame.from_dict({k: v.drop(temp) for k,v in Kinematics.items()})
+  # Changed splitting
+  def split_data(Kinematics,output,split=0.1):
+    temp =np.random.choice(list(range(len(output))), size=int(len(output)*split), replace = False)
 
-  test_y = output[temp]
-  train_y = output.drop(temp)
+    test_X = pd.DataFrame.from_dict({k: v[temp] for k,v in Kinematics.items()})
+    train_X = pd.DataFrame.from_dict({k: v.drop(temp) for k,v in Kinematics.items()})
 
-  return train_X, test_X, train_y, test_y
+    test_y = output[temp]
+    train_y = output.drop(temp)
 
-trainKin, testKin, trainOut, testOut = split_data(df[['phi_x', 'k', 'QQ', 'x_b', 't', 'F1', 'F2', 'dvcs']],df['F'],split =0.1)
+    return train_X, test_X, train_y, test_y
 
-models = Models()
+  trainKin, testKin, trainOut, testOut = split_data(df[['phi_x', 'k', 'QQ', 'x_b', 't', 'dvcs']],df['F'],split =0.1)
 
-early_stopping_callback = tf.keras.callbacks.EarlyStopping(monitor='loss', min_delta=0.0000005, patience=100)
+  models = Models()
 
-tfModel = models.tf_model1(len(trainKin[["QQ","x_b","t","phi_x","k"]]))
-Wsave = tfModel.get_weights()
-tfModel.set_weights(Wsave)
+  early_stopping_callback = tf.keras.callbacks.EarlyStopping(monitor='loss', min_delta=0.0000005, patience=100)
 
-tfModel.fit(trainKin[["QQ","x_b","t", "phi_x", "k"]], trainOut,
-            epochs=50, verbose=1, batch_size=16, callbacks=[early_stopping_callback],
-            validation_data=(testKin[["QQ","x_b","t", "phi_x", "k"]], testOut)) # validation loss
+  tfModel = models.tf_model1(len(trainKin[["QQ","x_b","t","phi_x","k"]]))
+  Wsave = tfModel.get_weights()
+  tfModel.set_weights(Wsave)
 
-tfModel.save('cffs_model.h5') # saves model to .h5
+  tfModel.fit(trainKin[["QQ","x_b","t", "phi_x", "k"]], trainOut,
+              epochs=100, verbose=1, batch_size=16, callbacks=[early_stopping_callback],
+              validation_data=(testKin[["QQ","x_b","t", "phi_x", "k"]], testOut)) # validation loss
 
-# cffs = cffs_from_globalModel(tfModel, trainKin[["QQ","x_b","t", "phi_x", "k"]], numHL=2)
+  tfModel.save(f'cffs_model_{i}.h5') # saves model to .h5
 
-# df = pd.DataFrame(cffs)
+  # cffs = cffs_from_globalModel(tfModel, trainKin[["QQ","x_b","t", "phi_x", "k"]], numHL=2)
 
-# if len(sys.argv) > 1:
-#     df.to_csv('bySetCFFs' + sys.argv[1] + '.csv')
-# else:
-#     df.to_csv('bySetCFFs.csv')
+  # df = pd.DataFrame(cffs)
 
-# displays results for train/validation loss
-plt.plot(tfModel.history.history['loss'])
-plt.plot(tfModel.history.history['val_loss'])
-plt.title('Model loss')
-plt.ylabel('Loss')
-plt.xlabel('Epoch')
-plt.legend(['Train', 'Val'], loc='upper right')
-plt.savefig('sample_BKM.png')
-plt.show()
+  # if len(sys.argv) > 1:
+  #     df.to_csv('bySetCFFs' + sys.argv[1] + '.csv')
+  # else:
+  #     df.to_csv('bySetCFFs.csv')
+
+  # displays results for train/validation loss
+  plt.figure(f'Figure {i}')
+  plt.plot(tfModel.history.history['loss'])
+  plt.plot(tfModel.history.history['val_loss'])
+  plt.title('Model loss')
+  plt.ylabel('Loss')
+  plt.xlabel('Epoch')
+  plt.legend(['Train', 'Val'], loc='upper right')
+  plt.savefig(f'sample_BKM_{i}.png')
+  # plt.show()
