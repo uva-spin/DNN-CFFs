@@ -6,19 +6,20 @@ class Models:
 
     def tf_model1(self, data_length):
         initializer = tf.keras.initializers.HeNormal()
+        #### QQ, x_b, t, phi, k ####
+        inputs = tf.keras.Input(shape=(5))
 
-        kinematics = tf.keras.Input(shape=(3))
+        QQ, x_b, t, phi, k = tf.split(inputs, num_or_size_splits=5, axis=1)
+        kinematics = tf.keras.layers.concatenate([QQ, x_b, t], axis=1)
         x1 = tf.keras.layers.Dense(100, activation="tanh", kernel_initializer=initializer)(kinematics)
         x2 = tf.keras.layers.Dense(100, activation="tanh", kernel_initializer=initializer)(x1)
         outputs = tf.keras.layers.Dense(4, activation="linear", kernel_initializer=initializer)(x2)
-        #### phi, k ####
-        noncffInputs = tf.keras.Input(shape=(2))
         #### QQ, x_b, t, phi, k, cffs ####
-        total_FInputs = tf.keras.layers.concatenate([kinematics, noncffInputs, outputs], axis=1)
+        total_FInputs = tf.keras.layers.concatenate([inputs, outputs], axis=1)
 
         TotalF = TotalFLayer()(total_FInputs) # get rid of f1 and f2
 
-        tfModel = tf.keras.Model(inputs=[kinematics, noncffInputs], outputs = TotalF, name="tfmodel")
+        tfModel = tf.keras.Model(inputs=inputs, outputs = TotalF, name="tfmodel")
 
         lr = tf.keras.optimizers.schedules.ExponentialDecay(
             0.0085, data_length, 0.96, staircase=False, name=None
