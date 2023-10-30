@@ -49,7 +49,7 @@ class BHDVCStf(object):
     def BHUU(self, phi, F1, F2, P1, P2, QQ, x, t, ee, y, Gamma, K):
 
         # BH utorch.larized Fourier harmonics eqs. (35 - 37)
-        phi, F1, F2, P1, P2, QQ, x, t, ee, y, Gamma, K = [tf.cast(i, np.float32) for i in [phi, F1, F2, P1, P2, QQ, x, t, ee, y, Gamma, K]]
+
         c0_BH = 8. * K * K * ((2. + 3. * ee) * (QQ / t) * (F1 * F1 - F2 * F2 * t / (4. * self.M2)) + 2. * x * x * (F1 + F2) * (F1 + F2)) + (2. - y) * (2. - y) * ((2. + ee) * (
                     (4. * x * x * self.M2 / t) * (1. + t / QQ) * (
                         1. + t / QQ)
@@ -79,7 +79,7 @@ class BHDVCStf(object):
 
     @tf.function
     def IUU(self, phi, F1, F2, P1, P2, QQ, x, t, ee, y, K, Gamma, ReH, ReE, ReHtilde, twist, tmin, xi, Ktilde_10):
-        phi, F1, F2, P1, P2, QQ, x, t, ee, y, K, Gamma, ReH, ReE, ReHtilde, tmin, xi, Ktilde_10 = [tf.cast(i, np.float32) for i in [phi, F1, F2, P1, P2, QQ, x, t, ee, y, K, Gamma, ReH, ReE, ReHtilde, tmin, xi, Ktilde_10]]
+
         # Get BH propagators and set the kinematics
         self.BHLeptonPropagators(phi, QQ, x, t, ee, y, K)
 
