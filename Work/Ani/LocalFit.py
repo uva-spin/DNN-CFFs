@@ -23,7 +23,7 @@ from scipy.stats import chisquare
 
 from model_utils import Models
 
-data_file = 'BKM_pseudodata.csv'
+data_file = 'BKM_pseudodata_0.csv'
 
 df = pd.read_csv(data_file, dtype=np.float64)
 df = df.rename(columns={"sigmaF": "errF"})

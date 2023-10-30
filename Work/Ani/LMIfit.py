@@ -23,7 +23,8 @@ from scipy.stats import chisquare
 
 from model_utils import Models
 
-data_file = 'BKM_pseudodata.csv'
+
+data_file = 'Work/Ani/pseudoKM15.csv'
 
 df = pd.read_csv(data_file, dtype=np.float64)
 df = df.rename(columns={"sigmaF": "errF"})
@@ -40,7 +41,7 @@ def split_data(Kinematics,output,split=0.1):
 
   return train_X, test_X, train_y, test_y
 
-trainKin, testKin, trainOut, testOut = split_data(df[['phi_x', 'k', 'QQ', 'x_b', 't', 'F1', 'F2', 'dvcs']],df['F'],split =0.1)
+trainKin, testKin, trainOut, testOut = split_data(df[['phi_x', 'k', 'QQ', 'x_b', 't', 'dvcs']],df['F'],split =0.1)
 
 models = Models()
 
@@ -51,7 +52,7 @@ Wsave = tfModel.get_weights()
 tfModel.set_weights(Wsave)
 
 tfModel.fit(trainKin[["QQ","x_b","t", "phi_x", "k"]], trainOut,
-            epochs=50, verbose=1, batch_size=16, callbacks=[early_stopping_callback],
+            epochs=100, verbose=1, batch_size=16, callbacks=[early_stopping_callback],
             validation_data=(testKin[["QQ","x_b","t", "phi_x", "k"]], testOut)) # validation loss
 
 tfModel.save('cffs_model.h5') # saves model to .h5
