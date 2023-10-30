@@ -4,7 +4,7 @@ import numpy as np
 from non_model_utils import F1F2
 from model_utils import F_calc
 
-file_name = 'data.csv'
+file_name = '/Users/aniru/Documents/Physics Research/DNN-CFFs/Work/Ani/data.csv'
 
 df = pd.read_csv(file_name, dtype=np.float32)
 df.set_index('index')
