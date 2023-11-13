@@ -26,7 +26,7 @@ class Models:
         )
 
         tfModel.compile(
-            optimizer = tf.keras.optimizers.Adam(lr),
+            optimizer = tf.keras.optimizers.experimental.RMSprop(lr),
             loss = tf.keras.losses.MeanSquaredError()
         )
 
