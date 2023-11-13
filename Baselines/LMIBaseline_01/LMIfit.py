@@ -29,6 +29,7 @@ for i in range(5):
 
   df = pd.read_csv(data_file, dtype=np.float64)
   df = df.rename(columns={"sigmaF": "errF"})
+  df = df.reset_index()
 
   # Changed splitting
   def split_data(Kinematics,output,split=0.1):
