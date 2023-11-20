@@ -22,7 +22,9 @@
 
    In this folder, I have used 'BHDVCS_tf_modified.py' which includes all the dependent classes/functions.
    Currently, the 'LMIFit.py' includes the following features 
-    1. sampling total-cross-section $F$ with its uncertainty: generating replicas
+    1. Sampling total-cross-section $F$ with its uncertainty: generating replicas
        It's implemented as a 'For' loop in this example. You can simply modify it in order to submit parallel jobs on Rivanna.
-    2. producing training loss and validation loss
+    2. Producing training loss and validation loss.
+    3. Producing models with .h5 extension for each replica.
     
+    Note: Please feel free to create separate folders for saving models, replica cv files, loss files/plots and provide the path in the code.
