@@ -3,7 +3,22 @@ import pandas as pd
 import tensorflow as tf
 from BHDVCS_tf_modified import *
 import matplotlib.pyplot as plt
+import os
 import sys
+
+
+def create_folders(folder_name):
+    if not os.path.exists(folder_name):
+        os.makedirs(folder_name)
+        print(f"Folder '{folder_name}' created successfully!")
+    else:
+        print(f"Folder '{folder_name}' already exists!")
+        
+
+create_folders('DNNmodels')
+create_folders('Losses_CSVs')
+create_folders('Losses_Plots')
+
 
 data_file = 'PseudoData_from_the_Basic_Model.csv'
 df = pd.read_csv(data_file, dtype=np.float64)
@@ -96,18 +111,18 @@ def run_replica(i):
 #         loss = tf.keras.losses.MeanSquaredError())
     #, callbacks=[modify_LR,EarlyStop]
     history = tfModel.fit(trainKin, trainY, validation_data=(testKin, testY), epochs=EPOCHS, callbacks=[modify_LR], batch_size=300, verbose=2)
-    tfModel.save('model' + str(replica_number) + '.h5', save_format='h5')
+    tfModel.save('DNNmodels/'+'model' + str(replica_number) + '.h5', save_format='h5')
     tempdf = pd.DataFrame()
     tempdf["Train_Loss"] = history.history['loss'][-100:]
     tempdf["Val_Loss"] = history.history['val_loss'][-100:]
-    tempdf.to_csv('reploss_'+str(replica_number)+'.csv')
+    tempdf.to_csv('Losses_CSVs/'+'reploss_'+str(replica_number)+'.csv')
     plt.figure(1)
     plt.plot(history.history['loss'])
     #plt.ylim([0,0.01])
-    plt.savefig('train_loss'+str(replica_number)+'.pdf')
+    plt.savefig('Losses_Plots/'+'train_loss'+str(replica_number)+'.pdf')
     plt.figure(2)
     plt.plot(history.history['val_loss'])
-    plt.savefig('val_loss'+str(replica_number)+'.pdf')
+    plt.savefig('Losses_Plots/'+'val_loss'+str(replica_number)+'.pdf')
 
     
 ###### Running Jobs on Rivanna: Comment the following lines and uncomment the run_replica(), uncomment replica_number = sys.argv[1] and comment replica_number = i in the 'def run_replica()'  
