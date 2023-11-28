@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import os
 import matplotlib.pyplot as plt
+from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 from BHDVCS_tf_modified import TotalFLayer
 
 def load_model_and_intermediate_model(model_path):
@@ -12,6 +13,15 @@ def load_model_and_intermediate_model(model_path):
                                               outputs=full_model.get_layer('cff_output_layer').output)
     return full_model, intermediate_layer_model
 
+
+def calculate_accuracy(predicted_values, mean_predicted):
+    n = len(predicted_values)
+    return np.sum((predicted_values - mean_predicted) ** 2) / n
+
+def calculate_precision(true_values, mean_predicted):
+    return 1 - np.abs((true_values - mean_predicted) / true_values)
+
+
 def predict_cffs_and_f(intermediate_model, full_model, inputs):
     cffs = intermediate_model.predict(inputs)
     f_values = full_model.predict(inputs)
@@ -20,9 +30,9 @@ def predict_cffs_and_f(intermediate_model, full_model, inputs):
 def create_folder_if_not_exists(folder_name):
     if not os.path.exists(folder_name):
         os.makedirs(folder_name)
-        print(f"Folder '{folder_name}' created successfully!")
+        print(f"Folder '{folder_name}' created successfully")
     else:
-        print(f"Folder '{folder_name}' already exists!")
+        print(f"Folder '{folder_name}' already exists")
 
 def plot_actual_vs_predicted(actual_values, predicted_values, title, filename, dot_size=2, x_range=None):
     plt.figure()
@@ -43,12 +53,12 @@ def save_predictions_to_csv(predictions, model_name, folder_name='DNNvalues'):
     df.to_csv(csv_filename, index=False)
     print(f"Predictions saved to {csv_filename}")
 
-def plot_with_error_bars(actual_values, predicted_values_array, title, filename, dot_size=2, x_range=None):
+def plot_with_error_bars(actual_values, predicted_values_array, title, filename, dot_size=2, error_bar_size=1, x_range=None):
     mean_predictions = np.mean(predicted_values_array, axis=0)
     std_predictions = np.std(predicted_values_array, axis=0)
 
     plt.figure()
-    plt.errorbar(range(len(mean_predictions)), mean_predictions, yerr=std_predictions, fmt='o', color='red', alpha=0.5, label='Predicted')
+    plt.errorbar(range(len(mean_predictions)), mean_predictions, yerr=std_predictions, fmt='o', color='red', alpha=0.3, label='Predicted', markersize=error_bar_size)
     plt.scatter(range(len(actual_values)), actual_values, color='blue', s=dot_size, label='Actual')
     if x_range is not None:
         plt.xlim(x_range)
@@ -57,7 +67,7 @@ def plot_with_error_bars(actual_values, predicted_values_array, title, filename,
     plt.ylabel('Values')
     plt.legend()
     plt.savefig(os.path.join('DNNimages', filename))
-    plt.close()  # Close the figure to free memory
+    plt.close()
 
 def main():
     create_folder_if_not_exists('DNNimages')
@@ -86,11 +96,33 @@ def main():
     all_cff_predictions_array = np.array(all_cff_predictions)
 
     actual_F = prediction_data['F'].values
+    predicted_F = all_f_predictions_array[:, :, 0].mean(axis=0)
+    mean_predicted_F = predicted_F.mean()
+
+    print("\nMetrics for F:")
+    f_accuracy = calculate_accuracy(predicted_F, mean_predicted_F)
+    f_precision = calculate_precision(actual_F, mean_predicted_F)
+
+    print(f"Accuracy for F: {f_accuracy}")
+    print(f"Precision for F: {f_precision.mean()}")
+
     plot_with_error_bars(actual_F, all_f_predictions_array[:, :, 0], 'Actual vs Predicted F', 'actual_vs_predicted_F_error_bars.png')
 
     for i, cff_name in enumerate(['ReH', 'ReE', 'ReHt', 'dvcs']):
         actual_cff = prediction_data[cff_name].values
+        predicted_cff = all_cff_predictions_array[:, :, i].mean(axis=0)
+        
+        mean_predicted_cff = predicted_cff.mean()
+
+        print(f"\nMetrics for {cff_name}:")
+        cff_accuracy = calculate_accuracy(predicted_cff, mean_predicted_cff)
+        cff_precision = calculate_precision(actual_cff, mean_predicted_cff)
+
+        print(f"Accuracy for {cff_name}: {cff_accuracy}")
+        print(f"Precision for {cff_name}: {cff_precision.mean()}")
+
         plot_with_error_bars(actual_cff, all_cff_predictions_array[:, :, i], f'Actual vs Predicted {cff_name}', f'actual_vs_predicted_{cff_name}_error_bars.png')
+
 
 if __name__ == "__main__":
     main()
