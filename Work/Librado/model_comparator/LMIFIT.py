@@ -29,7 +29,7 @@ Learning_Rate = 0.0001
 EPOCHS = 100
 modify_LR = tf.keras.callbacks.ReduceLROnPlateau(monitor='loss',factor=0.9,patience=400,mode='auto')
 EarlyStop = tf.keras.callbacks.EarlyStopping(monitor='loss',patience=1000)
-NUM_REPLICAS = 5
+NUM_REPLICAS =100
 
 def chisquare(y, yhat, err):
     return np.sum(((y - yhat)/err)**2)
@@ -75,19 +75,22 @@ def GenerateReplicaData(df):
 
 
 def DNNmodel(num_hidden_layers=2):
-    initializer = tf.keras.initializers.RandomUniform(minval=-0.1, maxval=0.1, seed=None)
+    initializer_seeds = [np.random.randint(0, 10000) for _ in range(num_hidden_layers + 1)]
     inputs = tf.keras.Input(shape=(5), name='input_layer')
     QQ, x_b, t, phi, k = tf.split(inputs, num_or_size_splits=5, axis=1)
     kinematics = tf.keras.layers.concatenate([QQ, x_b, t], axis=1, name='kinematics_concat')
     x = kinematics
     for i in range(num_hidden_layers):
-        x = tf.keras.layers.Dense(100, activation="tanh", kernel_initializer=initializer, name=f'hidden_layer_{i+1}')(x)
-    cff_output = tf.keras.layers.Dense(4, activation="linear", kernel_initializer=initializer, name='cff_output_layer')(x)
+        initializer = tf.keras.initializers.RandomUniform(minval=-0.1, maxval=0.1, seed=initializer_seeds[i])
+        x = tf.keras.layers.Dense(300, activation="relu", kernel_initializer=initializer, name=f'hidden_layer_{i+1}')(x)
+    final_initializer = tf.keras.initializers.RandomUniform(minval=-0.1, maxval=0.1, seed=initializer_seeds[-1])
+    cff_output = tf.keras.layers.Dense(4, activation="linear", kernel_initializer=final_initializer, name='cff_output_layer')(x)
     total_FInputs = tf.keras.layers.concatenate([inputs, cff_output], axis=1, name='combined_input_cff')
     TotalF = TotalFLayer(name='total_F_layer')(total_FInputs)
     tfModel = tf.keras.Model(inputs=inputs, outputs=TotalF, name="tfmodel")
     tfModel.compile(optimizer=tf.keras.optimizers.Adam(Learning_Rate), loss=tf.keras.losses.MeanSquaredError())
     return tfModel
+
     
 
 def run_replica(i):
