@@ -27,7 +27,8 @@ To set up the required environment, especially if you're using Rivanna, follow t
      ```
 
 ## Usage
-1. **Run the Tool**: Use the following command to start the tool:
+1. **Move the tool**: Place the tool within a folder that contains the BHDVCS_tf_modified file. for example, placing it in model_comparator is fine.
+2. **Run the Tool**: Use the following command to start the tool:
    ```bash
    python model_inspection_tool.py path/to/your/model.h5
 
