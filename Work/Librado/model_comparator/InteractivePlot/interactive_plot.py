@@ -25,20 +25,35 @@ def create_interactive_3d_plot(csv_file, y_col, z_col):
     fig = px.scatter_3d(df, x='Bin', y=y_col, z=z_col)
     fig.show()
 
-if __name__ == "__main__":
-    if len(sys.argv) != 3:
-        print("Usage: python plot_3d_interactive.py <y_column> <z_column>")
-        print("Columns: 'F', 'ReH', 'ReE', 'ReHt', 'dvcs'")
-    else:
-        y_col = sys.argv[1]
-        z_col = sys.argv[2]
+def create_interactive_2d_plot(csv_file, x_col, y_col):
+    df = pd.read_csv(csv_file)
+    if x_col == 'Bin':
+        df['Bin'] = df.index
+    fig = px.scatter(df, x=x_col, y=y_col)
+    fig.show()
 
-        valid_columns = ['F', 'ReH', 'ReE', 'ReHt', 'dvcs']
-        if y_col not in valid_columns or z_col not in valid_columns:
-            print("Invalid columns specified. Please choose from 'F', 'ReH', 'ReE', 'ReHt', 'dvcs'.")
+if __name__ == "__main__":
+    if len(sys.argv) < 4:
+        print("Usage: python plot_interactive.py <plot_type> <x_column> <y_column>")
+        print("plot_type: '2d' or '3d'")
+        print("Columns for 3D: 'F', 'ReH', 'ReE', 'ReHt', 'dvcs'")
+        print("Columns for 2D: 'Bin', 'F', 'ReH', 'ReE', 'ReHt', 'dvcs'")
+    else:
+        plot_type = sys.argv[1]
+        x_col = sys.argv[2]
+        y_col = sys.argv[3]
+
+        valid_columns = ['Bin', 'F', 'ReH', 'ReE', 'ReHt', 'dvcs']
+        if x_col not in valid_columns or y_col not in valid_columns:
+            print("Invalid columns specified. Please choose from 'Bin', 'F', 'ReH', 'ReE', 'ReHt', 'dvcs'.")
         else:
             try:
                 avg_csv = average_predictions('../DNNvalues')
-                create_interactive_3d_plot(avg_csv, y_col, z_col)
+                if plot_type == '3d':
+                    create_interactive_3d_plot(avg_csv, x_col, y_col)
+                elif plot_type == '2d':
+                    create_interactive_2d_plot(avg_csv, x_col, y_col)
+                else:
+                    print("Invalid plot type. Please choose '2d' or '3d'.")
             except Exception as e:
                 print(str(e))
