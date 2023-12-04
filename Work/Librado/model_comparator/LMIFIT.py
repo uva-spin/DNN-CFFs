@@ -93,9 +93,7 @@ def DNNmodel(num_hidden_layers=2):
 
     
 
-def run_replica(i):
-    #replica_number = sys.argv[1]
-    replica_number = i
+def run_replica(replica_number):
     tempdf=GenerateReplicaData(df)
     ### If you want to save the replica uncoment the following line with the proper folder name ####
     #tempdf.to_csv(str(Repl_Folder)+'/rep'+str(replica_number)+'.csv')
@@ -122,6 +120,5 @@ def run_replica(i):
 
     
 ###### Running Jobs on Rivanna: Comment the following lines and uncomment the run_replica(), uncomment replica_number = sys.argv[1] and comment replica_number = i in the 'def run_replica()'  
-for i in range(0,NUM_REPLICAS):
-    run_replica(i)
-#run_reppica()
+replica_number = int(sys.argv[1])
+run_replica(replica_number)

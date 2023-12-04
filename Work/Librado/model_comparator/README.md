@@ -38,3 +38,16 @@ pip install tensorflow pandas numpy matplotlib
 - This script assumes a specific structure for the TensorFlow models and input data. Ensure your models and data conform to the expected format.
 - The script must be run in an environment where graphical output is supported, as it generates visual plots.
 - To see more interactive and 3d graphs go to InteractivePlots folder
+
+## Additional scripts
+
+### njobs.sh
+This script is used to submit multiple jobs simultaneously on systems like Rivanna. It takes to arguments: the name of the python script to be executed and the number of jobs to run.
+1. Make sure `njobs.sh` is executable by running `chmod +x njobs.sh`. if that doesn't work try `chmod 755 njobs.sh` or somtimes restarting terminal after command is necessary.
+2. Execute the script with the Python script name and the desired number of jobs. For example: `./njobs.sh LMIFIT.py 3` will run th script 3 times.
+
+### generate_data.slurm
+This is a SLURM script used to manage job submission on systems like Rivanna. It sets various SLURM job parameters such as the number of tasks, runtime, and partition.
+1. For the purpose of this folder `generate_data.slurm` is called by `njobs.sh`. It takes two arguments: the name of the python script and the specific job number(replica number for this folder)
+2. You can edit the slurm details for specific job requirements(time, partition, etc.)
+
