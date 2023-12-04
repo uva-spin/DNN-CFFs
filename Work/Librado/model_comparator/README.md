@@ -24,7 +24,7 @@ Ensure you have the following Python libraries installed(if you are running on r
 
 You can install these libraries using pip if not already installed:
 
-bash ```
+```bash
 pip install tensorflow pandas numpy matplotlib
 ```
 
