@@ -14,11 +14,11 @@ def load_model_and_intermediate_model(model_path):
                                               outputs=full_model.get_layer('cff_output_layer').output)
     return full_model, intermediate_layer_model
 
-def calculate_accuracy(predicted_values, mean_predicted):
+def calculate_precision(predicted_values, mean_predicted):
     n = len(predicted_values)
     return np.sum((predicted_values - mean_predicted) ** 2) / n
 
-def calculate_precision(true_values, mean_predicted):
+def calculate_accuracy(true_values, mean_predicted):
     return 1 - np.abs((true_values - mean_predicted) / true_values)
     
 def predict_cffs_and_f(intermediate_model, full_model, inputs):
@@ -40,17 +40,37 @@ def save_predictions_to_csv(predictions, model_name, folder_name='DNNvalues'):
     df.to_csv(csv_filename, index=False)
     print(f"Predictions saved to {csv_filename}")
 
-def plot_with_error_bars(actual_values, mean_predictions, std_predictions, title, filename, folder_name, dot_size=2, x_range=None):
+def plot_with_error_bars(x_values, y_values, y_errors, actual_values, title, filename, folder_name, x_label='X Axis', y_label='Y Axis', dot_size=2):
     fig, ax = plt.subplots()
-    ax.errorbar(range(len(mean_predictions)), mean_predictions, yerr=std_predictions, fmt='o', color='red', alpha=0.5, label='Predicted', markersize=dot_size)
-    ax.scatter(range(len(actual_values)), actual_values, color='blue', s=dot_size, label='Actual')
-    if x_range:
-        ax.set_xlim(x_range)
+    # Plotting predicted values with error bars
+    ax.errorbar(x_values, y_values, yerr=y_errors, fmt='o', color='red', alpha=0.5, label='Predicted', markersize=dot_size)
+    # Plotting actual values
+    ax.scatter(x_values, actual_values, color='blue', s=dot_size, label='Actual')
+    ax.set_xlabel(x_label)
+    ax.set_ylabel(y_label)
     ax.set_title(title)
-    ax.set_xlabel('Data Points')
+    ax.legend()
+    plot_figure(fig, filename, folder_name)
+
+def plot_std_distribution_and_calculate_success(actual_values, predicted_values_array, title, filename, folder_name):
+    mean_predictions = np.mean(predicted_values_array, axis=0)
+    std_predictions = np.std(predicted_values_array, axis=0)
+
+    # Plotting the distribution of standard deviations
+    fig, ax = plt.subplots()
+    ax.errorbar(range(len(mean_predictions)), mean_predictions, yerr=std_predictions, fmt='o', color='red', alpha=0.5, label='Predicted')
+    ax.scatter(range(len(actual_values)), actual_values, color='blue', s=2, label='Actual')
+    ax.set_title(title)
+    ax.set_xlabel('Bins')
     ax.set_ylabel('Values')
     ax.legend()
     plot_figure(fig, filename, folder_name)
+
+    # Calculate success percentage
+    within_one_std = np.sum((actual_values >= (mean_predictions - std_predictions)) & (actual_values <= (mean_predictions + std_predictions)))
+    success_percentage = (within_one_std / len(actual_values)) * 100
+    return success_percentage
+
 
 def plot_figure(fig, filename, folder_name):
     plt.savefig(os.path.join(folder_name, filename))
@@ -68,14 +88,14 @@ def plot_2d(actual_values, predicted_values, title, filename, folder_name, dot_s
     ax.legend()
     plot_figure(fig, filename, folder_name)
 
-def plot_3d(x, y, z, title, filename, folder_name):
+def plot_3d(x, y, z, title, filename, folder_name, x_label='X Axis', y_label='Y Axis', z_label='Z Axis'):
     fig = plt.figure()
     ax = fig.add_subplot(111, projection='3d')
     ax.scatter(x, y, z, c='r', marker='o')
+    ax.set_xlabel(x_label)
+    ax.set_ylabel(y_label)
+    ax.set_zlabel(z_label)
     ax.set_title(title)
-    ax.set_xlabel('X Axis')
-    ax.set_ylabel('Y Axis')
-    ax.set_zlabel('Z Axis')
     plot_figure(fig, filename, folder_name)
 
 
@@ -116,40 +136,86 @@ def main():
 
     mean_f_predictions = all_f_predictions_array[:, :, 0].mean(axis=0)
     std_f_predictions = all_f_predictions_array[:, :, 0].std(axis=0)
-    plot_with_error_bars(actual_F, mean_f_predictions, std_f_predictions, 'Actual vs Predicted F', 'actual_vs_predicted_F_error_bars.png', 'DNN2Dimages')
+    #x_values, y_values, y_errors, actual_values, title, filename, folder_name
+    #plot_with_error_bars(actual_F, mean_f_predictions, std_f_predictions, 'Actual vs Predicted F', 'actual_vs_predicted_F_error_bars.png',)
 
-    f_accuracy = calculate_accuracy(predicted_F, mean_f_predictions)
-    f_precision = calculate_precision(actual_F, mean_f_predictions)
-    f_accuracy_values.append(f_accuracy)
-    f_precision_values.append(f_precision)
 
+#    f_accuracy = calculate_accuracy(predicted_F, mean_f_predictions)
+#    f_precision = calculate_precision(actual_F, mean_f_predictions)
+#    f_accuracy_values.append(f_accuracy)
+#    f_precision_values.append(f_precision)
+
+#    for i, cff_name in enumerate(['ReH', 'ReE', 'ReHt', 'dvcs']):
+#        actual_cff = prediction_data[cff_name].values
+#        predicted_cff = all_cff_predictions_array[:, :, i].mean(axis=0)
+#        cff_accuracy = calculate_accuracy(predicted_cff, predicted_cff.mean())
+#        cff_precision = calculate_precision(actual_cff, predicted_cff.mean())
+#        cff_accuracy_values[cff_name].append(cff_accuracy)
+#        cff_precision_values[cff_name].append(cff_precision)
+        
+        
+#    avg_f_accuracy = np.mean(f_accuracy_values)
+#    avg_f_precision = np.mean(f_precision_values)
+#    print(f"\nAverage Accuracy for F: {avg_f_accuracy}")
+#    print(f"Average Precision for F: {avg_f_precision}")
+
+#    for cff_name in ['ReH', 'ReE', 'ReHt', 'dvcs']:
+#        avg_cff_accuracy = np.mean(cff_accuracy_values[cff_name])
+#        avg_cff_precision = np.mean(cff_precision_values[cff_name])
+#        print(f"\nAverage Accuracy for {cff_name}: {avg_cff_accuracy}")
+#        print(f"Average Precision for {cff_name}: {avg_cff_precision}")
+
+        
+    kinematic_vars = ['QQ', 'x_b', 't']
+    cff_names = ['ReH', 'ReE', 'ReHt', 'dvcs']
+
+    # 2D Plots for each Compton form factor against each kinematic variable and bins
+    for i, cff_name in enumerate(cff_names):
+        actual_cff = prediction_data[cff_name].values
+        for kinematic_var in kinematic_vars:
+            x_values = prediction_data[kinematic_var].values
+            y_values = all_cff_predictions_array[:, :, i].mean(axis=0)
+            y_errors = all_cff_predictions_array[:, :, i].std(axis=0)
+            plot_with_error_bars(x_values, y_values, y_errors, actual_cff, f'{cff_name} vs {kinematic_var}', f'{cff_name}_vs_{kinematic_var}.png', 'DNN2Dimages', x_label=kinematic_var, y_label=cff_name)
+
+        # Plotting against bins
+        bins = range(len(prediction_data))
+        y_values = all_cff_predictions_array[:, :, i].mean(axis=0)
+        y_errors = all_cff_predictions_array[:, :, i].std(axis=0)
+        plot_with_error_bars(bins, y_values, y_errors, actual_cff, f'{cff_name} vs Bins', f'{cff_name}_vs_Bins.png', 'DNN2Dimages', x_label='Bins', y_label=cff_name)
+
+    # 3D Plots for each Compton form factor against pairs of kinematic variables
+    for i, cff_name in enumerate(cff_names):
+        for (var1, var2) in itertools.combinations(kinematic_vars, 2):
+            x_values = prediction_data[var1].values
+            y_values = prediction_data[var2].values
+            z_values = all_cff_predictions_array[:, :, i].mean(axis=0)
+            plot_3d(x_values, y_values, z_values, f'3D Plot of {cff_name} with {var1} and {var2}', f'{cff_name}_{var1}_{var2}_3d.png', 'DNN3Dimages', x_label=var1, y_label=var2, z_label=cff_name)
+
+    # New section to plot standard deviation distribution and calculate success percentage
+    success_percentages = {}
     for i, cff_name in enumerate(['ReH', 'ReE', 'ReHt', 'dvcs']):
         actual_cff = prediction_data[cff_name].values
-        predicted_cff = all_cff_predictions_array[:, :, i].mean(axis=0)
-        cff_accuracy = calculate_accuracy(predicted_cff, predicted_cff.mean())
-        cff_precision = calculate_precision(actual_cff, predicted_cff.mean())
-        cff_accuracy_values[cff_name].append(cff_accuracy)
-        cff_precision_values[cff_name].append(cff_precision)
-        
-        
-    avg_f_accuracy = np.mean(f_accuracy_values)
-    avg_f_precision = np.mean(f_precision_values)
-    print(f"\nAverage Accuracy for F: {avg_f_accuracy}")
-    print(f"Average Precision for F: {avg_f_precision}")
+        success_percentage = plot_std_distribution_and_calculate_success(
+            actual_cff,
+            all_cff_predictions_array[:, :, i],
+            f'Std Dev Distribution for {cff_name}',
+            f'{cff_name}_std_dev_distribution.png',
+            'DNN2Dimages'
+        )
+        success_percentages[cff_name] = success_percentage
+        print(f"Success Percentage for {cff_name}: {success_percentage:.2f}%")
 
-    for cff_name in ['ReH', 'ReE', 'ReHt', 'dvcs']:
-        avg_cff_accuracy = np.mean(cff_accuracy_values[cff_name])
-        avg_cff_precision = np.mean(cff_precision_values[cff_name])
-        print(f"\nAverage Accuracy for {cff_name}: {avg_cff_accuracy}")
-        print(f"Average Precision for {cff_name}: {avg_cff_precision}")
-        
-    combined_predictions = np.hstack((all_f_predictions_array.mean(axis=0), all_cff_predictions_array.mean(axis=0)))
-    column_names = ['F', 'ReH', 'ReE', 'ReHt', 'dvcs']
-    for (var1, var2) in itertools.combinations(column_names, 2):
-        x_values = range(len(prediction_data))
-        y_values = combined_predictions[:, column_names.index(var1)]
-        z_values = combined_predictions[:, column_names.index(var2)]
-        plot_3d(x_values, y_values, z_values, f'3D Plot of {var1} vs {var2}', f'{var1}_vs_{var2}_3d.png', 'DNN3Dimages')
+    # Optionally, you can also do this for F
+    success_percentage_F = plot_std_distribution_and_calculate_success(
+        actual_F,
+        all_f_predictions_array[:, :, 0],
+        'Std Dev Distribution for F',
+        'F_std_dev_distribution.png',
+        'DNN2Dimages'
+    )
+    success_percentages['F'] = success_percentage_F
+    print(f"Success Percentage for F: {success_percentage_F:.2f}%")
 
 if __name__ == "__main__":
     main()
