@@ -3,6 +3,7 @@ import pandas as pd
 import tensorflow as tf
 from BHDVCS_tf_modified import *
 import matplotlib.pyplot as plt
+import argparse
 import os
 import sys
 
@@ -27,9 +28,38 @@ df = df.rename(columns={"sigmaF": "errF"})
 #### User's inputs ####
 Learning_Rate = 0.0001
 EPOCHS = 100
-modify_LR = tf.keras.callbacks.ReduceLROnPlateau(monitor='loss',factor=0.9,patience=400,mode='auto')
-EarlyStop = tf.keras.callbacks.EarlyStopping(monitor='loss',patience=1000)
+EarlyStop_patience = 1000
+modify_LR_patience = 400
+modify_LR_factor = 0.9
 NUM_REPLICAS =100
+num_hidden_layers = 2
+num_nodes = 300
+activation_function = "relu"
+
+print(sys.argv)
+# Argument Parsing
+parser = argparse.ArgumentParser(description='LMIFIT model configuration')
+parser.add_argument('replica_number', type=int, help='Replica number')
+parser.add_argument('num_nodes', type=int, help='Number of nodes')
+parser.add_argument('learning_rate', type=float, help='Learning rate')
+parser.add_argument('activation_function', type=str, help='Activation function')
+parser.add_argument('EarlyStop_patience', type=int, help='Early stopping patience')
+parser.add_argument('modify_lr_patience', type=float, help='Modify learning rate patience')
+parser.add_argument('modify_lr_factor', type=float, help='Modify learning rate factor')
+parser.add_argument('num_hidden_layers', type=int, help='Number of hidden layers')
+args = parser.parse_args()
+print(args)
+# Using the parsed arguments
+num_nodes = args.num_nodes
+learning_rate = args.learning_rate
+activation_function = args.activation_function
+EarlyStop_patience = args.EarlyStop_patience
+modify_LR_patience = args.modify_lr_patience
+modify_LR_factor = args.modify_lr_factor
+num_hidden_layers = args.num_hidden_layers
+replica_number = args.replica_number
+modify_LR = tf.keras.callbacks.ReduceLROnPlateau(monitor='loss',factor=modify_LR_factor,patience=modify_LR_patience,mode='auto')
+EarlyStop = tf.keras.callbacks.EarlyStopping(monitor='loss',patience=EarlyStop_patience)
 
 def chisquare(y, yhat, err):
     return np.sum(((y - yhat)/err)**2)
@@ -74,7 +104,7 @@ def GenerateReplicaData(df):
 
 
 
-def DNNmodel(num_hidden_layers=2):
+def DNNmodel():
     initializer_seeds = [np.random.randint(0, 10000) for _ in range(num_hidden_layers + 1)]
     inputs = tf.keras.Input(shape=(5), name='input_layer')
     QQ, x_b, t, phi, k = tf.split(inputs, num_or_size_splits=5, axis=1)
@@ -82,7 +112,7 @@ def DNNmodel(num_hidden_layers=2):
     x = kinematics
     for i in range(num_hidden_layers):
         initializer = tf.keras.initializers.RandomUniform(minval=-0.1, maxval=0.1, seed=initializer_seeds[i])
-        x = tf.keras.layers.Dense(300, activation="relu", kernel_initializer=initializer, name=f'hidden_layer_{i+1}')(x)
+        x = tf.keras.layers.Dense(num_nodes, activation=activation_function, kernel_initializer=initializer, name=f'hidden_layer_{i+1}')(x)
     final_initializer = tf.keras.initializers.RandomUniform(minval=-0.1, maxval=0.1, seed=initializer_seeds[-1])
     cff_output = tf.keras.layers.Dense(4, activation="linear", kernel_initializer=final_initializer, name='cff_output_layer')(x)
     total_FInputs = tf.keras.layers.concatenate([inputs, cff_output], axis=1, name='combined_input_cff')
@@ -120,5 +150,5 @@ def run_replica(replica_number):
 
     
 ###### Running Jobs on Rivanna: Comment the following lines and uncomment the run_replica(), uncomment replica_number = sys.argv[1] and comment replica_number = i in the 'def run_replica()'  
-replica_number = int(sys.argv[1])
+#replica_number = int(sys.argv[1])
 run_replica(replica_number)
