@@ -12,4 +12,4 @@ source /home/lba9wf/miniconda3/etc/profile.d/conda.sh
 conda activate env
 
 # Executing Script
-python $1 $2
+python $1 $2 ${@:3}
