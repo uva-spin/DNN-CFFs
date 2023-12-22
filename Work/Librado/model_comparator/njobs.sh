@@ -52,19 +52,19 @@ confirm_values() {
 
 read_input() {
   read -p "Enter the Number of Jobs " NJOBS
-  read -p "Enter the Number of nodes or leave blank for default value  " input_num_hidden_layers
+  read -p "Enter the Number of hidden layers or leave blank for default value  " input_num_hidden_layers
   num_hidden_layers=${input_num_hidden_layers:-2}
   read -p "Enter the Number of nodes or leave blank for default value " input_num_nodes
   num_nodes=${input_num_nodes:-300}
-  read -p "Enter the Number of nodes or leave blank for default value  " input_activation_function
+  read -p "Enter the Activation Function or leave blank for default value  " input_activation_function
   activation_function=${input_activation_function:-relu}
-  read -p "Enter the Number of nodes or leave blank for default value  " input_learning_rate
+  read -p "Enter the NLearning Rate or leave blank for default value  " input_learning_rate
   learning_rate=${input_learning_rate:-0.0001}
-  read -p "Enter the Number of nodes or leave blank for default value  " input_earlystop_patience
+  read -p "Enter the Patience for Earlystop or leave blank for default value  " input_earlystop_patience
   EarlyStop_patience=${input_earlystop_patience:-1000}
-  read -p "Enter the Number of nodes or leave blank for default value  " input_modify_lr_patience
+  read -p "Enter the Patience for ModifyLR or leave blank for default value  " input_modify_lr_patience
   modify_LR_patience=${input_modify_lr_patience:-400}
-  read -p "Enter the Number of nodes or leave blank for default value " input_modify_lr_factor
+  read -p "Enter the Factor for ModifyLR or leave blank for default value " input_modify_lr_factor
   modify_LR_factor=${input_modify_lr_factor:-0.9}
 }
 
