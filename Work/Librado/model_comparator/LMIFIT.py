@@ -9,11 +9,12 @@ import sys
 
 
 def create_folders(folder_name):
-    if not os.path.exists(folder_name):
+    try:
         os.makedirs(folder_name)
         print(f"Folder '{folder_name}' created successfully!")
-    else:
+    except FileExistsError:
         print(f"Folder '{folder_name}' already exists!")
+
         
 
 create_folders('DNNmodels')
