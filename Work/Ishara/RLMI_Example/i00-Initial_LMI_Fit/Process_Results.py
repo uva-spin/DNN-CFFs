@@ -67,7 +67,7 @@ def process_columns_with_acc(folder_path):
     csv_files = [file for file in os.listdir(folder_path) if file.endswith('.csv')]
 
     # Initialize empty dataframes to store the columns from each file
-    columns_df = {col: pd.DataFrame() for col in ['F', 'ReE', 'ReHt', 'dvcs', 'Acc_ReH', 'Acc_ReE', 'Acc_ReHt', 'Acc_dvcs']}
+    columns_df = {col: pd.DataFrame() for col in ['F', 'ReH', 'ReE', 'ReHt', 'dvcs', 'Acc_ReH', 'Acc_ReE', 'Acc_ReHt', 'Acc_dvcs']}
 
     # Iterate through each .csv file
     for file in csv_files:
@@ -99,7 +99,7 @@ def process_columns_with_acc(folder_path):
 
         return final_df
     else:
-        print(f"No data found for columns 'F', 'ReE', 'ReHt', 'dvcs', 'Acc_ReH', 'Acc_ReE', 'Acc_ReHt', 'Acc_dvcs' in any of the files.")
+        print(f"No data found for columns 'F', 'ReH', 'ReE', 'ReHt', 'dvcs', 'Acc_ReH', 'Acc_ReE', 'Acc_ReHt', 'Acc_dvcs' in any of the files.")
         return None
 
     
@@ -108,7 +108,7 @@ def process_columns_without_acc(folder_path):
     csv_files = [file for file in os.listdir(folder_path) if file.endswith('.csv')]
 
     # Initialize empty dataframes to store the columns from each file
-    columns_df = {col: pd.DataFrame() for col in ['F', 'ReE', 'ReHt', 'dvcs']}
+    columns_df = {col: pd.DataFrame() for col in ['F', 'ReH', 'ReE', 'ReHt', 'dvcs']}
 
     # Iterate through each .csv file
     for file in csv_files:
@@ -140,7 +140,7 @@ def process_columns_without_acc(folder_path):
 
         return final_df
     else:
-        print(f"No data found for columns 'F', 'ReE', 'ReHt', 'dvcs' in any of the files.")
+        print(f"No data found for columns 'F', 'ReH', 'ReE', 'ReHt', 'dvcs' in any of the files.")
         return None
     
 
