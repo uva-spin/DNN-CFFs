@@ -1,45 +1,4 @@
-# Sample Codes to Get Started
-
-There are three directories/folders in this folder
-
-
-## An Example for generating pseudo-data
-
-   In this folder called "Example_PseudoData_Generation", you can find a file called 'Generate_Pseudo_Data_Basic_Model.py'.
-   This contains the so-called "basic model" for CFFs with the generic form of
-   $$CFF(x_B,t) = (a x_B^2 + b x_B) e^{ct^2 + dt + e}+f $$
-
-   The following parameters are used as a starting point:
-   | --- | a | b | c | d | e | f |
-   | --- | --- | --- | --- | --- | --- | --- |
-   | ReH | -4.41 | 1.68 | -9.14 |-3.57 | 1.54 | -1.37 |
-   | ReE | 144.56 | 149.99 | 0.32 | -1.09 | -148.49 | -0.31 |
-   | ReHe |  -1.86 | 1.50 | -0.29 | -1.33 | 0.46 | -0.98 |
-   | DVCS | 0.50  | -0.41 | 0.05 | -0.25 | 0.55 | 0.166 |
-
-
-## An Example for Local-Multivariate-Inference (LMI)
-
-A multivariate fit is performed in $Q^2$, $t$, and $x_b$ using a DNN at many fixed kinematics across the independent variable $\phi$. 
-The analytical fit function (loss function) is defined by the helicity amplitudes so the results can be specific to a particular formalism, similar to the local fit. 
-The DNN fit incorporates all of the information across the phase space of the experimental data resulting in a model that can interpolate and extrapolate. 
-With this approach, there is no preconceived analytical expression defined, so there are no initial biases to contend with.
-
-Referece: https://confluence.its.virginia.edu/display/twist/The+DNN+Extraction+Approach
-
-There are two python scripts provided in this folder.
-
-1. Sample_LMI_Fit.py : This code is for testing on a local computer or on a single node.
-   First: Run the following commands on your Rivanna terminal to launch the environment.
-   source /home/lba9wf/miniconda3/etc/profile.d/conda.sh 
-   conda activate env
-
-2. Sample_LMI_Fit_for_jobs.py : This code is for job submission on Rivanna/Cluster.
-   Use the command $ sbatch job_LMI.slurm
-   Ensure that you have the 'job_LMI.slurm' file in the same directory
-   
-
-## An Example for Local-Fit
+# An Example for Local-Fit
 The Compton form factors (CFFs) are extracted through a fit at fixed kinematics, usually across the independent variable $\phi$, the azimuthal angle between the lepton and hadron scattering planes. 
 The fit independently determines the CFFs from measurements between different fixed kinematic bins. 
 The analytical fit function (or loss function for ANNs) is defined by the helicity amplitudes so the results can be specific to a particular formalism. 
@@ -47,4 +6,49 @@ Without the necessary constraints using multiple observables in simultaneous fit
 
 Referece: https://confluence.its.virginia.edu/display/twist/The+DNN+Extraction+Approach
 
-Similar to the "Local-Multivariate-Inference (LMI)" there are two python scripts provided in this folder.
+## 1. Sample_Local_Fit.py
+
+This code is for testing on a local computer or on a single node.
+
+   Run the following commands on your Rivanna terminal to launch the environment, before running the Sample_LMI_Fit.py script.
+   ```bash
+source /home/lba9wf/miniconda3/etc/profile.d/conda.sh
+conda activate env
+```
+
+## 2. Sample_Local_Fit_for_jobs.py
+
+This code is for job submission on Rivanna (or on a Cluster).
+
+   Use the following command to submit your job. Ensure that you have the 'job_LMI.slurm' file in the same directory.
+   You can find more details about the 'job_LMI.slurm' file below.
+   ```bash
+   sbatch job_LMI.slurm
+   ```
+
+## 3. BHDVCS_tf_modified.py
+
+This file contains all the relevant definitions from the BKM10 formalism.
+
+## 4. Process_Results.py
+
+This script provides an example of how to use the trained models to generate results. You will have to either add your analysis definitions to this file or create similar files for various analysis purposes using the trained models.
+
+# Other Files
+
+## 5. job_LocalFit.slurm
+
+This is the job submission file. The most important lines to check are line #10 and #16. 
+
+### line #10
+Here you can input the number of replicas you need. In the current version it is set to 10 (because of quick testing purpose).
+```bash
+#SBATCH --array=0-10
+```
+
+### line #16
+Here you want to ensure that you are submitting the job with the proper script. Currently it is set to submit the jobs with Sample_LMI_Fit_for_jobs.py
+```bash
+python3 Sample_Local_Fit_for_jobs.py $SLURM_ARRAY_TASK_ID
+```
+
