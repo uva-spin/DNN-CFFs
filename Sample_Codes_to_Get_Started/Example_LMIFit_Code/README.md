@@ -11,8 +11,10 @@ There are four (4) python scripts provided in this folder.
 
 ## 1. Sample_LMI_Fit.py : This code is for testing on a local computer or on a single node.
    Run the following commands on your Rivanna terminal to launch the environment, before running the Sample_LMI_Fit.py script.
-   source /home/lba9wf/miniconda3/etc/profile.d/conda.sh 
-   conda activate env
+   ```bash
+source /home/lba9wf/miniconda3/etc/profile.d/conda.sh
+conda activate env
+```
 
 ## 2. Sample_LMI_Fit_for_jobs.py : This code is for job submission on Rivanna/Cluster.
    Use the command $ sbatch job_LMI.slurm
