@@ -1,6 +1,6 @@
 ##########################################################################
 ###############  Written by Ishara Fernando                  #############
-##############  Revised Date: 01/16/2024    ##############################
+##############  Revised Date: 01/17/2024    ##############################
 #####  This code is for testing on a local computer or on a single node ##
 ##### First: Run the following commands on your Rivanna terminal #########
 ## source /home/lba9wf/miniconda3/etc/profile.d/conda.sh         #########
@@ -12,11 +12,11 @@ import pandas as pd
 import tensorflow as tf
 from BHDVCS_tf_modified import *
 import matplotlib.pyplot as plt
-import plotly.express as px
-import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
-import plotly.graph_objects as go
-from plotly.subplots import make_subplots
+#import plotly.express as px
+#import matplotlib.pyplot as plt
+#from mpl_toolkits.mplot3d import Axes3D
+#import plotly.graph_objects as go
+#from plotly.subplots import make_subplots
 import os
 import sys
 
