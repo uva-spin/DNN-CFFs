@@ -24,6 +24,10 @@ The most popular way of propagating error is to use the replica method. In this 
 
 Right now, we are using pseudo-data where we know the true values of the CFFs instead of real experimental data where we don’t. This way, we can compare the CFF guesses to their true values and have a good idea of a model’s performance. Once we develop a method that can consistently and accurately predict the CFFs, we will move on to experimental data.
 
+## Sample Codes to Get Started
+
+You can find a folder called "Sample_Codes_to_Get_Started" in the main repository. Instructions to test those codes are given in the ReadMe file in that directory.
+
 
 ## Prerequisites
 
