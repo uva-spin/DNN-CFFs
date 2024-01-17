@@ -1,6 +1,6 @@
 # Sample Codes to Get Started
 
-There are three directories/folders in this folder
+There are three directories/folders in this folder.
 
 
 ## An Example for generating pseudo-data
@@ -17,6 +17,7 @@ There are three directories/folders in this folder
    | ReHe |  -1.86 | 1.50 | -0.29 | -1.33 | 0.46 | -0.98 |
    | DVCS | 0.50  | -0.41 | 0.05 | -0.25 | 0.55 | 0.166 |
 
+The relevent scripts can be found in the "Example_PseudoData_Generation" folder.
 
 ## An Example for Local-Multivariate-Inference (LMI)
 
@@ -27,16 +28,7 @@ With this approach, there is no preconceived analytical expression defined, so t
 
 Referece: https://confluence.its.virginia.edu/display/twist/The+DNN+Extraction+Approach
 
-There are two python scripts provided in this folder.
-
-1. Sample_LMI_Fit.py : This code is for testing on a local computer or on a single node.
-   First: Run the following commands on your Rivanna terminal to launch the environment.
-   source /home/lba9wf/miniconda3/etc/profile.d/conda.sh 
-   conda activate env
-
-2. Sample_LMI_Fit_for_jobs.py : This code is for job submission on Rivanna/Cluster.
-   Use the command $ sbatch job_LMI.slurm
-   Ensure that you have the 'job_LMI.slurm' file in the same directory
+The relevent scripts can be found in the "Example_LMIFit_Code" folder.
    
 
 ## An Example for Local-Fit
@@ -47,4 +39,4 @@ Without the necessary constraints using multiple observables in simultaneous fit
 
 Referece: https://confluence.its.virginia.edu/display/twist/The+DNN+Extraction+Approach
 
-Similar to the "Local-Multivariate-Inference (LMI)" there are two python scripts provided in this folder.
+The relevent scripts can be found in the "Example_LocalFit_Code" folder.
