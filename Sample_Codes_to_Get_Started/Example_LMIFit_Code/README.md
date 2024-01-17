@@ -23,8 +23,13 @@ conda activate env
 
 This code is for job submission on Rivanna (or on a Cluster).
 
-   Use the command $ sbatch job_LMI.slurm
-   Ensure that you have the 'job_LMI.slurm' file in the same directory
+   Use the following command to submit your job. Ensure that you have the 'job_LMI.slurm' file in the same directory.
+   You can find more details about the 'job_LMI.slurm' file below.
+
+    ```bash
+$ sbatch job_LMI.slurm
+```
+
 
 ## 3. BHDVCS_tf_modified.py
 
