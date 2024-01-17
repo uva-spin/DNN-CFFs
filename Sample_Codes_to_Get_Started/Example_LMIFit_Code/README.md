@@ -41,4 +41,18 @@ This script provides an example of how to use the trained models to generate res
 
 # Other Files
 
-## 5. 
+## 5. job_LMI.slurm
+
+This is the job submission file. The most important lines to check are line #10 and #16. 
+
+### line #10
+Here you can input the number of replicas you need. In the current version it is set to 10 (because of quick testing purpose).
+```bash
+#SBATCH --array=0-10
+```
+
+### line #16
+Here you want to ensure that you are submitting the job with the proper script. Currently it is set to submit the jobs with Sample_LMI_Fit_for_jobs.py
+```bash
+python3 Sample_LMI_Fit_for_jobs.py $SLURM_ARRAY_TASK_ID
+```
