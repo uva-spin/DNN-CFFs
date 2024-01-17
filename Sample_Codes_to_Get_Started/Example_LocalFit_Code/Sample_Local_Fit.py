@@ -1,6 +1,6 @@
 ##########################################################################
 ###############  Written by Ishara Fernando                  #############
-##############  Revised Date: 01/16/2024    ##############################
+##############  Revised Date: 01/17/2024    ##############################
 #####  This code is for testing on a local computer or on a single node ##
 ##### First: Run the following commands on your Rivanna terminal #########
 ## source /home/lba9wf/miniconda3/etc/profile.d/conda.sh         #########
