@@ -27,8 +27,8 @@ This code is for job submission on Rivanna (or on a Cluster).
    You can find more details about the 'job_LMI.slurm' file below.
 
     ```bash
-      $ sbatch job_LMI.slurm
-      ```
+ sbatch job_LMI.slurm
+ ```
 
 
 ## 3. BHDVCS_tf_modified.py
