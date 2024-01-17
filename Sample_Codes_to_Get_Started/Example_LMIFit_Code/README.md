@@ -9,21 +9,30 @@ Referece: https://confluence.its.virginia.edu/display/twist/The+DNN+Extraction+A
 
 There are four (4) python scripts provided in this folder.
 
-## 1. Sample_LMI_Fit.py : This code is for testing on a local computer or on a single node.
+## 1. Sample_LMI_Fit.py
+
+This code is for testing on a local computer or on a single node.
+
    Run the following commands on your Rivanna terminal to launch the environment, before running the Sample_LMI_Fit.py script.
    ```bash
 source /home/lba9wf/miniconda3/etc/profile.d/conda.sh
 conda activate env
 ```
 
-## 2. Sample_LMI_Fit_for_jobs.py : This code is for job submission on Rivanna/Cluster.
+## 2. Sample_LMI_Fit_for_jobs.py
+
+This code is for job submission on Rivanna (or on a Cluster).
+
    Use the command $ sbatch job_LMI.slurm
    Ensure that you have the 'job_LMI.slurm' file in the same directory
 
-## 3. BHDVCS_tf_modified.py : This file contains all the relevant definitions from the BKM10 formalism.
+## 3. BHDVCS_tf_modified.py
 
-## 4. Process_Results.py : This script provides an example of how to use the trained models to generate results.
+This file contains all the relevant definitions from the BKM10 formalism.
 
+## 4. Process_Results.py
+
+This script provides an example of how to use the trained models to generate results. You will have to either add your analysis definitions to this file or create similar files for various analysis purposes using the trained models.
 
 # Other Files
 
