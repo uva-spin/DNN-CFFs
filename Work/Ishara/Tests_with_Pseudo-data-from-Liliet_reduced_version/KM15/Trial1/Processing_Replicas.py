@@ -1,42 +1,113 @@
 ###################################
 ##  Written by Ishara Fernando   ##
-##  Revised Date: 01/22/2024     ##
+##  Revised Date: 01/24/2024     ##
 ###################################
 
 import os
+import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import plotly.express as px  # Import plotly express
 
+original_data_file = 'pseudo_KM15_BKM10_Jlab_all_t2.csv'
+
+def CollectingColumns(folder_path):
+    tempk = []
+    tempQQ = []
+    tempx = []
+    tempt = []
+    tempF = []
+    tempReH = []
+    tempReE = []
+    tempReHt = []
+    tempdvcs = []
+    tempAbsResReH = []
+    tempAbsResReE = []
+    tempAbsResReHt = []
+    tempAbsResdvcs = []
+    for filename in os.listdir(folder_path):
+        if filename.endswith(".csv"):
+            file_path = os.path.join(folder_path, filename)
+            tempdf = pd.read_csv(file_path)
+            tempk.append(tempdf["k"])
+            tempQQ.append(tempdf["QQ"])
+            tempx.append(tempdf["x_b"])
+            tempt.append(tempdf["t"])
+            tempF.append(tempdf["F"])
+            tempReH.append(tempdf["ReH"])
+            tempReE.append(tempdf["ReE"])
+            tempReHt.append(tempdf["ReHt"])
+            tempdvcs.append(tempdf["dvcs"])
+            tempAbsResReH.append(tempdf["AbsRes_ReH"])
+            tempAbsResReE.append(tempdf["AbsRes_ReE"])
+            tempAbsResReHt.append(tempdf["AbsRes_ReHt"])
+            tempAbsResdvcs.append(tempdf["AbsRes_dvcs"])
+    return (np.array(tempk), np.array(tempQQ), np.array(tempx), np.array(tempt), np.array(tempF),
+            np.array(tempReH), np.array(tempReE), np.array(tempReHt), np.array(tempdvcs),
+            np.array(tempAbsResReH), np.array(tempAbsResReE), np.array(tempAbsResReHt), np.array(tempAbsResdvcs))
+
+def AvgVals(folder_path):
+    data_dictionary = {"k": [], "QQ": [], "x_b": [], "t": [], "F": [], "errF": [],
+                       "ReH": [], "sigmaReH": [], "ReE": [], "sigmaReE": [],
+                       "ReHt": [], "sigmaReHt": [], "dvcs": [], "sigmadvcs": [],
+                       "AbsRes_ReH": [], "sigmaAbsRes_ReH": [], "AbsRes_ReE": [], "sigmaAbsRes_ReE": [],
+                       "AbsRes_ReHt": [], "sigmaAbsRes_ReHt": [], "AbsRes_dvcs": [], "sigmaAbsRes_dvcs": []}
+    results = CollectingColumns(folder_path)
+    
+
+    tempF = results[4].mean(axis=0)
+    tempFErr = results[4].std(axis=0)
+    tempReH = results[5].mean(axis=0)
+    tempReHErr = results[5].std(axis=0)
+    tempReE = results[6].mean(axis=0)
+    tempReEErr = results[6].std(axis=0)
+    tempReHt = results[7].mean(axis=0)
+    tempReHtErr = results[7].std(axis=0)
+    tempdvcs = results[8].mean(axis=0)
+    tempdvcsErr = results[8].std(axis=0)
+    tempAbsResReH = results[9].mean(axis=0)
+    tempAbsResReHErr = results[9].std(axis=0)
+    tempAbsResReE = results[10].mean(axis=0)
+    tempAbsResReEErr = results[10].std(axis=0)
+    tempAbsResReHt = results[11].mean(axis=0)
+    tempAbsResReHtErr = results[11].std(axis=0)
+    tempAbsResdvcs = results[12].mean(axis=0)
+    tempAbsResdvcsErr = results[12].std(axis=0)
+    
+
+    data_dictionary["k"] = pd.read_csv(original_data_file, usecols=["k"]).iloc[:len(tempF)]["k"].tolist()
+    data_dictionary["QQ"] = pd.read_csv(original_data_file, usecols=["QQ"]).iloc[:len(tempF)]["QQ"].tolist()
+    data_dictionary["x_b"] = pd.read_csv(original_data_file, usecols=["x_b"]).iloc[:len(tempF)]["x_b"].tolist()
+    data_dictionary["t"] = pd.read_csv(original_data_file, usecols=["t"]).iloc[:len(tempF)]["t"].tolist()
+    data_dictionary["F"] = tempF
+    data_dictionary["errF"] = tempFErr
+    data_dictionary["ReH"] = tempReH
+    data_dictionary["sigmaReH"] = tempReHErr
+    data_dictionary["ReE"] = tempReE
+    data_dictionary["sigmaReE"] = tempReEErr
+    data_dictionary["ReHt"] = tempReHt
+    data_dictionary["sigmaReHt"] = tempReHtErr
+    data_dictionary["dvcs"] = tempdvcs
+    data_dictionary["sigmadvcs"] = tempdvcsErr
+    data_dictionary["AbsRes_ReH"] = tempAbsResReH
+    data_dictionary["sigmaAbsRes_ReH"] = tempAbsResReHErr
+    data_dictionary["AbsRes_ReE"] = tempAbsResReE
+    data_dictionary["sigmaAbsRes_ReE"] = tempAbsResReEErr
+    data_dictionary["AbsRes_ReHt"] = tempAbsResReHt
+    data_dictionary["sigmaAbsRes_ReHt"] = tempAbsResReHtErr
+    data_dictionary["AbsRes_dvcs"] = tempAbsResdvcs
+    data_dictionary["sigmaAbsRes_dvcs"] = tempAbsResdvcsErr
+    
+    data_dictionary["set"] = pd.read_csv(original_data_file, usecols=["set"]).iloc[:len(tempF)]["set"].tolist()
+    data_dictionary["phi_x"] = pd.read_csv(original_data_file, usecols=["phi_x"]).iloc[:len(tempF)]["phi_x"].tolist()
+
+    return pd.DataFrame(data_dictionary)
+
 # Directory containing the CSV files
 folder_path = "Replica_Results"
 
-# Dictionary to store the average values for each column
-average_values = {col: [] for col in ["ReH", "ReE", "ReHt", "dvcs", "AbsRes_ReH", "AbsRes_ReE", "AbsRes_ReHt", "AbsRes_dvcs"]}
-
-# List to store the columns needed for the scatter plot
-scatter_columns = ['x_b', 'k', 't', 'QQ']
-
-# Iterate over each CSV file in the directory
-for filename in os.listdir(folder_path):
-    if filename.endswith(".csv"):
-        file_path = os.path.join(folder_path, filename)
-
-        # Read the CSV file
-        df = pd.read_csv(file_path)
-
-        # Calculate the average for each row for all columns
-        for col in average_values.keys():
-            # Extract the numeric values from the column
-            values = pd.to_numeric(df[col], errors='coerce')
-            # Calculate the row-wise average and append to the list
-            average_values[col].append(values.mean(skipna=True))
-
-# Create a DataFrame with the average values
-average_df = pd.DataFrame(average_values)
-
-# Add 'x_b', 'k', 't', 'QQ' columns to average_df
-average_df[scatter_columns] = pd.read_csv(os.path.join(folder_path, os.listdir(folder_path)[0]), usecols=scatter_columns).iloc[:len(average_df)]
+# Use AvgVals function to get the DataFrame with average values
+average_df = AvgVals(folder_path)
 
 # Save the DataFrame to a CSV file
 average_df.to_csv("average_values_from_replicas.csv", index=False)
@@ -71,4 +142,5 @@ create_4D_scatter_plot_HTML(average_df, 'AbsRes_ReH', (0, 1), 'ReH Residuals', '
 create_4D_scatter_plot_HTML(average_df, 'AbsRes_ReE', (0, 1), 'ReE Residuals', 'kinematics_ReE_Residuals.html')
 create_4D_scatter_plot_HTML(average_df, 'AbsRes_ReHt', (0, 1), 'ReHt Residuals', 'kinematics_ReHt_Residuals.html')
 create_4D_scatter_plot_HTML(average_df, 'AbsRes_dvcs', (0, 1), 'dvcs Residuals', 'kinematics_dvcs_Residuals.html')
+
 
