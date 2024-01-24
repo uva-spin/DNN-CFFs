@@ -32,7 +32,7 @@ def find_intersection(*equations):
 
     return tuple(intersection_point)
 
-def find_f(reh, ree, df, angle, reht = None):
+def find_f(reh, ree, df, angle, reht = []):
     row = df.loc[df['phi_x'] == angle]
     input_tensor= tf.cast([[row['QQ'].iloc[0], row['x_b'].iloc[0], row['t'].iloc[0], angle, row['k'].iloc[0]]], dtype=tf.float32) 	
 
@@ -41,7 +41,7 @@ def find_f(reh, ree, df, angle, reht = None):
     f_values = []
     bhdvcstf = BHDVCStf() 
 
-    if reht: #3D
+    if len(reht) > 0: #3D
         for i in range(len(reh)):
             params = tf.cast([[reh[i], ree[i], reht[i], dvcs]], dtype=tf.float32) # h, e, ht, dvcs
 
@@ -131,7 +131,16 @@ def save_graph(f, angle, cffs):
         plt.ylabel('ReE')
         plt.savefig(f'Work/Aaryan/2D Surface Plots/lossPlot_Set{kinematicSet}_{angle}.png')
     else: 
-        pass
+        reh, ree, reht = cffs
+        fig = plt.figure()
+        ax = fig.add_subplot(111, projection='3d')
+        scatter = ax.scatter(reh, ree, reht, c=-1*np.array(f), cmap='RdYlGn', alpha=0.3)
+        plt.colorbar(scatter)
+        ax.set_title(f'3D Loss Plot at {angle}')
+        ax.set_xlabel('ReH')
+        ax.set_ylabel('ReE')
+        ax.set_zlabel('ReHt')
+        plt.savefig(f'Work/Aaryan/3D Surface Plots/lossPlot_Set{kinematicSet}_{angle}.png')
 
 def create_2D_lossPlot(df, angle1 = 7.5, angle2 = 187.5):
     cff_range = np.linspace(-10, 10, 50)
@@ -162,10 +171,12 @@ def create_3D_lossPlot(kinematicDf, angle1 = 7.5, angle2 = 127.5, angle3 = 247.5
     f2 = find_f(reh, ree, df, angle2, reht)
     f3 = find_f(reh, ree, df, angle3, reht)
 
+    save_graph(f1, angle1, [reh, ree, reht])
+
 create_folders('2D Surface Plots')
 create_folders('3D Surface Plots')
-create_2D_lossPlot(kinematicDf, angle1 = 7.5, angle2 = 187.5)
-
+# create_2D_lossPlot(kinematicDf, angle1 = 7.5, angle2 = 187.5)
+create_3D_lossPlot(kinematicDf)
 
  
 
