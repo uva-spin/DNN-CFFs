@@ -158,8 +158,15 @@ def create_2D_lossPlot(df, angle1 = 7.5, angle2 = 187.5):
 
     combined_graph([f1,f2], [reh,ree], [angle1,angle2])
 
-def create_3D_lossPlot(kinematicDf, angle1 = 7.5, angle2 = 127.5, angle3 = 247.5):
-    cff_range = np.linspace(-10, 10, 35)
+def find_eqn_3D(f, reh, ree, reht):
+    x, y, z = zip(*get_min_coords(f, [reh, ree, reht]))
+    design_matrix = np.column_stack((x, y, np.ones_like(x)))
+    coefficients, _, _, _ = np.linalg.lstsq(design_matrix, z, rcond=None)
+    a, b, c = coefficients
+    return [a, b, -1, c]
+
+def extractCFF_3D(df, angle1 = 7.5, angle2 = 127.5, angle3 = 247.5):
+    cff_range = np.linspace(-1.2, 0.2, 35)
     grid = np.meshgrid(cff_range, cff_range, cff_range)
 
     reh, ree, reht = grid
@@ -172,11 +179,20 @@ def create_3D_lossPlot(kinematicDf, angle1 = 7.5, angle2 = 127.5, angle3 = 247.5
     f3 = find_f(reh, ree, df, angle3, reht)
 
     save_graph(f1, angle1, [reh, ree, reht])
+    save_graph(f2, angle2, [reh, ree, reht])
+    save_graph(f3, angle3, [reh, ree, reht])
+
+    eqn1 = find_eqn_3D(f1, reh, ree, reht)
+    eqn2 = find_eqn_3D(f2, reh, ree, reht)
+    eqn3 = find_eqn_3D(f3, reh, ree, reht)
+
+    print(find_intersection(eqn1, eqn2, eqn3))
 
 create_folders('2D Surface Plots')
 create_folders('3D Surface Plots')
+
 # create_2D_lossPlot(kinematicDf, angle1 = 7.5, angle2 = 187.5)
-create_3D_lossPlot(kinematicDf)
+extractCFF_3D(kinematicDf, angle1 = 7.5, angle2 = 127.5, angle3 = 247.5)
 
  
 
