@@ -32,18 +32,29 @@ def find_intersection(*equations):
 
     return tuple(intersection_point)
 
-def find_f_2D(reh, ree, df, angle):
+def find_f(reh, ree, df, angle, reht = None):
     row = df.loc[df['phi_x'] == angle]
     input_tensor= tf.cast([[row['QQ'].iloc[0], row['x_b'].iloc[0], row['t'].iloc[0], angle, row['k'].iloc[0]]], dtype=tf.float32) 	
 
     correct_f = row['F'].iloc[0]
+    dvcs = row['dvcs'].iloc[0]
     f_values = []
     bhdvcstf = BHDVCStf() 
-    for i in range(len(reh)):
-        params = tf.cast([[reh[i], ree[i], row['ReHt'].iloc[0], row['dvcs'].iloc[0]]], dtype=tf.float32) # h, e, ht, dvcs
 
-        pred_f = bhdvcstf.curve_fit(input_tensor, params)
-        f_values.append(abs(correct_f - pred_f))
+    if reht: #3D
+        for i in range(len(reh)):
+            params = tf.cast([[reh[i], ree[i], reht[i], dvcs]], dtype=tf.float32) # h, e, ht, dvcs
+
+            pred_f = bhdvcstf.curve_fit(input_tensor, params)
+            f_values.append(abs(correct_f - pred_f))
+    else: #2D
+        reht = row['ReHt'].iloc[0]
+        for i in range(len(reh)):
+            params = tf.cast([[reh[i], ree[i], reht, dvcs]], dtype=tf.float32) # h, e, ht, dvcs
+
+            pred_f = bhdvcstf.curve_fit(input_tensor, params)
+            f_values.append(abs(correct_f - pred_f))
+
 
     return f_values
 
@@ -71,7 +82,58 @@ def exponential_normalize_and_scale(values, scale_factor=1.0):
 
     return scaled_values
 
-def create_2D_lossPlot(df, angle1, angle2):
+def combined_graph(f, cffs, angles):
+    plt.clf()
+    if len(cffs) == 2: 
+        f1, f2 = f
+        reh, ree = cffs
+        angle1, angle2 = angles
+
+        min_coords = get_min_coords(f1, [reh, ree])
+        x, y = zip(*min_coords)
+        m, b = np.polyfit(x, y, 1)
+
+        min_coords = get_min_coords(f2, [reh, ree])
+        x, y = zip(*min_coords)
+        m1, b1 = np.polyfit(x, y, 1)
+
+        line_y = m * reh + b
+        plt.plot(reh, line_y, color='yellow')
+        line_y = m1 * reh + b1
+        plt.plot(reh, line_y, color='yellow')
+
+        intX, intY = find_intersection([-m, 1, -b], [-m1, 1, -b1]) # y = mx + b -> -mx + y - b = 0
+
+        normf1 = exponential_normalize_and_scale(f1)
+        normf2 = exponential_normalize_and_scale(f2)
+        sc = plt.scatter(reh, ree, c=-1*np.add(normf1,normf2), cmap = 'RdYlGn')
+
+        text_coordinates = f'({round(intX, 2)}, {round(intY, 2)})'
+        plt.text(intX + 0.8, intY + 0.8, text_coordinates, fontsize=8, bbox=dict(facecolor='white', alpha=0.5))
+        plt.xlim(-10,10)
+        plt.ylim(-10,10)
+        plt.title(f'Loss Plot ReH/ReE on Set {kinematicSet}')
+        plt.xlabel('ReH')
+        plt.ylabel('ReE')
+        plt.savefig(f'Work/Aaryan/2D Surface Plots/Combined_Set{kinematicSet}_{angle1}_{angle2}.png')
+    if len(cffs) == 3: 
+        #TODO 
+        pass
+
+def save_graph(f, angle, cffs):
+    plt.clf()
+    if len(cffs) == 2: 
+        reh, ree = cffs
+        sc = plt.scatter(reh, ree, c=-1*np.array(f), cmap = 'RdYlGn')
+        plt.colorbar(sc)
+        plt.title(f'2D Loss Plot at {angle}')
+        plt.xlabel('ReH')
+        plt.ylabel('ReE')
+        plt.savefig(f'Work/Aaryan/2D Surface Plots/lossPlot_Set{kinematicSet}_{angle}.png')
+    else: 
+        pass
+
+def create_2D_lossPlot(df, angle1 = 7.5, angle2 = 187.5):
     cff_range = np.linspace(-10, 10, 50)
     grid = np.meshgrid(cff_range, cff_range)
     
@@ -79,42 +141,30 @@ def create_2D_lossPlot(df, angle1, angle2):
     reh = reh.flatten()
     ree = ree.flatten()
 
-    f1 = find_f_2D(reh, ree, df, angle1)
-    f2 = find_f_2D(reh, ree, df, angle2)
+    f1 = find_f(reh, ree, df, angle1)
+    f2 = find_f(reh, ree, df, angle2)
 
-    min_coords = get_min_coords(f1, [reh, ree])
-    x, y = zip(*min_coords)
-    m, b = np.polyfit(x, y, 1)
+    save_graph(f1, angle1, [reh, ree])
+    save_graph(f2, angle2, [reh, ree])
 
-    min_coords = get_min_coords(f2, [reh, ree])
-    x, y = zip(*min_coords)
-    m1, b1 = np.polyfit(x, y, 1)
+    combined_graph([f1,f2], [reh,ree], [angle1,angle2])
 
-    line_y = m * reh + b
-    plt.plot(reh, line_y, color='yellow')
-    line_y = m1 * reh + b1
-    plt.plot(reh, line_y, color='yellow')
+def create_3D_lossPlot(kinematicDf, angle1 = 7.5, angle2 = 127.5, angle3 = 247.5):
+    cff_range = np.linspace(-10, 10, 35)
+    grid = np.meshgrid(cff_range, cff_range, cff_range)
 
-    intX, intY = find_intersection([-m, 1, -b], [-m1, 1, -b1]) # y = mx + b -> -mx + y - b = 0
+    reh, ree, reht = grid
+    reh = reh.flatten()
+    ree = ree.flatten()
+    reht = reht.flatten()
 
-    normf1 = exponential_normalize_and_scale(f1)
-    normf2 = exponential_normalize_and_scale(f2)
-    sc = plt.scatter(reh, ree, c=-1*np.add(normf1,normf2), cmap = 'RdYlGn')
-
-    text_coordinates = f'({round(intX, 2)}, {round(intY, 2)})'
-    plt.text(intX + 0.8, intY + 0.8, text_coordinates, fontsize=8, bbox=dict(facecolor='white', alpha=0.5))
-    plt.xlim(-10,10)
-    plt.ylim(-10,10)
-    plt.title(f'Loss Plot ReH/ReE on Set {kinematicSet}')
-    plt.xlabel('ReH')
-    plt.ylabel('ReE')
-    plt.savefig(f'Work/Aaryan/2D Surface Plots/ReH_ReE_lossPlot_{angle1}_{angle2}.png')
-    plt.show()
-
+    f1 = find_f(reh, ree, df, angle1, reht)
+    f2 = find_f(reh, ree, df, angle2, reht)
+    f3 = find_f(reh, ree, df, angle3, reht)
 
 create_folders('2D Surface Plots')
 create_folders('3D Surface Plots')
-create_2D_lossPlot(kinematicDf, 7.5, 187.5)
+create_2D_lossPlot(kinematicDf, angle1 = 7.5, angle2 = 187.5)
 
 
  
