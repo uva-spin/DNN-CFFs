@@ -10,7 +10,7 @@ import sys
 # if len(sys.argv) != 2:
 #     raise ValueError(f"Usage: python script.py arg1") 
 # kinematicSet = int(sys.argv[1])
-kinematicSet = 0
+kinematicSet = 1
 data_file = 'Work\Aaryan\PseudoData_from_the_Basic_Model_for_JLab_Kinematics.csv'
 df = pd.read_csv(data_file, dtype=np.float64)
 kinematicDf = df.iloc[kinematicSet*24: (kinematicSet+1)*24]
@@ -165,8 +165,8 @@ def find_eqn_3D(f, reh, ree, reht):
     a, b, c = coefficients
     return [a, b, -1, c]
 
-def extractCFF_3D(df, angle1 = 7.5, angle2 = 127.5, angle3 = 247.5):
-    cff_range = np.linspace(-1.2, 0.2, 35)
+def extractCFF_3D(df, angle1 = 7.5, angle2 = 127.5, angle3 = 247.5, createPlots = False):
+    cff_range = np.linspace(-10, 10, 50)
     grid = np.meshgrid(cff_range, cff_range, cff_range)
 
     reh, ree, reht = grid
@@ -178,9 +178,10 @@ def extractCFF_3D(df, angle1 = 7.5, angle2 = 127.5, angle3 = 247.5):
     f2 = find_f(reh, ree, df, angle2, reht)
     f3 = find_f(reh, ree, df, angle3, reht)
 
-    save_graph(f1, angle1, [reh, ree, reht])
-    save_graph(f2, angle2, [reh, ree, reht])
-    save_graph(f3, angle3, [reh, ree, reht])
+    if createPlots: 
+        save_graph(f1, angle1, [reh, ree, reht])
+        save_graph(f2, angle2, [reh, ree, reht])
+        save_graph(f3, angle3, [reh, ree, reht])
 
     eqn1 = find_eqn_3D(f1, reh, ree, reht)
     eqn2 = find_eqn_3D(f2, reh, ree, reht)
@@ -192,7 +193,7 @@ create_folders('2D Surface Plots')
 create_folders('3D Surface Plots')
 
 # create_2D_lossPlot(kinematicDf, angle1 = 7.5, angle2 = 187.5)
-extractCFF_3D(kinematicDf, angle1 = 7.5, angle2 = 127.5, angle3 = 247.5)
+extractCFF_3D(kinematicDf, angle1 = 7.5, angle2 = 127.5, angle3 = 247.5, createPlots = True)
 
  
 
