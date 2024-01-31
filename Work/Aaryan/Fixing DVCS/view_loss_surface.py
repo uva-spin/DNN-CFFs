@@ -7,13 +7,12 @@ import os
 import sys
 
 
-# if len(sys.argv) != 2:
-#     raise ValueError(f"Usage: python script.py arg1") 
-# kinematicSet = int(sys.argv[1])
-kinematicSet = 1
-data_file = 'Work\Aaryan\PseudoData_from_the_Basic_Model_for_JLab_Kinematics.csv'
+if len(sys.argv) != 2:
+    raise ValueError(f"Usage: python script.py arg1") 
+kinematicSets = int(sys.argv[1])
+
+data_file = 'PseudoData_from_the_Basic_Model_for_JLab_Kinematics.csv'
 df = pd.read_csv(data_file, dtype=np.float64)
-kinematicDf = df.iloc[kinematicSet*24: (kinematicSet+1)*24]
 
 def create_folders(folder_name):
     if not os.path.exists(folder_name):
@@ -84,41 +83,38 @@ def exponential_normalize_and_scale(values, scale_factor=1.0):
 
 def combined_graph(f, cffs, angles):
     plt.clf()
-    if len(cffs) == 2: 
-        f1, f2 = f
-        reh, ree = cffs
-        angle1, angle2 = angles
 
-        min_coords = get_min_coords(f1, [reh, ree])
-        x, y = zip(*min_coords)
-        m, b = np.polyfit(x, y, 1)
+    f1, f2 = f
+    reh, ree = cffs
+    angle1, angle2 = angles
 
-        min_coords = get_min_coords(f2, [reh, ree])
-        x, y = zip(*min_coords)
-        m1, b1 = np.polyfit(x, y, 1)
+    min_coords = get_min_coords(f1, [reh, ree])
+    x, y = zip(*min_coords)
+    m, b = np.polyfit(x, y, 1)
 
-        line_y = m * reh + b
-        plt.plot(reh, line_y, color='yellow')
-        line_y = m1 * reh + b1
-        plt.plot(reh, line_y, color='yellow')
+    min_coords = get_min_coords(f2, [reh, ree])
+    x, y = zip(*min_coords)
+    m1, b1 = np.polyfit(x, y, 1)
 
-        intX, intY = find_intersection([-m, 1, -b], [-m1, 1, -b1]) # y = mx + b -> -mx + y - b = 0
+    line_y = m * reh + b
+    plt.plot(reh, line_y, color='yellow')
+    line_y = m1 * reh + b1
+    plt.plot(reh, line_y, color='yellow')
 
-        normf1 = exponential_normalize_and_scale(f1)
-        normf2 = exponential_normalize_and_scale(f2)
-        sc = plt.scatter(reh, ree, c=-1*np.add(normf1,normf2), cmap = 'RdYlGn')
+    intX, intY = find_intersection([-m, 1, -b], [-m1, 1, -b1]) # y = mx + b -> -mx + y - b = 0
 
-        text_coordinates = f'({round(intX, 2)}, {round(intY, 2)})'
-        plt.text(intX + 0.8, intY + 0.8, text_coordinates, fontsize=8, bbox=dict(facecolor='white', alpha=0.5))
-        plt.xlim(-10,10)
-        plt.ylim(-10,10)
-        plt.title(f'Loss Plot ReH/ReE on Set {kinematicSet}')
-        plt.xlabel('ReH')
-        plt.ylabel('ReE')
-        plt.savefig(f'Work/Aaryan/2D Surface Plots/Combined_Set{kinematicSet}_{angle1}_{angle2}.png')
-    if len(cffs) == 3: 
-        #TODO 
-        pass
+    normf1 = exponential_normalize_and_scale(f1)
+    normf2 = exponential_normalize_and_scale(f2)
+    sc = plt.scatter(reh, ree, c=-1*np.add(normf1,normf2), cmap = 'RdYlGn')
+
+    text_coordinates = f'({round(intX, 2)}, {round(intY, 2)})'
+    plt.text(intX + 0.8, intY + 0.8, text_coordinates, fontsize=8, bbox=dict(facecolor='white', alpha=0.5))
+    plt.xlim(-10,10)
+    plt.ylim(-10,10)
+    plt.title(f'Loss Plot ReH/ReE on Set {kinematicSet}')
+    plt.xlabel('ReH')
+    plt.ylabel('ReE')
+    plt.savefig(f'2D Surface Plots/Combined_Set{kinematicSet}_{angle1}_{angle2}.png')
 
 def save_graph(f, angle, cffs):
     plt.clf()
@@ -129,7 +125,7 @@ def save_graph(f, angle, cffs):
         plt.title(f'2D Loss Plot at {angle}')
         plt.xlabel('ReH')
         plt.ylabel('ReE')
-        plt.savefig(f'Work/Aaryan/2D Surface Plots/lossPlot_Set{kinematicSet}_{angle}.png')
+        plt.savefig(f'2D Surface Plots/lossPlot_Set{kinematicSet}_{angle}.png')
     else: 
         reh, ree, reht = cffs
         fig = plt.figure()
@@ -140,10 +136,10 @@ def save_graph(f, angle, cffs):
         ax.set_xlabel('ReH')
         ax.set_ylabel('ReE')
         ax.set_zlabel('ReHt')
-        plt.savefig(f'Work/Aaryan/3D Surface Plots/lossPlot_Set{kinematicSet}_{angle}.png')
+        plt.savefig(f'3D Surface Plots/lossPlot_Set{kinematicSet}_{angle}.png')
 
 def create_2D_lossPlot(df, angle1 = 7.5, angle2 = 187.5):
-    cff_range = np.linspace(-10, 10, 50)
+    cff_range = np.linspace(-10, 10, 35)
     grid = np.meshgrid(cff_range, cff_range)
     
     reh, ree = grid
@@ -165,8 +161,8 @@ def find_eqn_3D(f, reh, ree, reht):
     a, b, c = coefficients
     return [a, b, -1, c]
 
-def extractCFF_3D(df, angle1 = 7.5, angle2 = 127.5, angle3 = 247.5, createPlots = False):
-    cff_range = np.linspace(-10, 10, 50)
+def extractCFF_3D(df, angle1 = 7.5, angle2 = 127.5, angle3 = 247.5, createPlots = False, space = 5):
+    cff_range = np.linspace(-10, 10, space)
     grid = np.meshgrid(cff_range, cff_range, cff_range)
 
     reh, ree, reht = grid
@@ -187,13 +183,52 @@ def extractCFF_3D(df, angle1 = 7.5, angle2 = 127.5, angle3 = 247.5, createPlots 
     eqn2 = find_eqn_3D(f2, reh, ree, reht)
     eqn3 = find_eqn_3D(f3, reh, ree, reht)
 
-    print(find_intersection(eqn1, eqn2, eqn3))
+    return find_intersection(eqn1, eqn2, eqn3)
+
+def log(kinematicSet, cffs, kinematicDf):
+    # CSV file name
+    csv_file = f"cffs_fixedDVCS{kinematicSet}.csv"
+
+    # Check if the CSV file exists
+    try:
+        df = pd.read_csv(csv_file)
+    except FileNotFoundError:
+        # If the file doesn't exist, create a new DataFrame
+        df = pd.DataFrame(columns=["KinematicSet", "ReH", "ReE", "ReHt", "Abs Res_ReH", "Abs Res_ReE", "Abs Res_ReHTilde"])     
+
+    # Example usage to add a row
+    row = kinematicDf.loc[kinematicDf['phi_x'] == 7.5]
+    real_reh, real_ree, real_reht = row['ReH'].iloc[0], row['ReE'].iloc[0], row['ReHt'].iloc[0]
+
+    new_row = {"KinematicSet": kinematicSet, "ReH": cffs[0], "ReE": cffs[1], "ReHt": cffs[2], "Abs Res_ReH": abs(cffs[0] - real_reh), "Abs Res_ReE": abs(cffs[1] - real_ree), "Abs Res_ReHTilde": abs(cffs[2] - real_reht)}
+    
+    # if len(df.loc[df['KinematicSet'] == kinematicSet].index) == 0:
+    #     df.loc[len(df.index)] = new_row
+    # else:
+    #     df.loc[df['KinematicSet'] == kinematicSet] = new_row
+    # df.to_csv(csv_file, index=False)
+
+    row_index = df[df['KinematicSet'] == kinematicSet].index
+
+    if row_index.empty:
+        df.loc[len(df.index)] = new_row
+    else:
+        df.at[row_index[0], 'ReH'] = cffs[0]
+        df.at[row_index[0], 'ReE'] = cffs[1]
+        df.at[row_index[0], 'ReHt'] = cffs[2]
+        df.at[row_index[0], 'Abs Res_ReH'] = abs(cffs[0] - real_reh)
+        df.at[row_index[0], 'Abs Res_ReE'] = abs(cffs[1] - real_ree)
+        df.at[row_index[0], 'Abs Res_ReHTilde'] = abs(cffs[2] - real_reht)
+
+    df.to_csv(csv_file, index=False)
 
 create_folders('2D Surface Plots')
 create_folders('3D Surface Plots')
 
-# create_2D_lossPlot(kinematicDf, angle1 = 7.5, angle2 = 187.5)
-extractCFF_3D(kinematicDf, angle1 = 7.5, angle2 = 127.5, angle3 = 247.5, createPlots = True)
-
+for kinematicSet in range(kinematicSets):
+    kinematicDf = df.iloc[kinematicSet*24: (kinematicSet+1)*24]
+    # create_2D_lossPlot(kinematicDf, angle1 = 7.5, angle2 = 187.5)
+    cffs = extractCFF_3D(kinematicDf, angle1 = 7.5, angle2 = 127.5, angle3 = 247.5, createPlots = True, space=5)
+    log(kinematicSet, cffs, kinematicDf)
  
 
