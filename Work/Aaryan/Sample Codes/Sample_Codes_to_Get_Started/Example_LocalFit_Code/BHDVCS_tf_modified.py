@@ -12,7 +12,7 @@ class TotalFLayer(tf.keras.layers.Layer):
         self.f = BHDVCStf()
 
     def call(self, inputs):
-        return self.f.curve_fit(inputs[:, 0:5], inputs[:, 5:9]) # QQ, x, t, phi, k, cff1, cff2, cff3, cff4
+        return self.f.curve_fit(inputs[:, 0:6], inputs[:, 5:8]) # QQ, x, t, phi, k, cff1, cff2, cff3, cff4
 
 class BHDVCStf(object):
 
@@ -261,9 +261,9 @@ class BHDVCStf(object):
     @tf.function
     def curve_fit(self, kins, cffs):
         calc = F1F2()
-        QQ, x, t, phi, k = tf.split(kins, num_or_size_splits=5, axis=1)
+        QQ, x, t, phi, k, c0fit = tf.split(kins, num_or_size_splits=6, axis=1)
         F1, F2 = calc.f1_f21(t) # calculating F1 and F2 using passed data as opposed to passing in F1 and F2
-        ReH, ReE, ReHtilde, c0fit = tf.split(cffs, num_or_size_splits=4, axis=1)  # output of network
+        ReH, ReE, ReHtilde = tf.split(cffs, num_or_size_splits=3, axis=1)  # output of network
         ee, y, xi, Gamma, tmin, Ktilde_10, K = self.SetKinematics(QQ, x, t, k)
         P1, P2 = self.BHLeptonPropagators(phi, QQ, x, t, ee, y, K)
         xsbhuu = self.BHUU(phi, F1, F2, P1, P2, QQ, x, t, ee, y, Gamma, K)

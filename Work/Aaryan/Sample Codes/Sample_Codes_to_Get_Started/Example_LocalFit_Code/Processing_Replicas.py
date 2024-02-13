@@ -12,7 +12,7 @@ import plotly.express as px  # Import plotly express
 folder_path = "Replica_Results"
 
 # Dictionary to store the average values for each column
-average_values = {col: [] for col in ["ReH", "ReE", "ReHt", "dvcs", "AbsRes_ReH", "AbsRes_ReE", "AbsRes_ReHt", "AbsRes_dvcs"]}
+average_values = {col: [] for col in ["ReH", "ReE", "ReHt", "dvcs", "AbsRes_ReH", "AbsRes_ReE", "AbsRes_ReHt"]}
 
 # List to store the columns needed for the scatter plot
 scatter_columns = ['x_b', 'k', 't', 'QQ']
@@ -46,7 +46,7 @@ fig, axs = plt.subplots(2, 2, figsize=(10, 8))
 fig.suptitle('1-D Histograms of Average Values')
 
 # Plot histograms for each column
-for i, col in enumerate(["AbsRes_ReH", "AbsRes_ReE", "AbsRes_ReHt", "AbsRes_dvcs"]):
+for i, col in enumerate(["AbsRes_ReH", "AbsRes_ReE", "AbsRes_ReHt"]):
     data = average_df[col]
     ax = axs[i // 2, i % 2]
     ax.hist(data, bins=30, edgecolor='black')
@@ -70,5 +70,5 @@ def create_4D_scatter_plot_HTML(df, acc_column, acc_range, title, filename):
 create_4D_scatter_plot_HTML(average_df, 'AbsRes_ReH', (0, 1), 'ReH Residuals', 'kinematics_ReH_Residuals.html')
 create_4D_scatter_plot_HTML(average_df, 'AbsRes_ReE', (0, 1), 'ReE Residuals', 'kinematics_ReE_Residuals.html')
 create_4D_scatter_plot_HTML(average_df, 'AbsRes_ReHt', (0, 1), 'ReHt Residuals', 'kinematics_ReHt_Residuals.html')
-create_4D_scatter_plot_HTML(average_df, 'AbsRes_dvcs', (0, 1), 'dvcs Residuals', 'kinematics_dvcs_Residuals.html')
+# create_4D_scatter_plot_HTML(average_df, 'AbsRes_dvcs', (0, 1), 'dvcs Residuals', 'kinematics_dvcs_Residuals.html')
 

@@ -35,7 +35,7 @@ create_folders('Losses_Plots')
 create_folders('Replica_Data')
 create_folders('Replica_Results')
 
-data_file = 'Sample_Local_PseudoData_from_the_Basic_Model_for_JLab_Kinematics.csv'
+data_file = 'Work\Aaryan\Sample Codes\Sample_Codes_to_Get_Started\Example_LocalFit_Code\Sample_Local_PseudoData_from_the_Basic_Model_for_JLab_Kinematics.csv'
 df = pd.read_csv(data_file, dtype=np.float64)
 df = df.rename(columns={"sigmaF": "errF"})
 
@@ -43,12 +43,12 @@ df = df.rename(columns={"sigmaF": "errF"})
 
 #### User's inputs ####
 Learning_Rate = 0.0001
-EPOCHS = 100
+EPOCHS = 50
 EarlyStop_patience = 1000
 modify_LR_patience = 400
 modify_LR_factor = 0.9
 
-NUM_REPLICAS = 2
+NUM_REPLICAS = 10
 
 modify_LR = tf.keras.callbacks.ReduceLROnPlateau(monitor='loss',factor=modify_LR_factor,patience=modify_LR_patience,mode='auto')
 EarlyStop = tf.keras.callbacks.EarlyStopping(monitor='loss',patience=EarlyStop_patience)
@@ -100,12 +100,12 @@ def GenerateReplicaData(df):
 def DNNmodel():
     initializer = tf.keras.initializers.RandomUniform(minval=-0.1,maxval=0.1,seed=None)
     #### QQ, x_b, t, phi, k ####
-    inputs = tf.keras.Input(shape=(5), name='input_layer')
-    QQ, x_b, t, phi, k = tf.split(inputs, num_or_size_splits=5, axis=1)
+    inputs = tf.keras.Input(shape=(6), name='input_layer')
+    QQ, x_b, t, phi, k, dvcs = tf.split(inputs, num_or_size_splits=6, axis=1)
     kinematics = tf.keras.layers.concatenate([QQ, x_b, t])
     x1 = tf.keras.layers.Dense(100, activation="tanh", kernel_initializer=initializer)(kinematics)
     x2 = tf.keras.layers.Dense(100, activation="tanh", kernel_initializer=initializer)(x1)
-    outputs = tf.keras.layers.Dense(4, activation="linear", kernel_initializer=initializer, name='cff_output_layer')(x2)
+    outputs = tf.keras.layers.Dense(3, activation="linear", kernel_initializer=initializer, name='cff_output_layer')(x2)
     #### QQ, x_b, t, phi, k, cffs ####
     total_FInputs = tf.keras.layers.concatenate([inputs, outputs], axis=1)
     TotalF = TotalFLayer(name='TotalFLayer')(total_FInputs) # get rid of f1 and f2
@@ -142,9 +142,8 @@ def GenerateReplicaResults(df,model):
                      'dvcs': [],
                      'AbsRes_ReH':[],
                      'AbsRes_ReE':[],
-                     'AbsRes_ReHt':[],
-                     'AbsRes_dvcs':[]}
-    tempX = df[['QQ', 'x_b', 't','phi_x', 'k']]
+                     'AbsRes_ReHt':[]}
+    tempX = df[['QQ', 'x_b', 't','phi_x', 'k', 'dvcs']]
     PredictedCFFs = np.array(tf.keras.backend.function(model.get_layer(name='input_layer').input, model.get_layer(name='cff_output_layer').output)(tempX))
     PredictedFs = np.array(tf.keras.backend.function(model.get_layer(name='input_layer').input, model.get_layer(name='TotalFLayer').output)(tempX))
     pseudodata_df['k'] = df['k']
@@ -158,11 +157,9 @@ def GenerateReplicaResults(df,model):
     pseudodata_df['ReH'] = list(PredictedCFFs[:, 0])
     pseudodata_df['ReE'] = list(PredictedCFFs[:, 1])
     pseudodata_df['ReHt'] = list(PredictedCFFs[:, 2])
-    pseudodata_df['dvcs'] = list(PredictedCFFs[:, 3])
     pseudodata_df['AbsRes_ReH'] = list(absolute_residual(df['ReH'],pseudodata_df['ReH']))
     pseudodata_df['AbsRes_ReE'] = list(absolute_residual(df['ReE'],pseudodata_df['ReE']))
     pseudodata_df['AbsRes_ReHt'] = list(absolute_residual(df['ReHt'],pseudodata_df['ReHt']))
-    pseudodata_df['AbsRes_dvcs'] = list(absolute_residual(df['dvcs'],pseudodata_df['dvcs']))
     return pd.DataFrame(pseudodata_df)
 
 
@@ -176,16 +173,16 @@ def run_replica(i):
     tempdf = GenerateReplicaData(df)
     tempdf.to_csv('Replica_Data/rep_data' + str(replica_number) + '.csv')
 
-    trainKin, testKin, trainY, testY, trainYerr, testYerr = split_data(tempdf[['QQ', 'x_b', 't', 'phi_x', 'k']],
+    trainKin, testKin, trainY, testY, trainYerr, testYerr = split_data(tempdf[['QQ', 'x_b', 't', 'phi_x', 'k', 'dvcs']],
                                                                        tempdf['F'], tempdf['errF'], split=0.1)
 
     tfModel = DNNmodel()
     history = tfModel.fit(trainKin, trainY, validation_data=(testKin, testY), epochs=EPOCHS, callbacks=[modify_LR],
-                          batch_size=300, verbose=2)
+                          batch_size=32, verbose=0)
     
     tfModel.save('DNNmodels/' + 'model' + str(replica_number) + '.h5', save_format='h5')
 
-    tempX = df[['QQ', 'x_b', 't', 'phi_x', 'k']]
+    tempX = df[['QQ', 'x_b', 't', 'phi_x', 'k', 'dvcs']]
 
     PredictedCFFs = np.array(tf.keras.backend.function(tfModel.get_layer(name='input_layer').input, tfModel.get_layer(name='cff_output_layer').output)(tempX))
     PredictedFs = np.array(tf.keras.backend.function(tfModel.get_layer(name='input_layer').input, tfModel.get_layer(name='TotalFLayer').output)(tempX))
