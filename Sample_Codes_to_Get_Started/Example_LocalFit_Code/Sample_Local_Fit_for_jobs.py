@@ -97,7 +97,8 @@ def GenerateReplicaData(df):
 
 
 def DNNmodel():
-    initializer = tf.keras.initializers.RandomUniform(minval=-0.1,maxval=0.1,seed=None)
+    initializer = tf.keras.initializers.RandomUniform(minval=-0.1,maxval=0.1)
+    #initializer = tf.keras.initializers.RandomUniform(minval=-0.1,maxval=0.1,seed=None)
     #### QQ, x_b, t, phi, k ####
     inputs = tf.keras.Input(shape=(5), name='input_layer')
     QQ, x_b, t, phi, k = tf.split(inputs, num_or_size_splits=5, axis=1)
