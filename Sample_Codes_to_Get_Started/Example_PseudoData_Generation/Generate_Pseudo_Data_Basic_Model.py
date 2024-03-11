@@ -59,7 +59,10 @@ def DVCSps(x,t):
 ## Note: sigmaF is considered as 5% of F ##
 
 def GeneratePseudoData(df):
-    pseudodata_df = {'k': [],
+    set_number = 1
+    counter = 0  # Counter for each set of 36 phi values
+    pseudodata_df = {'Set #': [],
+                     'k': [],
                      'QQ': [],
                      'x_b': [],
                      't': [],
@@ -72,8 +75,9 @@ def GeneratePseudoData(df):
                      'dvcs': []}
     for i in range(len(df)):
         row = df.loc[i]
-        for phi in range(0, 361, interval):
+        for phi in range(0, 360, interval):
             tempQQ, tempxb, tempt, tempk = np.array([row['QQ'], row['x_b'], row['t'], row['k']])
+            pseudodata_df['Set #'].append(set_number)
             pseudodata_df['k'].append(tempk)
             pseudodata_df['QQ'].append(tempQQ)
             pseudodata_df['x_b'].append(tempxb)
@@ -94,6 +98,10 @@ def GeneratePseudoData(df):
             tempF = calc.fn_1([phi, tempQQ, tempxb, tempt, tempk, F1, F2], [ReH, ReE, ReHtilde, dvcs])
             pseudodata_df['F'].append(tempF)
             pseudodata_df['sigmaF'].append(0.05*tempF)
+            counter += 1
+            if counter == 36:  # Check if the set is complete
+                set_number += 1  # Move to the next set
+                counter = 0  # Reset counter for the next set
     return pd.DataFrame(pseudodata_df)
 
 tempPseudoDatadf=GeneratePseudoData(kindf)
