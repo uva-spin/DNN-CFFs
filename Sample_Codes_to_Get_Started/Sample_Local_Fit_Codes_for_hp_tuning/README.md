@@ -1,5 +1,3 @@
-#    Sample Local Fit Codes for hp tuning
-
 There are two directories/folders in this folder.
 
    The sample (pseudo) data in this folder uses the so-called "basic model" for CFFs with the generic form of
