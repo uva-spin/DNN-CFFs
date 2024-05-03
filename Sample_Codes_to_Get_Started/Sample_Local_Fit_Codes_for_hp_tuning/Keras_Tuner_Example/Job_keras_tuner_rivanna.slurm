@@ -13,4 +13,4 @@
 module purge
 module load apptainer tensorflow/2.13.0
 
-apptainer run --nv $CONTAINERDIR/tensorflow-2.13.0.sif /file_location/file.py
+apptainer run --nv $CONTAINERDIR/tensorflow-2.13.0.sif Keras_Tuner_Pseudo_Basic_Local_Fit.py
