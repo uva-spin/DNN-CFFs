@@ -2,7 +2,7 @@
 ###############  Written by Ishara Fernando                         #############
 ##############  Revised Date: 05/02/2024           ##############################
 #####  This code is written for tensorflow version 2.11.00          #############
-#####  replace 'tensorflow' with 'tensor_flow' if you use version 2.13.00 #######
+#####  replace 'kerastuner' with 'keras_tuner' if you use version 2.13.00 #######
 #################################################################################
 
 import numpy as np
