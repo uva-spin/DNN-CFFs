@@ -2,7 +2,7 @@
 ###############  Written by Ishara Fernando                         #############
 ##############  Revised Date: 05/02/2024           ##############################
 #####  This code is written for tensorflow version 2.11.00          #############
-#####  replace 'kerastuner' with 'keras_tuner' if you use version 2.13.00 #######
+#####  replace 'tensorflow' with 'tensor_flow' if you use version 2.13.00 #######
 #################################################################################
 
 import numpy as np
@@ -12,23 +12,23 @@ import matplotlib.pyplot as plt
 import tensorflow as tf
 from tensorflow import keras
 from keras import layers
-from kerastuner.tuners import BayesianOptimization
+from keras_tuner.tuners import BayesianOptimization
 from sklearn.model_selection import train_test_split
 
 
 np.random.seed(42)  # Seed for reproducibility
 
 
-data_file = 'pseudo_basic_BKM10_Jlab_Set1.csv'
+data_file = 'PseudoData_From_Jlab.csv'
 #df = pd.read_csv(data_file, dtype=np.float64)
 tempdf = pd.read_csv(data_file)
 tempdf = tempdf.rename(columns={"sigmaF": "errF"})
 
 
 # Load prediction inputs from CSV
-#set_number = 1  # You can specify the desired set number
-#df = df[df['set'] == set_number]
-
+set_number = 7  # You can specify the desired set number
+tempdf = tempdf[tempdf['set'] == set_number]
+tempdf = tempdf.reset_index(drop=True)
 
 L1_reg = 10**(-12)
 
@@ -64,8 +64,8 @@ tuner = BayesianOptimization(
     # objective='val_mean_squared_error',
     max_trials=50,  # The total number of trials (model configurations) to test
     executions_per_trial=1,  # The number of models that should be built and fit for each trial
-    directory='my_dir',
-    project_name='keras_tuner_cffs_local'
+    directory='my_dir'+str(set_number),
+    project_name='keras_tuner_cffs_local_'+str(set_number)
 )
 
 
@@ -94,6 +94,6 @@ best_hps = tuner.get_best_hyperparameters(num_trials=1)[0]
 
 hyp_par_dict = best_hps.values
 hyp_df = pd.DataFrame(hyp_par_dict.items(), columns=['Hyperparameter','Value'])
-hyp_df.to_csv('best_hyperparameters.csv', index=False)
+hyp_df.to_csv('best_hyperparameters_'+str(set_number)+'.csv', index=False)
 
 
