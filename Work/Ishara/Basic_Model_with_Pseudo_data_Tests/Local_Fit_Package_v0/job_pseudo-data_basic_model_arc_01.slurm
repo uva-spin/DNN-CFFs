@@ -14,4 +14,4 @@
 module purge
 module load apptainer tensorflow/2.13.0
 
-apptainer run --nv $CONTAINERDIR/tensorflow-2.13.0.sif Pseudo_Basic_Local_Fit_User_Input_Kinematic.py $SLURM_ARRAY_TASK_ID
+apptainer run --nv $CONTAINERDIR/tensorflow-2.13.0.sif Rivanna_Pseudo_Basic_Local_Fit_User_Input_Kinematic.py $SLURM_ARRAY_TASK_ID
