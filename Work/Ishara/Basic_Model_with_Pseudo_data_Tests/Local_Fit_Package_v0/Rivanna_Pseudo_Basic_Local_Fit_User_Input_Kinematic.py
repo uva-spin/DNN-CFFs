@@ -40,7 +40,8 @@ data_file = 'Basic_Model_pseudo_data_for_Jlab_kinematics.csv'
 df = pd.read_csv(data_file)
 df = df.rename(columns={"sigmaF": "errF"})
 
-scratch_path = '/scratch/cee9hc/DNN_CFFs/Tests/Test_Arc_01/'
+### 
+scratch_path = '/scratch/UVA_computing_ID/DNN_CFFs/Tests/Test_Arc_01/'
 
 #### User's inputs ####
 #Learning_Rate = 0.0001
