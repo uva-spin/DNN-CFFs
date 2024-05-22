@@ -242,7 +242,7 @@ create_folders('Comparison_Plots')
 #for j in range(1,196):
 j = sys.argv[1]
     # Load prediction inputs from CSV
-set_number = j  # You can specify the desired set number
+set_number = int(j)  # You can specify the desired set number
 kin_df = df[df['set'] == int(set_number)]
 kin_df = kin_df.reset_index(drop=True)
 #print(kin_df)
