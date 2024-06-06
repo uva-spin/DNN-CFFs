@@ -118,7 +118,7 @@ def GenerateReplicaData(df):
 #        loss = tf.keras.losses.MeanSquaredError()
 #    )
 #    return tfModel
-    
+
 def DNNmodel():
     initializer = tf.keras.initializers.RandomUniform(minval=-0.1,maxval=0.1,seed=None)
     #### QQ, x_b, t, phi, k ####
