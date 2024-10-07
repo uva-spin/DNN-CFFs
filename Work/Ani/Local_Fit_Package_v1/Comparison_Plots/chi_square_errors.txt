@@ -1,0 +1,4 @@
+Kinematic Set	Chi-Square Error
+1	0.0012
+3	0.0192
+4	1.0773
