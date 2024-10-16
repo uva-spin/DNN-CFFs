@@ -10,7 +10,7 @@ This folder contains the scripts to generate pseudo-data with and without sampli
 
 ## Method_Testing_with_Pseudo-data
 
-This folder contains the scripts to perform "method testing" with pseudo-data. Please ensure to copy the relevant pseudo-data file from the "Pseudo-data-generator" folder. There are three sub-folders, each one is different in terms of handling job submission on Rivanna.
+This folder contains the scripts to perform "method testing" with pseudo-data. Please ensure to copy the relevant pseudo-data file from the "Pseudo-data-generator" folder. There are two sub-folders, each one is different in terms of handling job submission on Rivanna.
 
 ## Fits_with_Experimental_Data
 
