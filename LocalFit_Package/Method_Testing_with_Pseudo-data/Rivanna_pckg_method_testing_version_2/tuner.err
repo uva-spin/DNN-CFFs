@@ -1,0 +1,10 @@
+To execute the default application inside the container, run:
+apptainer run --nv $CONTAINERDIR/tensorflow-2.13.0.sif
+
+This container is based on NGC 23.08
+https://docs.nvidia.com/deeplearning/frameworks/tensorflow-release-notes/rel-23-08.html#rel-23-08
+INFO:    underlay of /etc/localtime required more than 50 (91) bind mounts
+INFO:    underlay of /usr/bin/nvidia-smi required more than 50 (523) bind mounts
+13:4: not a valid test operator: (
+13:4: not a valid test operator: 550.54.14
+python: can't open file '/home/cee9hc/DNN_CFFs_Tests/LocalFit_Package/Method_Testing_with_Pseudo-data/Rivanna_pckg_method_testing_version_2/Pseudo_Basic_Local_Fit_Per_KinematicSet_by_User.py': [Errno 2] No such file or directory
