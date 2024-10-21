@@ -1,0 +1,190 @@
+
+================
+== TensorFlow ==
+================
+
+NVIDIA Release 23.08-tf2 (build 66128809)
+TensorFlow Version 2.13.0
+
+Container image Copyright (c) 2023, NVIDIA CORPORATION & AFFILIATES. All rights reserved.
+Copyright 2017-2023 The TensorFlow Authors.  All rights reserved.
+
+Various files include modifications (c) NVIDIA CORPORATION & AFFILIATES.  All rights reserved.
+
+This container image and its contents are governed by the NVIDIA Deep Learning Container License.
+By pulling and using the container, you accept the terms and conditions of this license:
+https://developer.nvidia.com/ngc/nvidia-deep-learning-container-license
+
+Folder '/scratch/qzf7nj/DNN_CFFs_test_error_band/Tests/Test_Arc_02' already exists!
+Folder 'Comparison_Plots' already exists!
+Folder '/scratch/qzf7nj/DNN_CFFs_test_error_band/Tests/Test_Arc_02/DNNmodels_Kin_Set_3' already exists!
+Folder '/scratch/qzf7nj/DNN_CFFs_test_error_band/Tests/Test_Arc_02/Losses_Plots_Kin_Set_3' already exists!
+Folder '/scratch/qzf7nj/DNN_CFFs_test_error_band/Tests/Test_Arc_02/ReplicaData_Kin_Set_3' already exists!
+############# Set Number 3 ####################
+Epoch 1/10
+3/3 - 16s - loss: 24.2784 - val_loss: 12.7437 - lr: 0.1000 - 16s/epoch - 5s/step
+Epoch 2/10
+3/3 - 0s - loss: 15.9160 - val_loss: 0.7391 - lr: 0.1000 - 78ms/epoch - 26ms/step
+Epoch 3/10
+3/3 - 0s - loss: 2.0510 - val_loss: 10.0053 - lr: 0.1000 - 77ms/epoch - 26ms/step
+Epoch 4/10
+3/3 - 0s - loss: 6.9560 - val_loss: 0.4904 - lr: 0.1000 - 76ms/epoch - 25ms/step
+Epoch 5/10
+3/3 - 0s - loss: 2.4175 - val_loss: 4.1841 - lr: 0.1000 - 76ms/epoch - 25ms/step
+Epoch 6/10
+3/3 - 0s - loss: 2.5304 - val_loss: 1.0672 - lr: 0.1000 - 76ms/epoch - 25ms/step
+Epoch 7/10
+3/3 - 0s - loss: 2.0703 - val_loss: 1.4948 - lr: 0.1000 - 76ms/epoch - 25ms/step
+Epoch 8/10
+3/3 - 0s - loss: 0.8244 - val_loss: 1.2987 - lr: 0.1000 - 77ms/epoch - 26ms/step
+Epoch 9/10
+3/3 - 0s - loss: 1.5357 - val_loss: 0.3924 - lr: 0.1000 - 76ms/epoch - 25ms/step
+Epoch 10/10
+3/3 - 0s - loss: 0.2128 - val_loss: 1.0047 - lr: 0.1000 - 76ms/epoch - 25ms/step
+Completed replica 0 of Set number 3
+##################
+The duration for this replica
+0:00:21
+Epoch 1/10
+3/3 - 14s - loss: 13.8013 - val_loss: 17.2862 - lr: 0.1000 - 14s/epoch - 5s/step
+Epoch 2/10
+3/3 - 0s - loss: 11.0268 - val_loss: 3.4693 - lr: 0.1000 - 76ms/epoch - 25ms/step
+Epoch 3/10
+3/3 - 0s - loss: 3.2797 - val_loss: 0.4483 - lr: 0.1000 - 76ms/epoch - 25ms/step
+Epoch 4/10
+3/3 - 0s - loss: 1.4772 - val_loss: 0.2400 - lr: 0.1000 - 76ms/epoch - 25ms/step
+Epoch 5/10
+3/3 - 0s - loss: 0.4129 - val_loss: 1.3151 - lr: 0.1000 - 76ms/epoch - 25ms/step
+Epoch 6/10
+3/3 - 0s - loss: 0.7007 - val_loss: 0.9616 - lr: 0.1000 - 77ms/epoch - 26ms/step
+Epoch 7/10
+3/3 - 0s - loss: 0.8870 - val_loss: 0.1131 - lr: 0.1000 - 77ms/epoch - 26ms/step
+Epoch 8/10
+3/3 - 0s - loss: 0.4008 - val_loss: 0.1502 - lr: 0.1000 - 76ms/epoch - 25ms/step
+Epoch 9/10
+3/3 - 0s - loss: 0.1202 - val_loss: 0.4287 - lr: 0.1000 - 76ms/epoch - 25ms/step
+Epoch 10/10
+3/3 - 0s - loss: 0.2616 - val_loss: 0.3177 - lr: 0.1000 - 76ms/epoch - 25ms/step
+Completed replica 1 of Set number 3
+##################
+The duration for this replica
+0:00:16
+Epoch 1/10
+3/3 - 14s - loss: 1.9399 - val_loss: 15.4081 - lr: 0.1000 - 14s/epoch - 5s/step
+Epoch 2/10
+3/3 - 0s - loss: 7.5234 - val_loss: 0.1392 - lr: 0.1000 - 77ms/epoch - 26ms/step
+Epoch 3/10
+3/3 - 0s - loss: 0.0865 - val_loss: 0.1185 - lr: 0.1000 - 76ms/epoch - 25ms/step
+Epoch 4/10
+3/3 - 0s - loss: 0.0568 - val_loss: 0.0184 - lr: 0.1000 - 76ms/epoch - 25ms/step
+Epoch 5/10
+3/3 - 0s - loss: 0.0120 - val_loss: 0.0067 - lr: 0.1000 - 76ms/epoch - 25ms/step
+Epoch 6/10
+3/3 - 0s - loss: 0.0194 - val_loss: 0.0240 - lr: 0.1000 - 77ms/epoch - 26ms/step
+Epoch 7/10
+3/3 - 0s - loss: 0.0130 - val_loss: 0.0216 - lr: 0.1000 - 76ms/epoch - 25ms/step
+Epoch 8/10
+3/3 - 0s - loss: 0.0114 - val_loss: 0.0125 - lr: 0.1000 - 76ms/epoch - 25ms/step
+Epoch 9/10
+3/3 - 0s - loss: 0.0119 - val_loss: 3.8638e-05 - lr: 0.1000 - 76ms/epoch - 25ms/step
+Epoch 10/10
+3/3 - 0s - loss: 0.0037 - val_loss: 0.0014 - lr: 0.1000 - 76ms/epoch - 25ms/step
+Completed replica 2 of Set number 3
+##################
+The duration for this replica
+0:00:16
+Epoch 1/10
+3/3 - 14s - loss: 11.0106 - val_loss: 5.2841 - lr: 0.1000 - 14s/epoch - 5s/step
+Epoch 2/10
+3/3 - 0s - loss: 6.1010 - val_loss: 0.1957 - lr: 0.1000 - 76ms/epoch - 25ms/step
+Epoch 3/10
+3/3 - 0s - loss: 0.8197 - val_loss: 3.5919 - lr: 0.1000 - 76ms/epoch - 25ms/step
+Epoch 4/10
+3/3 - 0s - loss: 2.4225 - val_loss: 0.3268 - lr: 0.1000 - 76ms/epoch - 25ms/step
+Epoch 5/10
+3/3 - 0s - loss: 1.0799 - val_loss: 1.3722 - lr: 0.1000 - 76ms/epoch - 25ms/step
+Epoch 6/10
+3/3 - 0s - loss: 0.7922 - val_loss: 0.6155 - lr: 0.1000 - 76ms/epoch - 25ms/step
+Epoch 7/10
+3/3 - 0s - loss: 0.9061 - val_loss: 0.4497 - lr: 0.1000 - 76ms/epoch - 25ms/step
+Epoch 8/10
+3/3 - 0s - loss: 0.2168 - val_loss: 0.5548 - lr: 0.1000 - 76ms/epoch - 25ms/step
+Epoch 9/10
+3/3 - 0s - loss: 0.6152 - val_loss: 0.0512 - lr: 0.1000 - 76ms/epoch - 25ms/step
+Epoch 10/10
+3/3 - 0s - loss: 0.0628 - val_loss: 0.4344 - lr: 0.1000 - 77ms/epoch - 26ms/step
+Completed replica 3 of Set number 3
+##################
+The duration for this replica
+0:00:15
+Epoch 1/10
+3/3 - 14s - loss: 48.1654 - val_loss: 3.1187 - lr: 0.1000 - 14s/epoch - 5s/step
+Epoch 2/10
+3/3 - 0s - loss: 13.1505 - val_loss: 14.8836 - lr: 0.1000 - 78ms/epoch - 26ms/step
+Epoch 3/10
+3/3 - 0s - loss: 7.7571 - val_loss: 9.7001 - lr: 0.1000 - 77ms/epoch - 26ms/step
+Epoch 4/10
+3/3 - 0s - loss: 11.5835 - val_loss: 2.2875 - lr: 0.1000 - 77ms/epoch - 26ms/step
+Epoch 5/10
+3/3 - 0s - loss: 1.4220 - val_loss: 7.5508 - lr: 0.1000 - 77ms/epoch - 26ms/step
+Epoch 6/10
+3/3 - 0s - loss: 6.8419 - val_loss: 0.4862 - lr: 0.1000 - 76ms/epoch - 25ms/step
+Epoch 7/10
+3/3 - 0s - loss: 0.6796 - val_loss: 3.9597 - lr: 0.1000 - 77ms/epoch - 26ms/step
+Epoch 8/10
+3/3 - 0s - loss: 3.4544 - val_loss: 0.0775 - lr: 0.1000 - 76ms/epoch - 25ms/step
+Epoch 9/10
+3/3 - 0s - loss: 0.6954 - val_loss: 2.8771 - lr: 0.1000 - 76ms/epoch - 25ms/step
+Epoch 10/10
+3/3 - 0s - loss: 1.7535 - val_loss: 0.1877 - lr: 0.1000 - 76ms/epoch - 25ms/step
+Completed replica 4 of Set number 3
+##################
+The duration for this replica
+0:00:17
+1/1 [==============================] - ETA: 0s1/1 [==============================] - 0s 78ms/step
+1/1 [==============================] - ETA: 0s1/1 [==============================] - 0s 370ms/step
+Predicted F shape: (24, 1)
+1/1 [==============================] - ETA: 0s1/1 [==============================] - 0s 56ms/step
+1/1 [==============================] - ETA: 0s1/1 [==============================] - 0s 358ms/step
+Predicted F shape: (24, 1)
+1/1 [==============================] - ETA: 0s1/1 [==============================] - 0s 55ms/step
+1/1 [==============================] - ETA: 0s1/1 [==============================] - 0s 354ms/step
+Predicted F shape: (24, 1)
+1/1 [==============================] - ETA: 0s1/1 [==============================] - 0s 55ms/step
+1/1 [==============================] - ETA: 0s1/1 [==============================] - 0s 352ms/step
+Predicted F shape: (24, 1)
+1/1 [==============================] - ETA: 0s1/1 [==============================] - 0s 56ms/step
+1/1 [==============================] - ETA: 0s1/1 [==============================] - 0s 351ms/step
+Predicted F shape: (24, 1)
+1/1 [==============================] - ETA: 0s1/1 [==============================] - 0s 55ms/step
+1/1 [==============================] - ETA: 0s1/1 [==============================] - 0s 350ms/step
+Predicted F shape: (24, 1)
+1/1 [==============================] - ETA: 0s1/1 [==============================] - 0s 66ms/step
+1/1 [==============================] - ETA: 0s1/1 [==============================] - 0s 416ms/step
+Predicted F shape: (24, 1)
+1/1 [==============================] - ETA: 0s1/1 [==============================] - 0s 56ms/step
+1/1 [==============================] - ETA: 0s1/1 [==============================] - 0s 368ms/step
+Predicted F shape: (24, 1)
+1/1 [==============================] - ETA: 0s1/1 [==============================] - 0s 55ms/step
+1/1 [==============================] - ETA: 0s1/1 [==============================] - 0s 359ms/step
+Predicted F shape: (24, 1)
+1/1 [==============================] - ETA: 0s1/1 [==============================] - 0s 55ms/step
+1/1 [==============================] - ETA: 0s1/1 [==============================] - 0s 357ms/step
+Predicted F shape: (24, 1)
+1/1 [==============================] - ETA: 0s1/1 [==============================] - 0s 56ms/step
+1/1 [==============================] - ETA: 0s1/1 [==============================] - 0s 350ms/step
+Predicted F shape: (24, 1)
+1/1 [==============================] - ETA: 0s1/1 [==============================] - 0s 55ms/step
+1/1 [==============================] - ETA: 0s1/1 [==============================] - 0s 350ms/step
+Predicted F shape: (24, 1)
+1/1 [==============================] - ETA: 0s1/1 [==============================] - 0s 55ms/step
+1/1 [==============================] - ETA: 0s1/1 [==============================] - 0s 354ms/step
+Predicted F shape: (24, 1)
+1/1 [==============================] - ETA: 0s1/1 [==============================] - 0s 55ms/step
+1/1 [==============================] - ETA: 0s1/1 [==============================] - 0s 353ms/step
+Predicted F shape: (24, 1)
+1/1 [==============================] - ETA: 0s1/1 [==============================] - 0s 55ms/step
+1/1 [==============================] - ETA: 0s1/1 [==============================] - 0s 353ms/step
+Predicted F shape: (24, 1)
+1/1 [==============================] - ETA: 0s1/1 [==============================] - 0s 57ms/step
+1/1 [==============================] - ETA: 0s1/1 [==============================] - 0s 387ms/step

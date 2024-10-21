@@ -22,6 +22,7 @@ import matplotlib.pyplot as plt
 import os
 import sys
 from scipy.stats import norm
+import glob
 
 
 def create_folders(folder_name):
@@ -230,11 +231,6 @@ def plot_f_vs_phi(kin_df, replica_predictions, kinset):
 
 
 
-
-
-
-
-
 def run_replica(kinset,i,xdf):
     #replica_number = sys.argv[1]   # If you want to use this scrip for job submission, then uncomment this line, 
     #  then comment the following line, and then delete the 'i' in the parenthesis of run_replica(i) function's definition
@@ -336,9 +332,231 @@ for model_id in models:
     f_predictions.append(f_values)  
     cff_predictions.append(cffs)
 
-# Create subplots in a single figure for CFF histograms with vertical lines
-plt.figure(figsize=(15, 10))
+
+# Function to append residual data to a CSV
+def save_cff_data_to_csv(cff_predictions, true_values, cff_labels, set_number, output_csv='CFFs_Comparison_AllSets.csv'):
+    """
+    Appends data (True, Predicted, Residual, Std Dev) for each CFF to a CSV file for all sets.
+    If the CSV already exists, the new data is appended; otherwise, a new file is created.
+    """
+    row_data = {'Set_Number': set_number}  # Set number as the first column
+    
+    # Initialize lists to store residuals and std deviations for each CFF
+    residuals = []
+    std_devs = []
+    
+    for i, cff_label in enumerate(cff_labels):
+        data = np.array(cff_predictions)[:, :, i].T.flatten()
+        mean_value = np.mean(data)
+        std_deviation = np.std(data)
+        residual = true_values[i] - mean_value
+        
+        # Append residual and standard deviation for the current CFF
+        residuals.append(residual)
+        std_devs.append(std_deviation)
+        
+        # Append the data to row_data for CSV
+        row_data[f'{cff_label}_True'] = true_values[i]
+        row_data[f'{cff_label}_Predicted'] = mean_value
+        row_data[f'{cff_label}_Residual'] = residual
+        row_data[f'{cff_label}_Std_Dev'] = std_deviation
+    
+    # Convert the row to a DataFrame
+    df = pd.DataFrame([row_data])
+    
+    # Append to CSV or create a new one
+    if not os.path.isfile(output_csv):
+        df.to_csv(output_csv, index=False, mode='w')
+        print(f"CSV file created: {output_csv}")
+    else:
+        df.to_csv(output_csv, index=False, mode='a', header=False)
+        print(f"Data appended to CSV: {output_csv}")
+    
+    return residuals, std_devs
+
+
+def append_residuals_to_plot(cff_label, residuals, std_devs, set_number, temp_data):
+    """
+    Append residuals and std_devs for the current CFF to the temp_data structure,
+    which will later be used to create violin plots for each CFF.
+    """
+    if cff_label not in temp_data:
+        temp_data[cff_label] = {'kinematic_sets': [], 'residuals': [], 'std_devs': []}
+    
+    # Append the entire list of residuals and std_devs
+    temp_data[cff_label]['kinematic_sets'].append(set_number)
+    temp_data[cff_label]['residuals'].append(residuals)  # List of residuals
+    temp_data[cff_label]['std_devs'].append(std_devs)    # List of std_devs
+
+# def generate_violin_plots_for_cffs(temp_data, cff_labels, output_dir='ViolinPlots'):
+#     """
+#     Generates and saves violin plots for each CFF using the data stored in temp_data.
+    
+#     Parameters:
+#     - temp_data: A dictionary that holds residuals and std_devs for each CFF across kinematic sets.
+#     - cff_labels: List of CFF labels (e.g., ['ReH', 'ReE', 'ReHt', 'dvcs']).
+#     """
+#     if not os.path.exists(output_dir):
+#         os.makedirs(output_dir)
+
+#     for cff_label, data in residual_data.items():
+#         kinematic_sets = data['kinematic_sets']
+#         residuals_list = data['residuals']
+#         std_devs_list = data['std_devs']
+
+#         # Prepare the data for violin plot
+#         plot_data = []
+#         for residual, std_dev in zip(residuals_list, std_devs_list):
+#             generated_data = np.random.normal(loc=residual, scale=std_dev, size=1000)
+#             plot_data.append(generated_data)
+
+#         # Create the violin plot
+#         plt.figure(figsize=(10, 6))
+#         parts = plt.violinplot(plot_data, positions=kinematic_sets, widths=0.7, showmeans=False, showmedians=True)
+
+#         for pc in parts['bodies']:
+#             pc.set_facecolor('gray')
+#             pc.set_edgecolor('black')
+#             pc.set_alpha(0.7)
+
+#         plt.axhline(y=0, color='black', linestyle='--', linewidth=1)  # Residuals centered around 0
+#         plt.xticks(kinematic_sets)
+#         plt.xlabel('Kinematic Set Number')
+#         plt.ylabel('Residual')
+#         plt.title(f'Violin Plot of {cff_label} Residuals Across Kinematic Sets')
+
+#         # Save the plot
+#         plot_path = os.path.join(output_dir, f'{cff_label}_Residuals_ViolinPlot.png')
+#         plt.tight_layout()
+#         plt.savefig(plot_path)
+#         plt.close()
+#         print(f"Violin plot saved: {plot_path}")
+
+def save_cff_data_to_csv(cff_predictions, true_values, cff_labels, set_number, output_csv_dir='CFF_Residuals'):
+    """
+    Appends data (True, Predicted, Residual, Std Dev) for each CFF to a separate CSV file for each set.
+    Each set gets its own file, and this avoids overwriting data when multiple GPUs work in parallel.
+    """
+    if not os.path.exists(output_csv_dir):
+        os.makedirs(output_csv_dir)
+
+    # Define the path for the current kinematic set
+    output_csv = os.path.join(output_csv_dir, f'CFF_Residuals_Set_{set_number}.csv')
+    
+    row_data = {'Set_Number': set_number}  # Set number as the first column
+    
+    # Initialize lists to store residuals and std deviations for each CFF
+    residuals = []
+    std_devs = []
+    
+    for i, cff_label in enumerate(cff_labels):
+        data = np.array(cff_predictions)[:, :, i].T.flatten()
+        mean_value = np.mean(data)
+        std_deviation = np.std(data)
+        residual = true_values[i] - mean_value
+        
+        # Append residual and standard deviation for the current CFF
+        residuals.append(residual)
+        std_devs.append(std_deviation)
+        
+        # Append the data to row_data for CSV
+        row_data[f'{cff_label}_True'] = true_values[i]
+        row_data[f'{cff_label}_Predicted'] = mean_value
+        row_data[f'{cff_label}_Residual'] = residual
+        row_data[f'{cff_label}_Std_Dev'] = std_deviation
+    
+    # Convert the row to a DataFrame and save as a new CSV for each set
+    df = pd.DataFrame([row_data])
+    df.to_csv(output_csv, index=False, mode='w')
+    print(f"CSV file created: {output_csv}")
+    
+    return residuals, std_devs
+
+def aggregate_data_from_csvs(cff_labels, csv_dir='CFF_Residuals'):
+    """
+    Aggregate residual and standard deviation data from multiple CSV files generated by different GPUs.
+    Returns the aggregated temp_data dictionary.
+    """
+    temp_data = {cff: {'kinematic_sets': [], 'residuals': [], 'std_devs': []} for cff in cff_labels}
+
+    # Collect all CSV files
+    csv_files = glob.glob(os.path.join(csv_dir, 'CFF_Residuals_Set_*.csv'))
+    
+    # Loop over each CSV file and aggregate the data
+    for csv_file in csv_files:
+        df = pd.read_csv(csv_file)
+        set_number = df['Set_Number'].values[0]  # Get the set number from the file
+        
+        for cff_label in cff_labels:
+            residual = df[f'{cff_label}_Residual'].values[0]
+            std_dev = df[f'{cff_label}_Std_Dev'].values[0]
+            
+            # Append the data to the temp_data dictionary
+            temp_data[cff_label]['kinematic_sets'].append(set_number)
+            temp_data[cff_label]['residuals'].append(residual)
+            temp_data[cff_label]['std_devs'].append(std_dev)
+    
+    return temp_datas
+
+# def generate_violin_plots_for_cffs(temp_data, cff_labels, output_dir='ViolinPlots'):
+#     """
+#     Generates and saves violin plots for each CFF using the data stored in temp_data.
+    
+#     Parameters:
+#     - temp_data: A dictionary that holds residuals and std_devs for each CFF across kinematic sets.
+#     - cff_labels: List of CFF labels (e.g., ['ReH', 'ReE', 'ReHt', 'dvcs']).
+#     """
+#     if not os.path.exists(output_dir):
+#         os.makedirs(output_dir)
+    
+#     for cff_label in cff_labels:
+#         data = temp_data[cff_label]
+#         kinematic_sets = data['kinematic_sets']
+#         residuals_list = data['residuals']
+#         std_devs_list = data['std_devs']
+        
+#         # Prepare the data for violin plot
+#         plot_data = []
+#         for residuals, std_devs in zip(residuals_list, std_devs_list):
+#             # Convert residuals and std_devs to lists before using them
+#             residuals = list(residuals)
+#             std_devs = list(std_devs)
+            
+#             # Generate points for each kinematic set based on residuals and std devs
+#             generated_data = [np.random.normal(loc=res, scale=std, size=1000) for res, std in zip(residuals, std_devs)]
+#             plot_data.append(np.concatenate(generated_data))
+        
+#         # Create violin plot for this CFF
+#         plt.figure(figsize=(10, 6))
+#         parts = plt.violinplot(plot_data, positions=np.arange(1, len(kinematic_sets) + 1), widths=0.7, showmeans=False, showmedians=False)
+        
+#         for pc in parts['bodies']:
+#             pc.set_facecolor('gray')
+#             pc.set_edgecolor('black')
+#             pc.set_alpha(0.7)
+        
+#         plt.axhline(y=0, color='black', linestyle='--', linewidth=1)  # Residuals centered around 0
+#         plt.xticks(np.arange(1, len(kinematic_sets) + 1), labels=[f'Set {int(i)}' for i in kinematic_sets])
+#         plt.xlabel('Kinematic Set')
+#         plt.ylabel('Residual')
+#         plt.title(f'{cff_label} Residuals with 1-Sigma Spread for Each Kinematic Set')
+        
+#         # Save the violin plot to a PNG file
+#         plot_path = os.path.join(output_dir, f'{cff_label}_Residuals_ViolinPlot.png')
+#         plt.tight_layout()
+#         plt.savefig(plot_path)
+#         plt.close()
+#         print(f"Violin plot saved: {plot_path}")
+
+
+
 cff_labels = ['ReH', 'ReE', 'ReHt', 'dvcs']
+# Integration into your workflow
+temp_data = {cff: {'kinematic_sets': [], 'residuals': [], 'std_devs': []} for cff in cff_labels}  # Temporary storage for residuals and standard deviations
+
+
+plt.figure(figsize=(15, 10))
+
 for i, cff_label in enumerate(cff_labels):
     plt.subplot(2, 2, i+1)
     data = np.array(cff_predictions)[:, :, i].T.flatten()
@@ -353,23 +571,72 @@ for i, cff_label in enumerate(cff_labels):
     plt.axvline(x=mean_value - std_deviation, color='green', linestyle='--', label='1-sigma')
     plt.axvline(x=mean_value + std_deviation, color='green', linestyle='--')
 
-    # Fit a Gaussian curve with the correct x-axis limits
-    xmin, xmax = plt.xlim()
-    x = np.linspace(xmin, xmax, 100)
-    p = norm.pdf(x, mean_value, std_deviation)
-    plt.plot(x, p * len(data) * (xmax - xmin) / 20, 'k', linewidth=2)
-
-    plt.title(f'Set {set_number}: {cff_label} Histogram (from Local)\n Mean: {mean_value:.4f}, Std Dev: {std_deviation:.4f}')
+    plt.title(f'Set {set_number}: {cff_label} Histogram\n Mean: {mean_value:.4f}, Std Dev: {std_deviation:.4f}')
     plt.xlabel(cff_label)
     plt.ylabel('Frequency')
     plt.legend()
 
 # Save the CFF histograms as a PDF file
-output_pdf_path_combined = 'Comparison_Plots/'+'CFFs_CombinedPlots_subplot_kinematic_set_'+ str(j) +'.pdf'
+output_pdf_path_combined = 'Comparison_Plots/' + f'CFFs_CombinedPlots_kinematic_set_{set_number}.pdf'
 plt.tight_layout()
 plt.savefig(output_pdf_path_combined)
 plt.close()
 
+# Use the current set number (e.g., j)
+set_number = j
+
+# Save CFF data to a CSV for the current set and collect residuals/std_devs for plotting
+residuals, std_devs = save_cff_data_to_csv(cff_predictions, true_values, cff_labels, set_number, output_csv='CFFs_Comparison_AllSets.csv')
+
+# Append the data for each CFF to the temp_data dictionary
+for i, cff_label in enumerate(cff_labels):
+    append_residuals_to_plot(cff_label, [residuals[i]], [std_devs[i]], set_number, temp_data)  # Pass as list
+
+
+temp_data = aggregate_data_from_csvs(cff_labels)
+#generate_violin_plots_for_cffs(temp_data, cff_labels)
+
+
+# # Create subplots in a single figure for CFF histograms with vertical lines
+# plt.figure(figsize=(15, 10))
+# cff_labels = ['ReH', 'ReE', 'ReHt', 'dvcs']
+# for i, cff_label in enumerate(cff_labels):
+#     plt.subplot(2, 2, i+1)
+#     data = np.array(cff_predictions)[:, :, i].T.flatten()
+#     plt.hist(data, bins=20, edgecolor='black', alpha=0.7, color='lightblue')
+
+#     mean_value = np.mean(data)
+#     std_deviation = np.std(data)
+
+#     # Plot vertical lines for true value, mean, and bounds for 1-sigma
+#     plt.axvline(x=true_values[i], color='red', linestyle='--', label='True Value')
+#     plt.axvline(x=mean_value, color='blue', linestyle='--', label='Mean')
+#     plt.axvline(x=mean_value - std_deviation, color='green', linestyle='--', label='1-sigma')
+#     plt.axvline(x=mean_value + std_deviation, color='green', linestyle='--')
+
+#     # Fit a Gaussian curve with the correct x-axis limits
+#     xmin, xmax = plt.xlim()
+#     x = np.linspace(xmin, xmax, 100)
+#     p = norm.pdf(x, mean_value, std_deviation)
+#     plt.plot(x, p * len(data) * (xmax - xmin) / 20, 'k', linewidth=2)
+
+#     plt.title(f'Set {set_number}: {cff_label} Histogram (from Local)\n Mean: {mean_value:.4f}, Std Dev: {std_deviation:.4f}')
+#     plt.xlabel(cff_label)
+#     plt.ylabel('Frequency')
+#     plt.legend()
+
+# # Save the CFF histograms as a PDF file
+# output_pdf_path_combined = 'Comparison_Plots/'+'CFFs_CombinedPlots_subplot_kinematic_set_'+ str(j) +'.pdf'
+# plt.tight_layout()
+# plt.savefig(output_pdf_path_combined)
+# plt.close()
+
+# set_number = j  # Use the current set number
+
+# csv_data = append_cff_data_to_csv(csv_data, cff_predictions, true_values, cff_labels, set_number)
+# csv_file_path = 'CFFs_Comparison_AllSets.csv'
+# csv_data.to_csv(csv_file_path, index=False)
+# print(f"CSV file saved: {csv_file_path}")
 
 # save the chi-square error file
 chi_square_file = 'Comparison_Plots/chi_square_errors.txt'

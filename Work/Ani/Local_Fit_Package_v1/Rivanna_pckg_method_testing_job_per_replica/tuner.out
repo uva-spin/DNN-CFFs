@@ -1,0 +1,106 @@
+
+================
+== TensorFlow ==
+================
+
+NVIDIA Release 23.08-tf2 (build 66128809)
+TensorFlow Version 2.13.0
+
+Container image Copyright (c) 2023, NVIDIA CORPORATION & AFFILIATES. All rights reserved.
+Copyright 2017-2023 The TensorFlow Authors.  All rights reserved.
+
+Various files include modifications (c) NVIDIA CORPORATION & AFFILIATES.  All rights reserved.
+
+This container image and its contents are governed by the NVIDIA Deep Learning Container License.
+By pulling and using the container, you accept the terms and conditions of this license:
+https://developer.nvidia.com/ngc/nvidia-deep-learning-container-license
+
+2/2 - 12s - loss: 5.5511 - val_loss: 13.2982 - lr: 0.1000 - 12s/epoch - 6s/step
+Epoch 2/10
+2/2 - 0s - loss: 12.0394 - val_loss: 10.9560 - lr: 0.1000 - 62ms/epoch - 31ms/step
+Epoch 3/10
+2/2 - 0s - loss: 12.1934 - val_loss: 22.1881 - lr: 0.1000 - 61ms/epoch - 31ms/step
+Epoch 4/10
+2/2 - 0s - loss: 21.6773 - val_loss: 3.9015 - lr: 0.1000 - 61ms/epoch - 31ms/step
+Epoch 5/10
+2/2 - 0s - loss: 3.7031 - val_loss: 2.3970 - lr: 0.1000 - 61ms/epoch - 31ms/step
+Epoch 6/10
+2/2 - 0s - loss: 2.7447 - val_loss: 10.7723 - lr: 0.1000 - 61ms/epoch - 31ms/step
+Epoch 7/10
+2/2 - 12s - loss: 0.3554 - val_loss: 0.9154 - lr: 0.1000 - 12s/epoch - 6s/step
+Epoch 2/10
+2/2 - 0s - loss: 10.4218 - val_loss: 6.2335 - lr: 0.1000 - 63ms/epoch - 32ms/step
+Epoch 8/10
+2/2 - 0s - loss: 0.9186 - val_loss: 0.0034 - lr: 0.1000 - 62ms/epoch - 31ms/step
+Epoch 3/10
+2/2 - 0s - loss: 5.6812 - val_loss: 0.1106 - lr: 0.1000 - 62ms/epoch - 31ms/step
+Epoch 9/10
+2/2 - 0s - loss: 0.0556 - val_loss: 0.5839 - lr: 0.1000 - 62ms/epoch - 31ms/step
+Epoch 4/10
+2/2 - 0s - loss: 0.1343 - val_loss: 2.5656 - lr: 0.1000 - 62ms/epoch - 31ms/step
+Epoch 10/10
+2/2 - 0s - loss: 0.5249 - val_loss: 0.1811 - lr: 0.1000 - 60ms/epoch - 30ms/step
+Epoch 5/10
+2/2 - 0s - loss: 2.9215 - val_loss: 4.3937 - lr: 0.1000 - 63ms/epoch - 32ms/step
+2/2 - 0s - loss: 0.2150 - val_loss: 0.1915 - lr: 0.1000 - 61ms/epoch - 31ms/step
+Epoch 6/10
+2/2 - 0s - loss: 0.1823 - val_loss: 0.2155 - lr: 0.1000 - 60ms/epoch - 30ms/step
+Epoch 7/10
+Completed running for kinematic set 5
+2/2 - 0s - loss: 0.2171 - val_loss: 0.0752 - lr: 0.1000 - 60ms/epoch - 30ms/step
+Epoch 8/10
+2/2 - 0s - loss: 0.0682 - val_loss: 0.1632 - lr: 0.1000 - 61ms/epoch - 30ms/step
+Epoch 9/10
+2/2 - 0s - loss: 0.1670 - val_loss: 0.0236 - lr: 0.1000 - 60ms/epoch - 30ms/step
+Epoch 10/10
+2/2 - 0s - loss: 0.0248 - val_loss: 0.1288 - lr: 0.1000 - 61ms/epoch - 31ms/step
+Completed running for kinematic set 5
+Folder 'Cross_Sections_Replicas' already exists!
+Running for kinematic set 1
+Folder '/scratch/qzf7nj/Final_check/Tests/DNNmodels_Kin_Set_1' already exists!
+Folder '/scratch/qzf7nj/Final_check/Tests/Losses_Plots_Kin_Set_1' already exists!
+Epoch 1/10
+2/2 - 14s - loss: 4.8282 - val_loss: 1.7731 - lr: 0.1000 - 14s/epoch - 7s/step
+Epoch 2/10
+2/2 - 0s - loss: 2.9946 - val_loss: 16.8822 - lr: 0.1000 - 63ms/epoch - 31ms/step
+Epoch 3/10
+2/2 - 0s - loss: 15.7552 - val_loss: 0.0039 - lr: 0.1000 - 60ms/epoch - 30ms/step
+Epoch 4/10
+2/2 - 0s - loss: 0.4249 - val_loss: 8.9796 - lr: 0.1000 - 61ms/epoch - 30ms/step
+Epoch 5/10
+2/2 - 0s - loss: 8.8271 - val_loss: 0.8675 - lr: 0.1000 - 59ms/epoch - 29ms/step
+Epoch 6/10
+2/2 - 0s - loss: 0.9202 - val_loss: 3.8556 - lr: 0.1000 - 60ms/epoch - 30ms/step
+Epoch 7/10
+2/2 - 0s - loss: 3.8331 - val_loss: 2.7321 - lr: 0.1000 - 60ms/epoch - 30ms/step
+Epoch 8/10
+2/2 - 0s - loss: 2.3901 - val_loss: 0.5364 - lr: 0.1000 - 62ms/epoch - 31ms/step
+Epoch 9/10
+2/2 - 0s - loss: 0.7865 - val_loss: 2.7562 - lr: 0.1000 - 61ms/epoch - 30ms/step
+Epoch 10/10
+2/2 - 0s - loss: 2.7305 - val_loss: 0.0329 - lr: 0.1000 - 62ms/epoch - 31ms/step
+Completed running for kinematic set 1
+Running for kinematic set 5
+Folder '/scratch/qzf7nj/Final_check/Tests/DNNmodels_Kin_Set_5' already exists!
+Folder '/scratch/qzf7nj/Final_check/Tests/Losses_Plots_Kin_Set_5' already exists!
+Epoch 1/10
+2/2 - 12s - loss: 6.4230 - val_loss: 5.5053 - lr: 0.1000 - 12s/epoch - 6s/step
+Epoch 2/10
+2/2 - 0s - loss: 5.5613 - val_loss: 22.7082 - lr: 0.1000 - 62ms/epoch - 31ms/step
+Epoch 3/10
+2/2 - 0s - loss: 22.6514 - val_loss: 7.9537 - lr: 0.1000 - 60ms/epoch - 30ms/step
+Epoch 4/10
+2/2 - 0s - loss: 7.3671 - val_loss: 2.8894 - lr: 0.1000 - 60ms/epoch - 30ms/step
+Epoch 5/10
+2/2 - 0s - loss: 3.4108 - val_loss: 11.9997 - lr: 0.1000 - 61ms/epoch - 30ms/step
+Epoch 6/10
+2/2 - 0s - loss: 11.3883 - val_loss: 2.2052 - lr: 0.1000 - 60ms/epoch - 30ms/step
+Epoch 7/10
+2/2 - 0s - loss: 1.8919 - val_loss: 2.1450 - lr: 0.1000 - 60ms/epoch - 30ms/step
+Epoch 8/10
+2/2 - 0s - loss: 2.6196 - val_loss: 5.8899 - lr: 0.1000 - 60ms/epoch - 30ms/step
+Epoch 9/10
+2/2 - 0s - loss: 5.9439 - val_loss: 0.8397 - lr: 0.1000 - 59ms/epoch - 29ms/step
+Epoch 10/10
+2/2 - 0s - loss: 0.8508 - val_loss: 1.4682 - lr: 0.1000 - 60ms/epoch - 30ms/step
+Completed running for kinematic set 5
