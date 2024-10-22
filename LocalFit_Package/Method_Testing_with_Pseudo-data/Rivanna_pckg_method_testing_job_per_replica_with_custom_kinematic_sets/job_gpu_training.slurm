@@ -8,7 +8,7 @@
 #SBATCH -o tuner.out
 #SBATCH -e tuner.err
 #SBATCH --mem=256000
-#SBATCH --array=1-3
+#SBATCH --array=1-300
 
 module purge
 module load apptainer tensorflow/2.13.0
