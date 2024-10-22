@@ -41,20 +41,23 @@ data_file = 'Basic_Model_pseudo_data_for_Jlab_kinematics_with_sampling.csv'
 df = pd.read_csv(data_file)
 df = df.rename(columns={"sigmaF": "errF"})
 
-scratch_path = '/scratch/qzf7nj/Final_check/Tests/'
+## Remember to update the following line
+scratch_path = '/scratch/<your_uva_id>/DNN_CFFs/LocalFit_Tests/Test_01'
 create_folders('Cross_Sections_Replicas')
+
 #### User's inputs ####
-Learning_Rate = 0.1
-EPOCHS = 10
+Learning_Rate = 0.001
+EPOCHS = 2000
 BATCH = 20
 EarlyStop_patience = 1000
 modify_LR_patience = 400
 modify_LR_factor = 0.9
+
 ## Here define the Kinematic Set with the parameter j ##
 # j = 3 # Previously, we had a single set `j`. Now we will use a list of sets.
 
 # You can modify the following list to include the sets you want to run
-kinematic_sets = [1, 5]  # This list can be modified dynamically
+kinematic_sets = [1, 5, 10]  # This list can be modified dynamically
 
 modify_LR = tf.keras.callbacks.ReduceLROnPlateau(monitor='loss', factor=modify_LR_factor, patience=modify_LR_patience, mode='auto')
 EarlyStop = tf.keras.callbacks.EarlyStopping(monitor='loss', patience=EarlyStop_patience)
