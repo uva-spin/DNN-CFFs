@@ -1,4 +1,4 @@
-# Important Information
+# Important information to the user
 
 ## Files that user must modify/check before submitting jobs in Rivanna
 
