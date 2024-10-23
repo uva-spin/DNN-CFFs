@@ -1,5 +1,5 @@
 ############################################################################
-###############  Written by Ishara Fernando                  ###############
+#####  Written by Ishara Fernando, Ani Venkatapuram                  #######
 ##############  Revised Date: 10/14/2024    ################################
 ##### Rivanna usage: Run the following commands on your Rivanna terminal####
 ## source /home/lba9wf/miniconda3/etc/profile.d/conda.sh         ###########
