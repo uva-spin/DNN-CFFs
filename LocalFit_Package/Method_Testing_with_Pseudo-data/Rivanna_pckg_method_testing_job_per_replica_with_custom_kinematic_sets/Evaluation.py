@@ -286,8 +286,6 @@ def generate_mean_std_plots(df, cff_labels, output_dir='CFF_Mean_Deviation_Plots
 # Example usage (with 20 sets per plot):
 generate_mean_std_plots(all_results_df, cff_labels=['ReH', 'ReE', 'ReHt', 'dvcs'], sets_per_plot=20)
 
-# Example usage (with 20 sets per plot):
-generate_mean_std_plots(all_results_df, cff_labels=['ReH', 'ReE', 'ReHt', 'dvcs'], sets_per_plot=20)
 
 # **Step 2: Generate Violin Plots based on residuals**
 # Function to generate and save violin plots for each CFF using real residuals
