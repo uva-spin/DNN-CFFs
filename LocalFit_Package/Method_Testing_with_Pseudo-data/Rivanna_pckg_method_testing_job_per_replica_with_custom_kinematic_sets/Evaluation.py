@@ -1,6 +1,6 @@
 ############################################################################
 #####  Written by Ishara Fernando, Ani Venkatapuram                  #######
-##############  Revised Date: 10/14/2024    ################################
+##############  Revised Date: 10/23/2024    ################################
 ##### Rivanna usage: Run the following commands on your Rivanna terminal####
 ## source /home/lba9wf/miniconda3/etc/profile.d/conda.sh         ###########
 ## conda activate env                                            ###########
