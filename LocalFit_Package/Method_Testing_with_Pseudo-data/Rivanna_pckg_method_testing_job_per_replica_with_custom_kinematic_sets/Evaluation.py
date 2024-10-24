@@ -24,7 +24,6 @@ import sys
 # Update custom object for TensorFlow
 tf.keras.utils.get_custom_objects().update({'tanhshrink': tanhshrink})
 
-# Create folders if they don't exist
 def create_folders(folder_name):
     if not os.path.exists(folder_name):
         os.makedirs(folder_name)
