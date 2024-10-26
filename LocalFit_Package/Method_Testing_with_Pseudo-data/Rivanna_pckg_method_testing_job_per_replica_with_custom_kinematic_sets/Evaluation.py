@@ -52,13 +52,27 @@ scratch_path = '/scratch/<user_id>/DNN_CFFs/Tests/test/'
 create_folders('Comparison_Plots')
 create_folders('CFF_Mean_Deviation_Plots')
 
-# Find available kinematic sets (j) in the folder
-available_kin_sets = [d for d in os.listdir(scratch_path) if d.startswith('DNNmodels_Kin_Set_')]
-available_kin_sets = [int(d.split('_')[-1]) for d in available_kin_sets]
+# Variable to decide whether to use specific kinematic sets or all available sets
+use_specific_sets = True  # Set to False if you want to search all available kinematic sets
+
+# Define the list of specific kinematic sets you want to search for
+specific_kin_sets = [1]
+
+# If use_specific_sets is True, search for only the specific kinematic sets
+if use_specific_sets:
+    available_kin_sets = []
+    for kin_set in specific_kin_sets:
+        folder_name = f'DNNmodels_Kin_Set_{kin_set}'
+        if folder_name in os.listdir(scratch_path):
+            available_kin_sets.append(kin_set)
+
+# If use_specific_sets is False, search for all available kinematic sets in the folder
+else:
+    available_kin_sets = [d for d in os.listdir(scratch_path) if d.startswith('DNNmodels_Kin_Set_')]
+    available_kin_sets = [int(d.split('_')[-1]) for d in available_kin_sets]
+
 available_kin_sets = sorted(available_kin_sets)
 print(f"Available kinematic sets: {available_kin_sets}")
-#Put this under if statement and have another option so that the user can specify one or some kinematic sets
-#instead of searching for all kinematic sets in folder for quick testing
 
 # Initialize an empty DataFrame to store all results
 all_results_df = pd.DataFrame()
