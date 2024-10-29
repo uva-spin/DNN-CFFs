@@ -14,6 +14,7 @@ This code file now includes the creation of F vs phi before training, with rando
 ## 2. Update job_gpu_training.slurm
 
 1. Line #11: There are 3 lines of interest here:
+2. Ensure the 'path' where you want to save the models is updated. Otherwise, you mayne over-riding the models in an existing folder.
 
 ```
 --gres=gpu:a100
@@ -30,9 +31,13 @@ For the second line, the time, try to keep it within 3 hours. If you need to, mo
 
 For the third line, this is the number of replicas. There are two options here. First is to drop the number of replicas so that the first job does replicas 1 to 50, then 51 to 100, etc, or any series of replicas of your choice, but try to keep the time within 3 hours. The other option is to drop the number of kinematic sets so that the jobs don't run too long. Feel free to use a combination of these two so that the jobs are done for a certain number of kinematic sets with a couple replicas at a time, for maximum efficiency when submitting jobs.
 
+Ensure to give a meaningful name for this line: '#SBATCH -J LocalFit_job'
+
 ## 3. Evaluation.py
 
 1. Line 51: put your own computing id
+2. Ensure to give the 'path' where your models are saved (from the Pseudo_Basic_Local_Fit_Per_KinematicSet_by_User.py), otherwise you may create evaluation results from models from a totally different folder.
+
 
 This evaluates the trained data over CFFs, evaluates F vs phi, makes a chi-square txt file for how the chi square error on F vs phi, and provides a csv for how well it predicted F vs phi. The F vs phi plots, CFF evaluation plots, and `chi_square.txt` are made in the `Comparison_Plots` folder, while the evaluation of F vs phi is made in the `CFF_Mean_Deviation_Plots` folder. This file takes all available models in the `DNN_CFFs` folder in the scratch path and looks over all of them, and makes models for each available model in that folder as of right now. Be careful of the models currently in that folder before running evaluate.
 
@@ -43,4 +48,5 @@ This evaluates the trained data over CFFs, evaluates F vs phi, makes a chi-squar
 ```
 These are the only two lines of interest. The gpus that are available on rivanna are mentioned above. For the time, I realize that evaluating depends entirely on the number of replicas and kinematic sets in the `DNN_CFFs` folder. Feel free to increase the time up to 3 hours if necessary. If it takes longer (due to a large number of replicas and kinematic sets), then please contact me and I will have to re-write the part where it reads all existing models in the folder and instead just reads models that the user inputs.
 
+Ensure to give a meaningful name for this line: '#SBATCH -J Evaluation_job'
 
