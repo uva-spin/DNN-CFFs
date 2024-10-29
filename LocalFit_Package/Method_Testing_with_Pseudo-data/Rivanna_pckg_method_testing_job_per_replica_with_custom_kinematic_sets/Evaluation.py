@@ -47,7 +47,7 @@ df = pd.read_csv(data_file)
 df = df.rename(columns={"sigmaF": "errF"})
 
 # Define the scratch path where the results will be saved
-scratch_path = '/scratch/<user_id>/DNN_CFFs/Tests/test/'
+scratch_path = '/scratch/<your_uva_id>/DNN_CFFs/LocalFit_Tests/Test_01/'
 
 create_folders('Comparison_Plots')
 create_folders('CFF_Mean_Deviation_Plots')

@@ -42,7 +42,7 @@ df = pd.read_csv(data_file)
 df = df.rename(columns={"sigmaF": "errF"})
 
 ## Remember to update the following line
-scratch_path = '/scratch/<your_uva_id>/DNN_CFFs/LocalFit_Tests/Test_01'
+scratch_path = '/scratch/<your_uva_id>/DNN_CFFs/LocalFit_Tests/Test_01/'
 create_folders('Cross_Sections_Replicas')
 
 #### User's inputs ####
