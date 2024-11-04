@@ -65,7 +65,7 @@ def DVCSps(x,t):
 
 
 def GeneratePseudoData(df):
-    pseudodata_df = {'Set #': [],
+    pseudodata_df = {'set': [],
                      'k': [],
                      'QQ': [],
                      'x_b': [],
@@ -81,7 +81,7 @@ def GeneratePseudoData(df):
         row = df.loc[i]
         
         tempSet, tempQQ, tempxb, tempt, tempk, tempphi, varF = np.array([row['#Set'],row['QQ'], row['x_b'], row['t'], row['k'],row['phi_x'], row['varF']])
-        pseudodata_df['Set #'].append(tempSet)
+        pseudodata_df['set'].append(tempSet)
         pseudodata_df['k'].append(tempk)
         pseudodata_df['QQ'].append(tempQQ)
         pseudodata_df['x_b'].append(tempxb)
