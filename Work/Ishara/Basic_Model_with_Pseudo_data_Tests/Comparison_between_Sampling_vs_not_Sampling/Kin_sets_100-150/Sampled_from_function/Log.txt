@@ -1,0 +1,9 @@
+11/03/2024 11:12
+Submitted batch job 65804699
+bash-4.4$sbatch --dependency=afterok:65804699 job_gpu_evaluation.slurm
+Submitted batch job 65804701
+
+11/03/2024 16:01
+Submitted batch job 65816465
+bash-4.4$sbatch --dependency=afterok:65816465 job_gpu_evaluation.slurm
+Submitted batch job 65816477
