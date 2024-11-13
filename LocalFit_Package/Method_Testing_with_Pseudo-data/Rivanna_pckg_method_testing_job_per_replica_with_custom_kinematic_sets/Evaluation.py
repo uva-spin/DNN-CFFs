@@ -300,6 +300,53 @@ def generate_mean_std_plots(df, cff_labels, output_dir='CFF_Mean_Deviation_Plots
 # Example usage (with 20 sets per plot):
 generate_mean_std_plots(all_results_df, cff_labels=['ReH', 'ReE', 'ReHt', 'dvcs'], sets_per_plot=20)
 
+df_kinematic = pd.read_csv("Basic_Model_pseudo_data_for_Jlab_kinematics_with_sampling.csv")
+
+df_cffs = pd.read_csv("CFFs_AllSets_Combined.csv")
+
+df_evaluation = pd.DataFrame()
+
+for set_id in df_cffs['set'].unique():
+    df_kin_set = df_kinematic[df_kinematic['set'] == set_id].copy()
+    df_cffs_set = df_cffs[df_cffs['set'] == set_id].copy()
+    df_f_phi = pd.read_csv(f"Comparison_Plots/F_vs_phi_x_Kinematic_Set_{set_id}.csv")
+    
+    df_cffs_repeated = pd.concat([df_cffs_set] * 24, ignore_index=True)
+    
+    df_kin_set.reset_index(drop=True, inplace=True)
+    df_f_phi.reset_index(drop=True, inplace=True)
+    df_cffs_repeated.reset_index(drop=True, inplace=True)
+    
+    df_combined = pd.concat([df_kin_set, df_f_phi[['Mean F Prediction', 'Std Dev Prediction']], df_cffs_repeated], axis=1)
+    
+    df_evaluation = pd.concat([df_evaluation, df_combined], ignore_index=True)
+
+df_evaluation.to_csv("evaluation.csv", index=False)
+
+
+
+
+
+df_evaluation = pd.read_csv("evaluation.csv")
+
+df_evaluation['set'] = df_evaluation['set'].astype(int)
+
+columns_to_drop = ['ReH_true', 'ReE_true', 'ReHt_true', 'dvcs_true']
+df_evaluation = df_evaluation.drop(columns=columns_to_drop)
+
+ordered_columns = [
+    'set', 'k', 'QQ', 'x_b', 't', 'phi_x', 'F', 'sigmaF', 
+    'Mean F Prediction', 'Std Dev Prediction', 
+    'ReH', 'ReH_pred', 'ReH_res', 'ReH_std',
+    'ReE', 'ReE_pred', 'ReE_res', 'ReE_std',
+    'ReHt', 'ReHt_pred', 'ReHt_res', 'ReHt_std',
+    'dvcs', 'dvcs_pred', 'dvcs_res', 'dvcs_std'
+]
+
+df_evaluation = df_evaluation[ordered_columns]
+
+df_evaluation.to_csv("evaluation.csv", index=False)
+
 
 # **Step 2: Generate Violin Plots based on residuals**
 # Function to generate and save violin plots for each CFF using real residuals
