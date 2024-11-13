@@ -37,13 +37,14 @@ def create_folders(folder_name):
         print(f"Folder '{folder_name}' already exists!")
         
 
-data_file = 'Basic_Model_pseudo_data_for_Jlab_kinematics_with_sampling.csv'
+#data_file = 'Basic_Model_pseudo_data_for_Jlab_kinematics_with_sampling.csv'
+data_file = 'AllJlabData_from_Zulkaida_and_Liliet.csv'
 df = pd.read_csv(data_file)
 df = df.rename(columns={"sigmaF": "errF"})
 
 ## Remember to update the following line
-scratch_path = '/scratch/<uva-computing-id>/DNN_CFFs/LocalFit_BasicModel_Comparison_100_150/Sampled/'
-create_folders('Replica_Cross_Sections')
+scratch_path = '/scratch/<your-computing-id>/DNN_CFFs/LocalFit_BasicModel_Comparison_100_150/Sampled/'
+create_folders(scratch_path+'Replica_Cross_Sections')
 
 #### User's inputs ####
 Learning_Rate = 0.001
@@ -58,7 +59,7 @@ modify_LR_factor = 0.9
 
 # You can modify the following list to include the sets you want to run
 # This list can be modified dynamically
-kinematic_sets = list(range(100, 151))
+kinematic_sets = list(range(1, 5))
 
 modify_LR = tf.keras.callbacks.ReduceLROnPlateau(monitor='loss', factor=modify_LR_factor, patience=modify_LR_patience, mode='auto')
 EarlyStop = tf.keras.callbacks.EarlyStopping(monitor='loss', patience=EarlyStop_patience)
@@ -98,7 +99,8 @@ def GenerateReplicaData(df):
     pseudodata_df['t'] = df['t']
     pseudodata_df['phi_x'] = df['phi_x']
     pseudodata_df['errF'] = df['errF']
-    pseudodata_df['dvcs'] = df['dvcs']
+    if(df['dvcs']):
+        pseudodata_df['dvcs'] = df['dvcs']
     pseudodata_df['True_F'] = df['F']
     tempF = np.array(df['F'])
     tempFerr = np.abs(np.array(df['errF']))  # Had to do abs due to a run-time error
@@ -118,9 +120,9 @@ def gen_F_sanity_check(df_1, kinset, replica_id):
     plt.ylabel('F')
     plt.legend(loc='best', fontsize='small')
     
-    create_folders('Replica_Cross_Sections/' + f'Kinematic_Set_{kinset}')
+    create_folders(scratch_path + 'Replica_Cross_Sections/' + f'Kinematic_Set_{kinset}')
     
-    output_file = scratch_path + './Replica_Cross_Sections/' + f'Kinematic_Set_{kinset}/' + f'F_vs_Phi_Kinematic_Set_{kinset}_replica_{replica_id}.pdf'
+    output_file = scratch_path + 'Replica_Cross_Sections/' + f'Kinematic_Set_{kinset}/' + f'F_vs_Phi_Kinematic_Set_{kinset}_replica_{replica_id}.pdf'
     plt.savefig(output_file)
     plt.close()
     
