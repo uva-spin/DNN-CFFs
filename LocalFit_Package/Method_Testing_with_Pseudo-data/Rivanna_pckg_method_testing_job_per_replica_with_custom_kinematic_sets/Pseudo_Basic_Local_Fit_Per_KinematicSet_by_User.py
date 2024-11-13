@@ -42,8 +42,8 @@ df = pd.read_csv(data_file)
 df = df.rename(columns={"sigmaF": "errF"})
 
 ## Remember to update the following line
-scratch_path = '/scratch/<your_uva_id>/DNN_CFFs/LocalFit_Tests/Test_01/'
-create_folders('Cross_Sections_Replicas')
+scratch_path = '/scratch/<uva-computing-id>/DNN_CFFs/LocalFit_BasicModel_Comparison_100_150/Sampled/'
+create_folders('Replica_Cross_Sections')
 
 #### User's inputs ####
 Learning_Rate = 0.001
@@ -57,7 +57,8 @@ modify_LR_factor = 0.9
 # j = 3 # Previously, we had a single set `j`. Now we will use a list of sets.
 
 # You can modify the following list to include the sets you want to run
-kinematic_sets = [1, 5, 10]  # This list can be modified dynamically
+# This list can be modified dynamically
+kinematic_sets = list(range(100, 151))
 
 modify_LR = tf.keras.callbacks.ReduceLROnPlateau(monitor='loss', factor=modify_LR_factor, patience=modify_LR_patience, mode='auto')
 EarlyStop = tf.keras.callbacks.EarlyStopping(monitor='loss', patience=EarlyStop_patience)
@@ -117,7 +118,9 @@ def gen_F_sanity_check(df_1, kinset, replica_id):
     plt.ylabel('F')
     plt.legend(loc='best', fontsize='small')
     
-    output_file = './Cross_Sections_Replicas/'  + f'F_vs_Phi_Kinematic_Set_{kinset}_replica_{replica_id}.pdf'
+    create_folders('Replica_Cross_Sections/' + f'Kinematic_Set_{kinset}')
+    
+    output_file = scratch_path + './Replica_Cross_Sections/' + f'Kinematic_Set_{kinset}/' + f'F_vs_Phi_Kinematic_Set_{kinset}_replica_{replica_id}.pdf'
     plt.savefig(output_file)
     plt.close()
     
