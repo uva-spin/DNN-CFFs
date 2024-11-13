@@ -99,7 +99,7 @@ def GenerateReplicaData(df):
     pseudodata_df['t'] = df['t']
     pseudodata_df['phi_x'] = df['phi_x']
     pseudodata_df['errF'] = df['errF']
-    pseudodata_df['dvcs'] = df['dvcs']
+    #pseudodata_df['dvcs'] = df['dvcs']
     pseudodata_df['True_F'] = df['F']
     tempF = np.array(df['F'])
     tempFerr = np.abs(np.array(df['errF']))  # Had to do abs due to a run-time error
