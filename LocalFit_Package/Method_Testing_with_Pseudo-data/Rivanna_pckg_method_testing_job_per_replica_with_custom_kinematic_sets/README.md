@@ -41,7 +41,7 @@ Ensure to give a meaningful name for this line: '#SBATCH -J LocalFit_job'
 
 This evaluates the trained data over CFFs, evaluates F vs phi, makes a chi-square txt file for how the chi square error on F vs phi, and provides a csv for how well it predicted F vs phi. The F vs phi plots, CFF evaluation plots, and `chi_square.txt` are made in the `Comparison_Plots` folder, while the evaluation of F vs phi is made in the `CFF_Mean_Deviation_Plots` folder. This file takes all available models in the `DNN_CFFs` folder in the scratch path and looks over all of them, and makes models for each available model in that folder as of right now. Be careful of the models currently in that folder before running evaluate.
 
-## 4. job_gpu_evaluation.py
+## 4. job_gpu_evaluation.slurm
 ```
 #SBATCH --gres=gpu:a100
 #SBATCH -t 1:00:00
@@ -50,3 +50,18 @@ These are the only two lines of interest. The gpus that are available on rivanna
 
 Ensure to give a meaningful name for this line: '#SBATCH -J Evaluation_job'
 
+## 5. Evaluation_csvs_only.py
+
+This file only creates the csvs that would be made in Evaluation.py. The key lines are the same as in Evaluation.py: just make sure the scratch path is correct and the rest will handle itself.
+
+## Evaluation_graphs_from_csvs.py
+
+This file creates the graphs using the csvs. Make sure to set the scratch path to what it originally was in the `Evaluation_csvs_only.py` and make sure to only run this file after making the csvs.
+
+## job_gpu_evaluation_csvs_only.slurm
+
+This is the associated slurm file for `Evaluation_csvs_only.py`. Change the hours if necessary, and feel free to change gpu to a100 only if you prefer.
+
+## job_gpu_evaluation_graphs_from_csvs.slurm
+
+This is the associated slurm file for `Evaluation_graphs_from_csvs.py`, but isn't necessary as this file can just be run locally as well as there is no explicit need for tensorflow.
