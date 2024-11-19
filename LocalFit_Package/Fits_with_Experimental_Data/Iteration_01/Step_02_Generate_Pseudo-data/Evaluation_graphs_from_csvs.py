@@ -55,7 +55,7 @@ def generate_f_vs_phi_plot_from_csv(csv_path, output_dir='Comparison_Plots'):
 
 
 
-def generate_mean_std_plots(df, cff_labels, output_dir='CFF_Mean_Deviation_Plots', sets_per_plot=20):
+def generate_mean_std_plots(df, cff_labels, output_dir='CFF_Mean_Deviation_Plots', sets_per_plot=25):
     """
     Generates and saves plots for each CFF showing the residual (true - predicted) and standard deviation.
     Each plot will contain up to a specified number of kinematic sets, and new plots will be generated 
@@ -136,7 +136,7 @@ def generate_plots_from_csv(csv_path, output_dir='Comparison_Plots'):
 
         # Create a histogram for the predictions
         plt.subplot(2, 2, i + 1)
-        plt.hist(predictions, bins=20, edgecolor='black', alpha=0.7, color='lightblue')
+        plt.hist(predictions, bins=25, edgecolor='black', alpha=0.7, color='lightblue')
 
         # Plot vertical lines for true value, mean, and ±1 standard deviation
         plt.axvline(x=mean_value, color='blue', linestyle='--', label='Mean')
@@ -147,7 +147,7 @@ def generate_plots_from_csv(csv_path, output_dir='Comparison_Plots'):
         xmin, xmax = plt.xlim()
         x = np.linspace(xmin, xmax, 100)
         p = norm.pdf(x, mean_value, std_deviation)
-        plt.plot(x, p * len(predictions) * (xmax - xmin) / 20, 'k', linewidth=2)
+        plt.plot(x, p * len(predictions) * (xmax - xmin) / 25, 'k', linewidth=2)
 
         # Set plot titles and labels
         plt.title(f'Set {kinematic_set}: {cff_label} Histogram\nMean: {mean_value:.4f}, Std Dev: {std_deviation:.4f}')
@@ -206,7 +206,7 @@ def generate_all_plots(evaluation_csv, cff_predictions_dir, output_dir):
         if os.path.exists(cff_all_sets_combined_csv):
             print("Generating line plots")
             daaframe = pd.read_csv(cff_all_sets_combined_csv)
-            generate_mean_std_plots(daaframe, cff_labels=['ReH', 'ReE', 'ReHt', 'dvcs'], sets_per_plot=20)
+            generate_mean_std_plots(daaframe, cff_labels=['ReH', 'ReE', 'ReHt', 'dvcs'], sets_per_plot=25)
 
     print("All plots have been generated.")
 
