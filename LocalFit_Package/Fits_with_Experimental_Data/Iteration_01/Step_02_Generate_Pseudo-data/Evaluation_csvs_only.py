@@ -230,7 +230,7 @@ for j in available_kin_sets:
 all_results_df.to_csv('CFFs_AllSets_Combined.csv', index=False)
 
 
-df_kinematic = pd.read_csv("Basic_Model_pseudo_data_for_Jlab_kinematics_with_sampling.csv")
+df_kinematic = pd.read_csv("AllJlabData_from_Zulkaida_and_Liliet.csv")
 
 df_cffs = pd.read_csv("CFFs_AllSets_Combined.csv")
 
