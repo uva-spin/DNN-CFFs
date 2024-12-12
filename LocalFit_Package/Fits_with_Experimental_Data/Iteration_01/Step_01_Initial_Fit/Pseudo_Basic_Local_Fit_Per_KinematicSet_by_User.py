@@ -41,6 +41,8 @@ def create_folders(folder_name):
 data_file = 'AllJlabData_from_Zulkaida_and_Liliet.csv'
 df = pd.read_csv(data_file)
 df = df.rename(columns={"sigmaF": "errF"})
+# Filter out rows where the "F" column contains zero (Note, this is only for the training not for predictions)
+df = df[df["F"] != 0]
 
 ## Remember to update the following line
 scratch_path = '/scratch/<your-computing-id>/DNN_CFFs/LocalFit_BasicModel_Comparison_100_150/Sampled/'
