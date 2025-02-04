@@ -9,15 +9,23 @@ There are three directories/folders in this folder.
    This contains the so-called "basic model" for CFFs with the generic form of
    $$CFF(x_B,t) = (a x_B^2 + b x_B) e^{ct^2 + dt + e}+f $$
 
-   The following parameters are used as a starting point:
+   ### Updated parameters of the 'basic model':
+   | --- | a | b | c | d | e | f |
+   | --- | --- | --- | --- | --- | --- | --- |
+   | ReH | -4.41 | 1.68 | -9.14 |-3.57 | 1.54 | 2.07 |
+   | ReE | -1.04 | 0.46 | 0.6 | 1.95 | 2.72 | -0.95 |
+   | ReHt |  -1.86 | 1.50 | -0.29 | -1.33 | 0.46 | -0.98 |
+   | DVCS | 0.52  | -0.41 | 0.05 | -0.25 | 0.55 | 0.173 |
+
+   The following parameters are used as a starting point (old):
    | --- | a | b | c | d | e | f |
    | --- | --- | --- | --- | --- | --- | --- |
    | ReH | -4.41 | 1.68 | -9.14 |-3.57 | 1.54 | -1.37 |
    | ReE | 144.56 | 149.99 | 0.32 | -1.09 | -148.49 | -0.31 |
-   | ReHe |  -1.86 | 1.50 | -0.29 | -1.33 | 0.46 | -0.98 |
+   | ReHt |  -1.86 | 1.50 | -0.29 | -1.33 | 0.46 | -0.98 |
    | DVCS | 0.50  | -0.41 | 0.05 | -0.25 | 0.55 | 0.166 |
 
-The relevent scripts can be found in the "Example_PseudoData_Generation" folder.
+The relevant scripts can be found in the "Example_PseudoData_Generation" folder.
 
 ## An Example for Local-Multivariate-Inference (LMI)
 
@@ -28,7 +36,7 @@ With this approach, there is no preconceived analytical expression defined, so t
 
 Referece: https://confluence.its.virginia.edu/display/twist/The+DNN+Extraction+Approach
 
-The relevent scripts can be found in the "Example_LMIFit_Code" folder.
+The relevant scripts can be found in the "Example_LMIFit_Code" folder.
    
 
 ## An Example for Local-Fit
@@ -39,4 +47,4 @@ Without the necessary constraints using multiple observables in simultaneous fit
 
 Referece: https://confluence.its.virginia.edu/display/twist/The+DNN+Extraction+Approach
 
-The relevent scripts can be found in the "Example_LocalFit_Code" folder.
+The relevant scripts can be found in the "Example_LocalFit_Code" folder.
