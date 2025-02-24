@@ -1,5 +1,6 @@
 import tensorflow as tf
 from BHDVCS_tf_modified import *
+from user_inputs import *
 
 
 #Model architecture
