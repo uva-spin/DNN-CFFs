@@ -1,5 +1,7 @@
 import tensorflow as tf
 from BHDVCS_tf_modified import *
+from experimental_data_user_inputs import *
+
 def DNNmodel():
     initializer = tf.keras.initializers.RandomUniform(minval=-0.1, maxval=0.1, seed=None)
     #### QQ, x_b, t, phi, k ####
