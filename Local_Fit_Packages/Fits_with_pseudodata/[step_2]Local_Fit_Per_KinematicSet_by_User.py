@@ -23,11 +23,10 @@ import tensorflow as tf
 from BHDVCS_tf_modified import *
 from user_inputs import *
 import matplotlib.pyplot as plt
-from tensorflow_addons.activations import tanhshrink
-tf.keras.utils.get_custom_objects().update({'tanhshrink': tanhshrink})
 import os
 import sys
 from scipy.stats import norm
+from DNN_model import *
 
 
 def create_folders(folder_name):
