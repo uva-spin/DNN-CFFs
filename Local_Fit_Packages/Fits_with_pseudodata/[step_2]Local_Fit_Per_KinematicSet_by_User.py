@@ -100,7 +100,7 @@ def GenerateReplicaData(df):
     #ReplicaF = np.random.normal(loc=tempF, scale=tempFerr)
     while True:
         ReplicaF = np.random.normal(loc=tempF, scale=tempFerr)
-        if ReplicaF > 0:
+        if ReplicaF.all() > 0:
             break
     pseudodata_df['F'] = ReplicaF
     return pd.DataFrame(pseudodata_df)
