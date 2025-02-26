@@ -44,6 +44,8 @@ data_file = 'AllJlabData_from_Zulkaida_and_Liliet.csv'
 df = pd.read_csv(data_file)
 df = df.rename(columns={"sigmaF": "errF"})
 
+scratch_path = str(scratch_path) + '/'
+
 create_folders('Comparison_Plots')
 create_folders('CFF_Mean_Deviation_Plots')
 
