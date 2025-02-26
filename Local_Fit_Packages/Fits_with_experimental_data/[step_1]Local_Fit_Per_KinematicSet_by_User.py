@@ -98,7 +98,11 @@ def GenerateReplicaData(df):
     pseudodata_df['True_F'] = df['F']
     tempF = np.array(df['F'])
     tempFerr = np.abs(np.array(df['errF']))  # Had to do abs due to a run-time error
-    ReplicaF = np.random.normal(loc=tempF, scale=tempFerr)
+    #ReplicaF = np.random.normal(loc=tempF, scale=tempFerr)
+    while True:
+        ReplicaF = np.random.normal(loc=tempF, scale=tempFerr)
+        if SampleF > 0:
+            break
     pseudodata_df['F'] = ReplicaF
     return pd.DataFrame(pseudodata_df)
 
