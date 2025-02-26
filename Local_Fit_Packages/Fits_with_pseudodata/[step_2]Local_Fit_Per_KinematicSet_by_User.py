@@ -42,7 +42,7 @@ df = pd.read_csv(initial_data_file)
 df = df.rename(columns={"sigmaF": "errF"})
 df = df[df["F"] != 0]
 
-
+scratch_path = str(scratch_path) + '/'
 ## Remember to update the following line
 create_folders(scratch_path+'Replica_Cross_Sections')
 
