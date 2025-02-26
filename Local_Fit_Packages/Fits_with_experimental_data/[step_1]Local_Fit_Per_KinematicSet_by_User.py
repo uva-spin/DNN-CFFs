@@ -44,7 +44,7 @@ df = df.rename(columns={"sigmaF": "errF"})
 #filtering out F = 0 ones
 df = df[df["F"] != 0]
 
-
+scratch_path = str(scratch_path) + '/'
 ## Remember to update the following line
 
 create_folders(scratch_path+'Replica_Cross_Sections')
