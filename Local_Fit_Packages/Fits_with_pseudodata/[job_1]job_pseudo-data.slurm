@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH -A spinquest
+#SBATCH -A spinquest_standard
 #SBATCH -p gpu
 #SBATCH --gres=gpu:a100
 #SBATCH --constraint=a100_80gb
