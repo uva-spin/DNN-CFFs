@@ -110,7 +110,10 @@ def GeneratePseudoData(df):
         #print(tempFerr)
         #pseudodata_df['F'].append(tempF)
         pseudodata_df['sigmaF'].append(tempFerr)
-        SampleF = np.random.normal(loc=tempF, scale=tempFerr)
+        while True:
+            SampleF = np.random.normal(loc=tempF, scale=tempFerr)
+            if SampleF > 0:
+                break
         #print(SampleF)
         pseudodata_df['F'].append(SampleF)
     return pd.DataFrame(pseudodata_df)
