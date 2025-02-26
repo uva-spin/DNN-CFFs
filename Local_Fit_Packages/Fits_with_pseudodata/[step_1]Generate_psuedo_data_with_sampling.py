@@ -11,6 +11,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from BHDVCS_tf_modified import *
 from mpl_toolkits.mplot3d import Axes3D
+from scipy.interpolate import griddata
 
 fns = F1F2()
 calc = F_calc()
@@ -28,6 +29,8 @@ kindf = pd.read_csv(file_name, dtype=np.float32).dropna(axis=0, how='all').dropn
 def genf(x,t,a,b,c,d,e,f):
     temp = (a*(x**2) + b*x)*np.exp(c*(t**2)+d*t+e)+f
     return temp
+
+# Basic 2 #
 
 def ReHps(x,t):
     temp_a = -4.41
@@ -136,50 +139,100 @@ ReE_values = df['ReE'].values
 ReHt_values = df['ReHt'].values
 dvcs_values = df['dvcs'].values
 
-# Create a single figure for all 4 scatter plots
-fig = plt.figure(figsize=(16, 12))
+##########################################
+########## 3D scatter plots ##############
+##########################################
 
-# ReH scatter plot
-ax1 = fig.add_subplot(221, projection='3d')
-sc1 = ax1.scatter(x_b_values, t_values, ReH_values, c=ReH_values, marker='o')
-ax1.set_xlabel('x_b')
-ax1.set_ylabel('t')
-ax1.set_zlabel('ReH')
-ax1.set_title('ReH vs x_b and t')
-fig.colorbar(sc1, ax=ax1, shrink=0.5)
 
-# ReE scatter plot
-ax2 = fig.add_subplot(222, projection='3d')
-sc2 = ax2.scatter(x_b_values, t_values, ReE_values, c=ReE_values, marker='o')
-ax2.set_xlabel('x_b')
-ax2.set_ylabel('t')
-ax2.set_zlabel('ReE')
-ax2.set_title('ReE vs x_b and t')
-fig.colorbar(sc2, ax=ax2, shrink=0.5)
+vmin = min(ReH_values.min(), ReE_values.min(), ReHt_values.min(), dvcs_values.min())
+vmax = max(ReH_values.max(), ReE_values.max(), ReHt_values.max(), dvcs_values.max())
 
-# ReHt scatter plot
-ax3 = fig.add_subplot(223, projection='3d')
-sc3 = ax3.scatter(x_b_values, t_values, ReHt_values, c=ReHt_values, marker='o')
-ax3.set_xlabel('x_b')
-ax3.set_ylabel('t')
-ax3.set_zlabel('ReHt')
-ax3.set_title('ReHt vs x_b and t')
-fig.colorbar(sc3, ax=ax3, shrink=0.5)
+# Create figure
+fig2 = plt.figure(figsize=(16, 12))
+plt.suptitle("Basic Model 1: 3D Scatter Plots of CFFs", fontsize=14, fontweight='bold')
 
-# DVCS scatter plot
-ax4 = fig.add_subplot(224, projection='3d')
-sc4 = ax4.scatter(x_b_values, t_values, dvcs_values, c=dvcs_values, marker='o')
-ax4.set_xlabel('x_b')
-ax4.set_ylabel('t')
-ax4.set_zlabel('DVCS')
-ax4.set_title('DVCS vs x_b and t')
-fig.colorbar(sc4, ax=ax4, shrink=0.5)
+# Function for creating subplots
+def create_3d_subplot(ax, x, y, z, title, zlabel, cmap='viridis'):
+    sc = ax.scatter(x, y, z, c=z, cmap=cmap, s=50, marker='o', vmin=vmin, vmax=vmax)
+    ax.set_xlabel('x_b', fontsize=12)
+    ax.set_ylabel('t', fontsize=12)
+    ax.set_zlabel(zlabel, fontsize=12)
+    ax.set_title(title, fontsize=12, fontweight='bold')
+    ax.view_init(elev=30, azim=45)  # Adjust view angle for better visibility
+    return sc
 
-# Save all scatter plots into a single PNG file
-plt.tight_layout()
+# Create subplots
+ax1 = fig2.add_subplot(221, projection='3d')
+sc1 = create_3d_subplot(ax1, x_b_values, t_values, ReH_values, '$ReH$ vs $x_B$ and $t$', '$ReH$')
+
+ax2 = fig2.add_subplot(222, projection='3d')
+sc2 = create_3d_subplot(ax2, x_b_values, t_values, ReE_values, '$ReE$ vs $x_B$ and $t$', '$ReE$')
+
+ax3 = fig2.add_subplot(223, projection='3d')
+sc3 = create_3d_subplot(ax3, x_b_values, t_values, ReHt_values, '$Re\\tilde{H}$ vs $x_B$ and $t$', '$Re\\tilde{H}$')
+
+ax4 = fig2.add_subplot(224, projection='3d')
+sc4 = create_3d_subplot(ax4, x_b_values, t_values, dvcs_values, '$DVCS$ vs $x_B$ and $t$', '$DVCS$')
+
+# Add colorbars
+fig2.colorbar(sc1, ax=ax1, shrink=0.5, aspect=10)
+fig2.colorbar(sc2, ax=ax2, shrink=0.5, aspect=10)
+fig2.colorbar(sc3, ax=ax3, shrink=0.5, aspect=10)
+fig2.colorbar(sc4, ax=ax4, shrink=0.5, aspect=10)
+
+# Adjust layout and save figure
+plt.tight_layout(rect=[0, 0, 1, 0.96])
 plt.savefig("CFF_Scatter_Plots.png", dpi=300)
 
-# Close the plots to free memory
-plt.close(fig)
 
-print("Combined 3D scatter plots saved as 'CFF_Scatter_Plots.png'.")
+##########################################
+########## 3D surface plots ##############
+##########################################
+
+# Create a meshgrid for interpolation
+grid_x, grid_t = np.meshgrid(
+    np.linspace(x_b_values.min(), x_b_values.max(), 50),
+    np.linspace(t_values.min(), t_values.max(), 50)
+)
+
+# Function to interpolate and create surface plots
+def plot_surface(ax, x, y, z, title, zlabel, cmap='viridis'):
+    grid_z = griddata((x, y), z, (grid_x, grid_t), method='cubic')  # Interpolation
+    surf = ax.plot_surface(grid_x, grid_t, grid_z, cmap=cmap, edgecolor='none', alpha=0.8)
+    ax.set_xlabel('x_b', fontsize=12)
+    ax.set_ylabel('t', fontsize=12)
+    ax.set_zlabel(zlabel, fontsize=12)
+    ax.set_title(title, fontsize=12, fontweight='bold')
+    ax.view_init(elev=30, azim=45)  # Adjust view angle
+    return surf
+
+# Create figure
+fig1 = plt.figure(figsize=(16, 12))
+plt.suptitle("Basic Model 1: 3D Surface Plots of CFFs", fontsize=14, fontweight='bold')
+
+# ReH surface plot
+ax1 = fig1.add_subplot(221, projection='3d')
+surf1 = plot_surface(ax1, x_b_values, t_values, ReH_values, '$ReH$ vs $x_B$ and $t$', '$ReH$')
+
+# ReE surface plot
+ax2 = fig1.add_subplot(222, projection='3d')
+surf2 = plot_surface(ax2, x_b_values, t_values, ReE_values, '$ReE$ vs $x_B$ and $t$', '$ReE$')
+
+# ReHt surface plot
+ax3 = fig1.add_subplot(223, projection='3d')
+surf3 = plot_surface(ax3, x_b_values, t_values, ReHt_values, '$Re\\tilde{H}$ vs $x_B$ and $t$', '$Re\\tilde{H}$')
+
+# DVCS surface plot
+ax4 = fig1.add_subplot(224, projection='3d')
+surf4 = plot_surface(ax4, x_b_values, t_values, dvcs_values, '$DVCS$ vs $x_B$ and $t$', '$DVCS$')
+
+# Add colorbars
+fig1.colorbar(surf1, ax=ax1, shrink=0.5, aspect=10)
+fig1.colorbar(surf2, ax=ax2, shrink=0.5, aspect=10)
+fig1.colorbar(surf3, ax=ax3, shrink=0.5, aspect=10)
+fig1.colorbar(surf4, ax=ax4, shrink=0.5, aspect=10)
+
+# Adjust layout and save figure
+plt.tight_layout(rect=[0, 0, 1, 0.96])
+plt.savefig("CFF_Surface_Plots.png", dpi=300)
+
