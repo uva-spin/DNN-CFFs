@@ -144,15 +144,15 @@ def run_replica(kinset, i, xdf):
     tfModel.save(str(scratch_path) + 'DNNmodels_Kin_Set_' + str(kinset) + '/' + 'model' + str(replica_number) + '.h5', save_format='h5')
 
     # Create subplots for loss plots
-    # plt.figure(1, figsize=(12, 5))
-    # plt.plot(history.history['loss'], label='Train loss')
-    # plt.plot(history.history['val_loss'], label='Val. loss')
-    # plt.title(f'Losses for Kinematic Set {kinset}')
-    # plt.xlabel('Epochs')
-    # plt.ylabel('Loss')
-    # plt.legend()
-    # plt.savefig(str(scratch_path) + 'Losses_Plots_Kin_Set_' + str(kinset) + '/' + 'loss_plots_' + str(replica_number) + '.pdf')
-    # plt.close()
+    plt.figure(1, figsize=(12, 5))
+    plt.plot(history.history['loss'], label='Train loss')
+    plt.plot(history.history['val_loss'], label='Val. loss')
+    plt.title(f'Losses for Kinematic Set {kinset}')
+    plt.xlabel('Epochs')
+    plt.ylabel('Loss')
+    plt.legend()
+    plt.savefig(str(scratch_path) + 'Losses_Plots_Kin_Set_' + str(kinset) + '/' + 'loss_plots_' + str(replica_number) + '.pdf')
+    plt.close()
 
 
 # Load prediction inputs from CSV and run for multiple kinematic sets
