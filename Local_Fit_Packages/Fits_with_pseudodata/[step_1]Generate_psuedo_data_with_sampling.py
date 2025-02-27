@@ -30,6 +30,45 @@ def genf(x,t,a,b,c,d,e,f):
     temp = (a*(x**2) + b*x)*np.exp(c*(t**2)+d*t+e)+f
     return temp
 
+# Basic 1 #
+
+# def ReHps(x,t):
+#     temp_a = -4.41
+#     temp_b = 1.68
+#     temp_c = -9.14
+#     temp_d = -3.57
+#     temp_e = 1.54
+#     temp_f = 2.07
+#     return genf(x,t,temp_a, temp_b, temp_c, temp_d, temp_e, temp_f)
+
+# def ReEps(x,t):
+#     temp_a = 144.56
+#     temp_b = 149.99
+#     temp_c = 0.32
+#     temp_d = -1.09
+#     temp_e = -148.49
+#     temp_f = -0.31
+#     return genf(x,t,temp_a, temp_b, temp_c, temp_d, temp_e, temp_f)
+
+# def ReHtps(x,t):
+#     temp_a = -1.86
+#     temp_b = 1.50
+#     temp_c = -0.29
+#     temp_d = -1.33
+#     temp_e = 0.46
+#     temp_f = -0.98
+#     return genf(x,t,temp_a, temp_b, temp_c, temp_d, temp_e, temp_f)
+
+# def DVCSps(x,t):
+#     temp_a = 0.50
+#     temp_b = -0.41
+#     temp_c = 0.05
+#     temp_d = -0.25
+#     temp_e = 0.55
+#     temp_f = 0.166
+#     return genf(x,t,temp_a, temp_b, temp_c, temp_d, temp_e, temp_f)
+
+
 # Basic 2 #
 
 def ReHps(x,t):
