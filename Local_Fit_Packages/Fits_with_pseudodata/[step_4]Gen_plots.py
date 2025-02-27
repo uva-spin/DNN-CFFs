@@ -222,7 +222,7 @@ def generate_all_plots(evaluation_csv, cff_predictions_dir, output_dir):
 
         if os.path.exists(cff_predictions_csv):
             print(f"Generating CFF histogram plots for Set {kinematic_set}")
-            #generate_plots_from_csv(cff_predictions_csv, output_dir)
+            generate_plots_from_csv(cff_predictions_csv, output_dir)
         else:
             print(f"CFF predictions CSV not found for Set {kinematic_set}")
         if os.path.exists(cff_all_sets_combined_csv):
