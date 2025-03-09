@@ -6,8 +6,8 @@
 #SBATCH -c 4
 #SBATCH -t 2:00:00
 #SBATCH -J pseudo_data_gen_with_sampling
-#SBATCH -o tuner.out
-#SBATCH -e tuner.err
+#SBATCH -o make_pseudodata.out
+#SBATCH -e make_pseudodata.err
 #SBATCH --mem=256000
 
 module purge

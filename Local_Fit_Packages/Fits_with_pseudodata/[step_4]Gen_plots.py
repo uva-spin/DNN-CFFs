@@ -210,7 +210,7 @@ def generate_all_plots(evaluation_csv, cff_predictions_dir, output_dir):
         # Define paths for the relevant CSV files
         f_vs_phi_csv = os.path.join(f'Comparison_Plots/F_vs_phi_x_Kinematic_Set_{kinematic_set}.csv')
         cff_predictions_csv = os.path.join(cff_predictions_dir, f'CFFs_Predictions_Set_{kinematic_set}.csv')
-        cff_all_sets_combined_csv = os.path.join('CFFs_AllSets_Combined.csv')
+        cff_all_sets_combined_csv = os.path.join('Summary_of_CFFs.csv')
 
 
         # Check if the necessary CSV files exist before proceeding
@@ -222,7 +222,7 @@ def generate_all_plots(evaluation_csv, cff_predictions_dir, output_dir):
 
         if os.path.exists(cff_predictions_csv):
             print(f"Generating CFF histogram plots for Set {kinematic_set}")
-            generate_plots_from_csv(cff_predictions_csv, output_dir)
+            #generate_plots_from_csv(cff_predictions_csv, output_dir)
         else:
             print(f"CFF predictions CSV not found for Set {kinematic_set}")
         if os.path.exists(cff_all_sets_combined_csv):
@@ -238,5 +238,3 @@ scratch_path = scratch_path
 output_dir = 'Comparison_Plots'
 
 generate_all_plots(evaluation_csv, scratch_path, output_dir)
-
-

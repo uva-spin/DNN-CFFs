@@ -3,10 +3,10 @@
 #SBATCH -p gpu
 #SBATCH --gres=gpu:1
 #SBATCH -c 4
-#SBATCH -t 6:00:00
-#SBATCH -J LocalFit_job
-#SBATCH -o tuner.out
-#SBATCH -e tuner.err
+#SBATCH -t 15:00:00
+#SBATCH -J training_basic_1
+#SBATCH -o training.out
+#SBATCH -e training.err
 #SBATCH --mem=256000
 #SBATCH --array=1-100
 

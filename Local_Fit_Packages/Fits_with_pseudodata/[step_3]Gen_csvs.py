@@ -16,6 +16,7 @@ import pandas as pd
 import tensorflow as tf
 from BHDVCS_tf_modified import *
 from user_inputs import *
+from DNN_model import *
 import matplotlib.pyplot as plt
 from scipy.stats import norm
 import os
@@ -40,28 +41,40 @@ def predict_cffs_and_f(LayerCFFs, LayerF, inputs):
 
 def remove_extra_evaluation_columns(input_csv, output_csv):
     """
-    Remove the first column from a CSV file and save the result to a new file.
+    Remove specific columns from a CSV file if they exist and rename columns if they exist.
 
     Parameters:
         input_csv (str): Path to the input CSV file.
-        output_csv (str): Path to the output CSV file with the first column removed.
+        output_csv (str): Path to the output CSV file with specified columns removed or renamed.
     """
-    # Load the CSV file
     df = pd.read_csv(input_csv)
 
-    # Remove the first column
-    df = df.drop(columns=['Mean F Prediction','Std Dev Prediction','ReH_std','ReE_std','ReHt_std','dvcs_std'])
-    df.rename(columns={
+    columns_to_remove = ['Mean F Prediction', 'Std Dev Prediction', 'ReH_std', 'ReE_std', 'ReHt_std', 'dvcs_std']
+    
+    # Remove columns only if they exist
+    existing_columns_to_remove = [col for col in columns_to_remove if col in df.columns]
+    if existing_columns_to_remove:
+        df.drop(columns=existing_columns_to_remove, inplace=True)
+
+    # Define column renaming mapping
+    rename_mapping = {
         "ReH_pred": "ReH",
         "ReE_pred": "ReE",
         "ReHt_pred": "ReHt",
         "dvcs_pred": "dvcs"
-    }, inplace=True)
+    }
+
+    # Rename columns only if they exist
+    existing_rename_mapping = {old: new for old, new in rename_mapping.items() if old in df.columns}
+    if existing_rename_mapping:
+        df.rename(columns=existing_rename_mapping, inplace=True)
 
     # Save the modified DataFrame to a new CSV file
     df.to_csv(output_csv, index=False)
-    print(f"columns removed and renamed, file renamed to {output_csv}")
-
+    
+    print(f"Columns removed: {existing_columns_to_remove}")
+    print(f"Columns renamed: {existing_rename_mapping}")
+    print(f"File saved as {output_csv}")
 
 remove_extra_evaluation_columns(initial_data_file, "temp_pseudodata.csv")
 
@@ -98,7 +111,6 @@ else:
 available_kin_sets = sorted(available_kin_sets)
 print(f"Available kinematic sets: {available_kin_sets}")
 
-# Initialize an empty DataFrame to store all results
 all_results_df = pd.DataFrame()
 
 # **Step 1: Initialize a dictionary to store residuals for each CFF per kinematic set for violin plots**
