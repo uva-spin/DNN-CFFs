@@ -1,0 +1,3 @@
+Kinematic Set	Chi-Square Error
+100	156.3923
+100	184.5139
