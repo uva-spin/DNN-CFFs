@@ -12,6 +12,18 @@ import matplotlib.pyplot as plt
 from BHDVCS_tf_modified import *
 from mpl_toolkits.mplot3d import Axes3D
 from scipy.interpolate import griddata
+import os
+
+def create_folders(folder_name):
+    if not os.path.exists(folder_name):
+        os.makedirs(folder_name)
+        print(f"Folder '{folder_name}' created successfully!")
+    else:
+        print(f"Folder '{folder_name}' already exists!")
+
+
+sanity_checks_folder = 'Checks_for_Issues'
+create_folders(sanity_checks_folder)
 
 fns = F1F2()
 calc = F_calc()
@@ -30,7 +42,7 @@ def genf(x,t,a,b,c,d,e,f):
     temp = (a*(x**2) + b*x)*np.exp(c*(t**2)+d*t+e)+f
     return temp
 
-# Basic 1 #
+# ### Basic 1 #
 
 # def ReHps(x,t):
 #     temp_a = -4.41
@@ -69,7 +81,7 @@ def genf(x,t,a,b,c,d,e,f):
 #     return genf(x,t,temp_a, temp_b, temp_c, temp_d, temp_e, temp_f)
 
 
-# Basic 2 #
+# # Basic 2 #
 
 def ReHps(x,t):
     temp_a = -4.41
@@ -108,7 +120,19 @@ def DVCSps(x,t):
     return genf(x,t,temp_a, temp_b, temp_c, temp_d, temp_e, temp_f)
 
 
-def GeneratePseudoData(df):
+# This function returns a new DataFrame with kinematics if 'F' is negative.
+def slice_negative_f(df):
+    return df[df['F'] < 0]
+
+
+# This function returns a new DataFrame with kinematics if 'F' > 20.
+def slice_large_f(df):
+    tempPseudoDatadf = df[df['F'] > 20.0]
+    #print(df[df['F'] > 20]) 
+    return pd.DataFrame(tempPseudoDatadf)
+
+
+def GeneratePseudoData_noSampling(df):
     pseudodata_df = {'set': [],
                      'k': [],
                      'QQ': [],
@@ -143,30 +167,37 @@ def GeneratePseudoData(df):
         #print(pseudodata_df['dvcs'])
         ###################
         F1, F2 = fns.f1_f21(tempt)
-        tempF = calc.fn_1([tempphi, tempQQ, tempxb, tempt, tempk, F1, F2], [ReH, ReE, ReHtilde, dvcs])
-        #tempFerr = tempF * varF
+        ## Here I notied that there are zeros by hand in the exp data file for the kinematics
+        ## 66, 67, 68, 69, 70, 74, 75, 76, 78, 79, 80, 81, 82, 93, 94 
+        ## Therefore we set those ones' F to zeto as well
+        if row['sigmaF']==0.0:
+            tempF = 0.0
+        else:
+            tempF = calc.fn_1([tempphi, tempQQ, tempxb, tempt, tempk, F1, F2], [ReH, ReE, ReHtilde, dvcs])
+        pseudodata_df['F'].append(tempF)
         tempFerr = np.abs(tempF * varF) ## Had to do abs due to a run-time error
-        #print(tempFerr)
-        #pseudodata_df['F'].append(tempF)
         pseudodata_df['sigmaF'].append(tempFerr)
-        #SampleF = np.random.normal(loc=tempF, scale=tempFerr)
-        while True:
-            SampleF = np.random.normal(loc=tempF, scale=tempFerr)
-            if SampleF > 0:
-                break
-        #print(SampleF)
-        pseudodata_df['F'].append(SampleF)
     return pd.DataFrame(pseudodata_df)
 
 
+tempPseudoData_FUNCTION_df=GeneratePseudoData_noSampling(kindf)
+tempPseudoData_FUNCTION_df.to_csv(str(sanity_checks_folder)+'/'+'Pseudo_data_without_sampling.csv', index=False)
 
-tempPseudoDatadf=GeneratePseudoData(kindf)
-tempPseudoDatadf.to_csv('Pseudo_data_with_sampling.csv', index=False)
+negative_F_kinematics_from_FUNCTION = slice_negative_f(tempPseudoData_FUNCTION_df)
+negative_F_kinematics_from_FUNCTION.to_csv(str(sanity_checks_folder)+'/'+'Kinematics_wth_negaive_F_from_FUNCTION.csv', index=False)
+
+large_F_kinematics_from_FUNCTION = slice_large_f(tempPseudoData_FUNCTION_df)
+large_F_kinematics_from_FUNCTION.to_csv(str(sanity_checks_folder)+'/'+'Kinematics_wth_large_F_from_FUNCTION.csv', index=False)
+
+
+
 
 ###### Making 3d scatter plots of CFFs ########
 
-file_name = "Pseudo_data_with_sampling.csv"
-df = pd.read_csv(file_name)
+# file_name = "Pseudo_data_with_sampling.csv"
+# df = pd.read_csv(file_name)
+
+df = tempPseudoData_FUNCTION_df
 
 # Extract relevant columns
 x_b_values = df['x_b'].values
@@ -275,3 +306,77 @@ fig1.colorbar(surf4, ax=ax4, shrink=0.5, aspect=10)
 plt.tight_layout(rect=[0, 0, 1, 0.96])
 plt.savefig("CFF_Surface_Plots.png", dpi=300)
 
+
+
+###########  Generating pseudo-data #####################
+
+def GeneratePseudoData(df):
+    pseudodata_df = {'set': [],
+                     'k': [],
+                     'QQ': [],
+                     'x_b': [],
+                     't': [],
+                     'phi_x': [],
+                     'F_function':[],
+                     'F':[],
+                     'sigmaF':[],                     
+                     'ReH': [],
+                     'ReE': [],
+                     'ReHt': [],
+                     'dvcs': []}
+    for i in range(len(df)):
+        row = df.loc[i]
+        
+        tempSet, tempQQ, tempxb, tempt, tempk, tempphi, varF = np.array([row['#Set'],row['QQ'], row['x_b'], row['t'], row['k'],row['phi_x'], row['varF']])
+        pseudodata_df['set'].append(tempSet)
+        pseudodata_df['k'].append(tempk)
+        pseudodata_df['QQ'].append(tempQQ)
+        pseudodata_df['x_b'].append(tempxb)
+        pseudodata_df['t'].append(tempt)
+        pseudodata_df['phi_x'].append(tempphi)
+        ####################
+        ReH=ReHps(tempxb,tempt)
+        ReE=ReEps(tempxb,tempt)
+        ReHtilde=ReHtps(tempxb,tempt)
+        dvcs=DVCSps(tempxb,tempt)
+        pseudodata_df['ReH'].append(ReH)
+        pseudodata_df['ReE'].append(ReE)
+        pseudodata_df['ReHt'].append(ReHtilde)
+        pseudodata_df['dvcs'].append(dvcs)
+        #print(pseudodata_df['dvcs'])
+        ###################
+        F1, F2 = fns.f1_f21(tempt)
+        #tempF = calc.fn_1([tempphi, tempQQ, tempxb, tempt, tempk, F1, F2], [ReH, ReE, ReHtilde, dvcs])
+        #pseudodata_df['F_function'].append(tempF)
+        ## Here I notied that there are zeros by hand in the exp data file for the kinematics
+        ## 66, 67, 68, 69, 70, 74, 75, 76, 78, 79, 80, 81, 82, 93, 94 
+        ## Therefore we set those ones' F to zeto as well
+        if row['sigmaF']==0.0:
+            tempF = 0.0
+            tempFerr = np.abs(tempF * varF)
+        else:
+            tempF = calc.fn_1([tempphi, tempQQ, tempxb, tempt, tempk, F1, F2], [ReH, ReE, ReHtilde, dvcs])
+            tempFerr = np.abs(tempF * varF)
+            while True:
+                SampleF = np.random.normal(loc=tempF, scale=tempFerr)
+                if np.all(SampleF > 0):
+                    break
+        pseudodata_df['F_function'].append(tempF)
+        pseudodata_df['sigmaF'].append(tempFerr)
+        # while True:
+        #     SampleF = np.random.normal(loc=tempF, scale=tempFerr)
+        #     if np.all(SampleF > 0):
+        #         break
+        #print(SampleF)
+        pseudodata_df['F'].append(SampleF)
+    return pd.DataFrame(pseudodata_df)
+
+
+tempPseudoDatadf=GeneratePseudoData(kindf)
+tempPseudoDatadf.to_csv('Pseudo_data_with_sampling.csv', index=False)
+
+negative_F_kinematics = slice_negative_f(tempPseudoDatadf)
+negative_F_kinematics.to_csv(str(sanity_checks_folder)+'/'+'Kinematics_wth_negaive_F_after_sampling.csv', index=False)
+
+large_F_kinematics = slice_large_f(tempPseudoDatadf)
+large_F_kinematics.to_csv(str(sanity_checks_folder)+'/'+'Kinematics_wth_large_F_after_sampling.csv', index=False)

@@ -29,6 +29,9 @@ def create_folders(folder_name):
     else:
         print(f"Folder '{folder_name}' already exists!")
 
+
+scratch_path = str(scratch_path) + '/'
+
 def load_FLayer_and_cffLayer(model):
     LayerF = tf.keras.models.load_model(model, custom_objects={'TotalFLayer': TotalFLayer})
     LayerCFFs = tf.keras.Model(inputs=LayerF.input, outputs=LayerF.get_layer('cff_output_layer').output)
@@ -86,8 +89,6 @@ df = pd.read_csv(data_file)
 df = df.rename(columns={"sigmaF": "errF"})
 
 
-create_folders('Comparison_Plots')
-create_folders('CFF_Mean_Deviation_Plots')
 
 # Variable to decide whether to use specific kinematic sets or all available sets
 use_specific_sets = False  # Set to False if you want to search all available kinematic sets

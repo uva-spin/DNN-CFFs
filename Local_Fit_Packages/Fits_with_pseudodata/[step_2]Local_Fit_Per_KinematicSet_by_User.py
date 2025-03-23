@@ -166,8 +166,15 @@ for set_number in kinematic_sets:  # Loop through the list of kinematic sets
     create_folders(str(scratch_path) + 'DNNmodels_Kin_Set_' + str(set_number))
     create_folders(str(scratch_path) + 'Losses_Plots_Kin_Set_' + str(set_number))
 
+    # ### For running on Rivanna with a slurm file #####
     replica_id = sys.argv[1]
     run_replica(set_number, replica_id, kin_df)
+
+    # ### For running with a local machine ####
+    # for j in range(0,10):
+    #     replica_id = j
+    #     run_replica(set_number, replica_id, kin_df)
+
     print(f"Completed running for kinematic set {set_number}")
 
     

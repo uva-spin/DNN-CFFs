@@ -5,6 +5,17 @@ import numpy as np
 from scipy.stats import norm
 from user_inputs import *
 
+
+def create_folders(folder_name):
+    if not os.path.exists(folder_name):
+        os.makedirs(folder_name)
+        print(f"Folder '{folder_name}' created successfully!")
+    else:
+        print(f"Folder '{folder_name}' already exists!")
+
+create_folders('Comparison_Plots')
+create_folders('CFF_Mean_Deviation_Plots')
+
 def remove_duplicate_columns(df):
     """
     Removes duplicate columns from a pandas DataFrame.
@@ -222,7 +233,7 @@ def generate_all_plots(evaluation_csv, cff_predictions_dir, output_dir):
 
         if os.path.exists(cff_predictions_csv):
             print(f"Generating CFF histogram plots for Set {kinematic_set}")
-            #generate_plots_from_csv(cff_predictions_csv, output_dir)
+            generate_plots_from_csv(cff_predictions_csv, output_dir)
         else:
             print(f"CFF predictions CSV not found for Set {kinematic_set}")
         if os.path.exists(cff_all_sets_combined_csv):
