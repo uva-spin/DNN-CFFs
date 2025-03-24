@@ -169,11 +169,13 @@ def GeneratePseudoData_noSampling(df):
         F1, F2 = fns.f1_f21(tempt)
         ## Here I notied that there are zeros by hand in the exp data file for the kinematics
         ## 66, 67, 68, 69, 70, 74, 75, 76, 78, 79, 80, 81, 82, 93, 94 
-        ## Therefore we set those ones' F to zeto as well
-        if row['sigmaF']==0.0:
-            tempF = 0.0
-        else:
-            tempF = calc.fn_1([tempphi, tempQQ, tempxb, tempt, tempk, F1, F2], [ReH, ReE, ReHtilde, dvcs])
+        ## Uncomment the following lines if you want to set those ones' F to zeto.
+        # if row['sigmaF']==0.0:
+        #     tempF = 0.0
+        # else:
+        #     tempF = calc.fn_1([tempphi, tempQQ, tempxb, tempt, tempk, F1, F2], [ReH, ReE, ReHtilde, dvcs])
+        ## Comment the following line if you are using the lines above
+        tempF = calc.fn_1([tempphi, tempQQ, tempxb, tempt, tempk, F1, F2], [ReH, ReE, ReHtilde, dvcs])
         pseudodata_df['F'].append(tempF)
         tempFerr = np.abs(tempF * varF) ## Had to do abs due to a run-time error
         pseudodata_df['sigmaF'].append(tempFerr)
@@ -184,10 +186,16 @@ tempPseudoData_FUNCTION_df=GeneratePseudoData_noSampling(kindf)
 tempPseudoData_FUNCTION_df.to_csv(str(sanity_checks_folder)+'/'+'Pseudo_data_without_sampling.csv', index=False)
 
 negative_F_kinematics_from_FUNCTION = slice_negative_f(tempPseudoData_FUNCTION_df)
-negative_F_kinematics_from_FUNCTION.to_csv(str(sanity_checks_folder)+'/'+'Kinematics_wth_negaive_F_from_FUNCTION.csv', index=False)
+negative_F_kinematics_from_FUNCTION.to_csv(str(sanity_checks_folder)+'/'+'ATTENTION_Kinematics_wth_negaive_F_from_FUNCTION.csv', index=False)
 
 large_F_kinematics_from_FUNCTION = slice_large_f(tempPseudoData_FUNCTION_df)
-large_F_kinematics_from_FUNCTION.to_csv(str(sanity_checks_folder)+'/'+'Kinematics_wth_large_F_from_FUNCTION.csv', index=False)
+large_F_kinematics_from_FUNCTION.to_csv(str(sanity_checks_folder)+'/'+'ATTENTION_Kinematics_wth_large_F_from_FUNCTION.csv', index=False)
+
+print("************************* ATTENTION!!!  **************************************")
+print(f"Please check the {sanity_checks_folder} folder to see which kinematic sets produce either very large cross-section values or negative cross-section values.")
+print(" Note: In the files starts with filename *ATTENTION*, we haven't set F (cross-section) values to zero as it was done in the original data file AllJlabData_from_Zulkaida_and_Liliet.csv.")
+print("In the 'Pseudo_data_with_sampling.csv' file, F values were set to zero if the correspondin ones were set to zero in the file AllJlabData_from_Zulkaida_and_Liliet.csv ")
+print("******************************************************************************")
 
 
 
