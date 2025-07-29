@@ -1,0 +1,1 @@
+For the record, there might be some extra files. To run, module load root (figure out prerequisite modules through module spider), and load all other necessary imports with pip or conda install. When done running step 1, move Pseudo_data_with_sampling
