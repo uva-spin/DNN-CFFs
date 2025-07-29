@@ -1,0 +1,2 @@
+- Python version of the BKM10 Unpolarized DVCS Formulation BKM_DVCS_8Pars.py. The pure DVCS dependence on all 8 CFFs is included.
+- The compare_Fvalues.py produces the F_true_comparison_t2.csv file that shows the xs values (F) using the BKM10 formularion with the KM15 CFFs model obtained with ROOT software (F_true) and python (F_true_py) which agree with each other.
