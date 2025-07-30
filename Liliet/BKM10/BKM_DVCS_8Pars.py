@@ -193,6 +193,37 @@ class BKM_DVCS(object):
         f_pred = xsbhuu + xsiuu + xsdvcs # Total DVCS cross-section
 
         return f_pred
+    
+    @tf.function
+    def total_xs_fix_dvcs(self, kins, pars,twist):
+
+        # Split input data
+        k, QQ, x, t, phi = tf.split(kins, num_or_size_splits=5, axis=1)
+        ReH, ReE, ReHt, dvcs = tf.split(pars, num_or_size_splits=4, axis=1) 
+
+        # Compute kinematic dependent variables
+        ee, y, xi, Gamma, tmin, Ktilde_10, K = self.SetKinematics(QQ, x, t, k)
+
+        # Twist-2 approximation selection
+        if twist == "t2": # F_eff = 0 ( pure twist 2) --> DVCS is constant
+            f = 0  
+        if twist == "t2_ho": # twist-2 higher order (ho) corrections from t3 (DVCS phi-dependence appears)
+            f = - 2. * xi / (1. + xi)
+        if twist == "t2_ww": # twist-2 higher order (ho) corrections from t3 using the WW relations (DVCS phi-dependence appears)
+            f = 2. / (1. + xi)
+
+        # Get elastic FFs
+        ffs = FFs()
+        F1, F2 = ffs.F1_F2(t) 
+        # Get lepton propagators
+        P1, P2 = self.BHLeptonPropagators(phi, QQ, x, t, ee, y, K)
+
+        xsbhuu = self.BHUU(phi, F1, F2, P1, P2, QQ, x, t, ee, y, Gamma, K) # BH cross-section
+        xsiuu = self.IUU(phi, F1, F2, P1, P2, QQ, x, t, ee, y, K, Gamma, ReH, ReE, ReHt, tmin, xi, Ktilde_10, f) # BH-DVCS interference
+        f_pred = xsbhuu + xsiuu + dvcs # Total DVCS cross-section
+
+        return f_pred
+
 
 class FFs:
 
@@ -233,5 +264,5 @@ class FFs:
     
 
 bkm = BKM_DVCS()
-xs = bkm.total_xs(tf.constant([[5.75,1.82,0.343,-0.172, 0]]), tf.constant([[ -2.56464,2.21195,1.39564, 141.316, 3.39541,0,1.56463,0]]), "t2")
+xs = bkm.total_xs_fix_dvcs(tf.constant([[5.75,1.82,0.343,-0.172, 7.5]]), tf.constant([[ -2.56464,2.21195,1.39564, 0.0315875]]), "t2")
 print(xs)

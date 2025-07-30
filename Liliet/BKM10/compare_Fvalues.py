@@ -20,12 +20,23 @@ xs = xs.numpy().flatten()  # Convert to NumPy array for saving
 # Add predictions to DataFrame
 df["F_true_py"] = xs
 
-# Select columns to save
-output_columns = ["k", "QQ", "xB", "t", "phi", "ReH", "ReE", "ReHt", "ReEt", "ImH", "ImE", "ImHt", "ImEt", "F_true", "F_true_py"]
+# Prepare input for total_xs_fix_dvcs
+pars_fix = tf.constant(df[["ReH", "ReE", "ReHt", "dvcs"]].values, dtype=tf.float32)
+
+# Compute total_xs_fix_dvcs that uses the dvcs value from the pseudodata file
+xs_fix = bkm.total_xs_fix_dvcs(kins, pars_fix, twist="t2")
+df["F_true_fix_dvcs"] = xs_fix.numpy().flatten()
+
+# Define output columns
+output_columns = [
+    "k", "QQ", "xB", "t", "phi",
+    "ReH", "ReE", "ReHt", "ReEt", "ImH", "ImE", "ImHt", "ImEt",
+    "F_true", "F_true_py", "F_true_fix_dvcs"
+]
 output_df = df[output_columns]
 
-# Save to new CSV
+# Save to CSV
 output_file = "F_true_comparison_t2.csv"
 output_df.to_csv(output_file, index=False)
 
-print(f"Predictions saved to {output_file}")
+print(f"Results saved to {output_file}")
