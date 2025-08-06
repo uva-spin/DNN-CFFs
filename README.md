@@ -70,15 +70,21 @@ git clone https://github.com/uva-spin/DNN-CFFs.git
 cd DNN-CFFs
 ```
 
-2. **Create the Conda Environment**:
+2. **Create the Conda Environment** (OUTDATED):
 Use the `env.yml` file to create a new Conda environment:
 ```bash
 conda env create -f env.yml
 ```
 
+2. **AEGIS USERS ONLY: Create the Conda Environment**:
+Use the `env_aegis.yml` file to create an environment for aegis. Keep in mind that numpy, pandas, etc are not included, so just download an appropriate version. ALSO, PLEASE CHANGE THE NAME OF THE ENVIRONMENT AS TO NOT CREATE DUPLICATE ENVIRONMENTS ON AEGIS:
+```bash
+conda env create -f env_aegis.yml --name aegis_env
+```
+
 3. **Activate the Environment**:
 ```bash
-conda activate env
+conda activate aegis_env
 ```
 
 Now, you're all set. You can run the project code within this environment. each time you wish

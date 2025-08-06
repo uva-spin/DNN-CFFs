@@ -31,6 +31,7 @@ def create_folders(folder_name):
 
 
 scratch_path = str(scratch_path) + '/'
+create_folders('Comparison_Plots')
 
 def load_FLayer_and_cffLayer(model):
     LayerF = tf.keras.models.load_model(model, custom_objects={'TotalFLayer': TotalFLayer})

@@ -1,0 +1,9 @@
+name: Ani_env
+channels:
+  - https://repo.anaconda.com/pkgs/main
+  - https://repo.anaconda.com/pkgs/r
+dependencies:
+  - python=3.11
+  - h5py=3.7.0
+  - tensorflow==2.13.1=cuda118py311h878bca4_1
+prefix: /home/ptgroup/miniconda3/envs/Ani_env
