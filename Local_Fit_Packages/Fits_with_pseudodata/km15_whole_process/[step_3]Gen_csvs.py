@@ -327,6 +327,6 @@ time_file = 'time_taken_gen_csvs.txt'
 elapsed = end_time - start_time
 if not os.path.exists(time_file):
     with open(time_file, 'w') as file:
-        file.write("Time taken\n")
+        file.write("Time taken for set number and replica\n")
 with open(time_file, "a") as f:
     f.write(f"Start: {start_time} | End: {end_time} | Elapsed: {elapsed}\n")

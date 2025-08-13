@@ -1,8 +1,8 @@
 #!/bin/bash
-#SBATCH -A spinquest_standard
+#SBATCH --partition=standard
 #SBATCH -c 4
 #SBATCH -t 00:10:00
-#SBATCH -J Gen_plots
+#SBATCH -J opposite_autoencoder_1-50_plots
 #SBATCH -o gen_plots.out
 #SBATCH -e gen_plots.err
 #SBATCH --mem=256000
