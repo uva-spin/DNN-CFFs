@@ -164,7 +164,7 @@ for set_number in kinematic_sets:  # Loop through the list of kinematic sets
     kin_df = df[df['set'] == int(set_number)]
     kin_df = kin_df.reset_index(drop=True)
 
-    if len(kin_df) < 8:
+    if len(kin_df) < 10:
         print(f"Skipping set {set_number} (only {len(kin_df)} data points)")
         continue
 
