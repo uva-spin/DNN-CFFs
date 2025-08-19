@@ -4,7 +4,7 @@
 #SBATCH --gres=gpu:a100
 #SBATCH --constraint=a100_80gb
 #SBATCH -c 4
-#SBATCH -t 72:00:00
+#SBATCH -t 02:00:00
 #SBATCH -J tunertest_selected_set
 #SBATCH -o tuner.out
 #SBATCH -e tuner.err
