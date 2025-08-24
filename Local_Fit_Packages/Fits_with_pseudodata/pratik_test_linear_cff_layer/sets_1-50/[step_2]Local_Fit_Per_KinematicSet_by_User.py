@@ -147,7 +147,7 @@ def run_replica(kinset, replica_number, xdf):
     history = tfModel.fit(
         X8_train, y_train,
         validation_data=(X8_test, y_test),
-        epochs=EPOCHS, callbacks=[modify_LR],
+        epochs=EPOCHS, callbacks=[modify_LR, EarlyStop],
         batch_size=BATCH, verbose=2
     )
 

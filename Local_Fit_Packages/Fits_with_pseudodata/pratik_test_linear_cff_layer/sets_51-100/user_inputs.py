@@ -11,7 +11,7 @@ kinematic_sets = list(range(51, 101))
 
 # Model parameters (match "fast" script behavior)
 Learning_Rate = 0.1     # Adam(1e-1) in the fast code
-EPOCHS = 2000            # fast code trained up to 300 epochs with early stopping
+EPOCHS = 300            # fast code trained up to 300 epochs with early stopping
 BATCH = 1               # batch_size=1 in the fast code
 EarlyStop_patience = 50
 modify_LR_patience = 40
