@@ -1,0 +1,285 @@
+Folder 'Comparison_Plots' already exists!
+Folder 'CFF_Mean_Deviation_Plots' created successfully!
+Found 46 unique kinematic sets: [101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118
+ 119 120 121 122 123 124 125 126 127 128 129 130 131 133 134 135 136 137
+ 139 140 141 142 143 145 146 147 148 150]
+Processing Kinematic Set: 101
+Generating F vs phi_x plot for Set 101
+F vs phi_x plot saved: Comparison_Plots/F_vs_phi_x_Plot_Set_101.png
+Generating CFF histogram plots for Set 101
+Plots saved to Comparison_Plots/CFFs_Histograms_Set_101.pdf
+Generating line plots
+Processing Kinematic Set: 102
+Generating F vs phi_x plot for Set 102
+F vs phi_x plot saved: Comparison_Plots/F_vs_phi_x_Plot_Set_102.png
+Generating CFF histogram plots for Set 102
+Plots saved to Comparison_Plots/CFFs_Histograms_Set_102.pdf
+Generating line plots
+Processing Kinematic Set: 103
+Generating F vs phi_x plot for Set 103
+F vs phi_x plot saved: Comparison_Plots/F_vs_phi_x_Plot_Set_103.png
+Generating CFF histogram plots for Set 103
+Plots saved to Comparison_Plots/CFFs_Histograms_Set_103.pdf
+Generating line plots
+Processing Kinematic Set: 104
+Generating F vs phi_x plot for Set 104
+F vs phi_x plot saved: Comparison_Plots/F_vs_phi_x_Plot_Set_104.png
+Generating CFF histogram plots for Set 104
+Plots saved to Comparison_Plots/CFFs_Histograms_Set_104.pdf
+Generating line plots
+Processing Kinematic Set: 105
+Generating F vs phi_x plot for Set 105
+F vs phi_x plot saved: Comparison_Plots/F_vs_phi_x_Plot_Set_105.png
+Generating CFF histogram plots for Set 105
+Plots saved to Comparison_Plots/CFFs_Histograms_Set_105.pdf
+Generating line plots
+Processing Kinematic Set: 106
+Generating F vs phi_x plot for Set 106
+F vs phi_x plot saved: Comparison_Plots/F_vs_phi_x_Plot_Set_106.png
+Generating CFF histogram plots for Set 106
+Plots saved to Comparison_Plots/CFFs_Histograms_Set_106.pdf
+Generating line plots
+Processing Kinematic Set: 107
+Generating F vs phi_x plot for Set 107
+F vs phi_x plot saved: Comparison_Plots/F_vs_phi_x_Plot_Set_107.png
+Generating CFF histogram plots for Set 107
+Plots saved to Comparison_Plots/CFFs_Histograms_Set_107.pdf
+Generating line plots
+Processing Kinematic Set: 108
+Generating F vs phi_x plot for Set 108
+F vs phi_x plot saved: Comparison_Plots/F_vs_phi_x_Plot_Set_108.png
+Generating CFF histogram plots for Set 108
+Plots saved to Comparison_Plots/CFFs_Histograms_Set_108.pdf
+Generating line plots
+Processing Kinematic Set: 109
+Generating F vs phi_x plot for Set 109
+F vs phi_x plot saved: Comparison_Plots/F_vs_phi_x_Plot_Set_109.png
+Generating CFF histogram plots for Set 109
+Plots saved to Comparison_Plots/CFFs_Histograms_Set_109.pdf
+Generating line plots
+Processing Kinematic Set: 110
+Generating F vs phi_x plot for Set 110
+F vs phi_x plot saved: Comparison_Plots/F_vs_phi_x_Plot_Set_110.png
+Generating CFF histogram plots for Set 110
+Plots saved to Comparison_Plots/CFFs_Histograms_Set_110.pdf
+Generating line plots
+Processing Kinematic Set: 111
+Generating F vs phi_x plot for Set 111
+F vs phi_x plot saved: Comparison_Plots/F_vs_phi_x_Plot_Set_111.png
+Generating CFF histogram plots for Set 111
+Plots saved to Comparison_Plots/CFFs_Histograms_Set_111.pdf
+Generating line plots
+Processing Kinematic Set: 112
+Generating F vs phi_x plot for Set 112
+F vs phi_x plot saved: Comparison_Plots/F_vs_phi_x_Plot_Set_112.png
+Generating CFF histogram plots for Set 112
+Plots saved to Comparison_Plots/CFFs_Histograms_Set_112.pdf
+Generating line plots
+Processing Kinematic Set: 113
+Generating F vs phi_x plot for Set 113
+F vs phi_x plot saved: Comparison_Plots/F_vs_phi_x_Plot_Set_113.png
+Generating CFF histogram plots for Set 113
+Plots saved to Comparison_Plots/CFFs_Histograms_Set_113.pdf
+Generating line plots
+Processing Kinematic Set: 114
+Generating F vs phi_x plot for Set 114
+F vs phi_x plot saved: Comparison_Plots/F_vs_phi_x_Plot_Set_114.png
+Generating CFF histogram plots for Set 114
+Plots saved to Comparison_Plots/CFFs_Histograms_Set_114.pdf
+Generating line plots
+Processing Kinematic Set: 115
+Generating F vs phi_x plot for Set 115
+F vs phi_x plot saved: Comparison_Plots/F_vs_phi_x_Plot_Set_115.png
+Generating CFF histogram plots for Set 115
+Plots saved to Comparison_Plots/CFFs_Histograms_Set_115.pdf
+Generating line plots
+Processing Kinematic Set: 116
+Generating F vs phi_x plot for Set 116
+F vs phi_x plot saved: Comparison_Plots/F_vs_phi_x_Plot_Set_116.png
+Generating CFF histogram plots for Set 116
+Plots saved to Comparison_Plots/CFFs_Histograms_Set_116.pdf
+Generating line plots
+Processing Kinematic Set: 117
+Generating F vs phi_x plot for Set 117
+F vs phi_x plot saved: Comparison_Plots/F_vs_phi_x_Plot_Set_117.png
+Generating CFF histogram plots for Set 117
+Plots saved to Comparison_Plots/CFFs_Histograms_Set_117.pdf
+Generating line plots
+Processing Kinematic Set: 118
+Generating F vs phi_x plot for Set 118
+F vs phi_x plot saved: Comparison_Plots/F_vs_phi_x_Plot_Set_118.png
+Generating CFF histogram plots for Set 118
+Plots saved to Comparison_Plots/CFFs_Histograms_Set_118.pdf
+Generating line plots
+Processing Kinematic Set: 119
+Generating F vs phi_x plot for Set 119
+F vs phi_x plot saved: Comparison_Plots/F_vs_phi_x_Plot_Set_119.png
+Generating CFF histogram plots for Set 119
+Plots saved to Comparison_Plots/CFFs_Histograms_Set_119.pdf
+Generating line plots
+Processing Kinematic Set: 120
+Generating F vs phi_x plot for Set 120
+F vs phi_x plot saved: Comparison_Plots/F_vs_phi_x_Plot_Set_120.png
+Generating CFF histogram plots for Set 120
+Plots saved to Comparison_Plots/CFFs_Histograms_Set_120.pdf
+Generating line plots
+Processing Kinematic Set: 121
+Generating F vs phi_x plot for Set 121
+F vs phi_x plot saved: Comparison_Plots/F_vs_phi_x_Plot_Set_121.png
+Generating CFF histogram plots for Set 121
+Plots saved to Comparison_Plots/CFFs_Histograms_Set_121.pdf
+Generating line plots
+Processing Kinematic Set: 122
+Generating F vs phi_x plot for Set 122
+F vs phi_x plot saved: Comparison_Plots/F_vs_phi_x_Plot_Set_122.png
+Generating CFF histogram plots for Set 122
+Plots saved to Comparison_Plots/CFFs_Histograms_Set_122.pdf
+Generating line plots
+Processing Kinematic Set: 123
+Generating F vs phi_x plot for Set 123
+F vs phi_x plot saved: Comparison_Plots/F_vs_phi_x_Plot_Set_123.png
+Generating CFF histogram plots for Set 123
+Plots saved to Comparison_Plots/CFFs_Histograms_Set_123.pdf
+Generating line plots
+Processing Kinematic Set: 124
+Generating F vs phi_x plot for Set 124
+F vs phi_x plot saved: Comparison_Plots/F_vs_phi_x_Plot_Set_124.png
+Generating CFF histogram plots for Set 124
+Plots saved to Comparison_Plots/CFFs_Histograms_Set_124.pdf
+Generating line plots
+Processing Kinematic Set: 125
+Generating F vs phi_x plot for Set 125
+F vs phi_x plot saved: Comparison_Plots/F_vs_phi_x_Plot_Set_125.png
+Generating CFF histogram plots for Set 125
+Plots saved to Comparison_Plots/CFFs_Histograms_Set_125.pdf
+Generating line plots
+Processing Kinematic Set: 126
+Generating F vs phi_x plot for Set 126
+F vs phi_x plot saved: Comparison_Plots/F_vs_phi_x_Plot_Set_126.png
+Generating CFF histogram plots for Set 126
+Plots saved to Comparison_Plots/CFFs_Histograms_Set_126.pdf
+Generating line plots
+Processing Kinematic Set: 127
+Generating F vs phi_x plot for Set 127
+F vs phi_x plot saved: Comparison_Plots/F_vs_phi_x_Plot_Set_127.png
+Generating CFF histogram plots for Set 127
+Plots saved to Comparison_Plots/CFFs_Histograms_Set_127.pdf
+Generating line plots
+Processing Kinematic Set: 128
+Generating F vs phi_x plot for Set 128
+F vs phi_x plot saved: Comparison_Plots/F_vs_phi_x_Plot_Set_128.png
+Generating CFF histogram plots for Set 128
+Plots saved to Comparison_Plots/CFFs_Histograms_Set_128.pdf
+Generating line plots
+Processing Kinematic Set: 129
+Generating F vs phi_x plot for Set 129
+F vs phi_x plot saved: Comparison_Plots/F_vs_phi_x_Plot_Set_129.png
+Generating CFF histogram plots for Set 129
+Plots saved to Comparison_Plots/CFFs_Histograms_Set_129.pdf
+Generating line plots
+Processing Kinematic Set: 130
+Generating F vs phi_x plot for Set 130
+F vs phi_x plot saved: Comparison_Plots/F_vs_phi_x_Plot_Set_130.png
+Generating CFF histogram plots for Set 130
+Plots saved to Comparison_Plots/CFFs_Histograms_Set_130.pdf
+Generating line plots
+Processing Kinematic Set: 131
+Generating F vs phi_x plot for Set 131
+F vs phi_x plot saved: Comparison_Plots/F_vs_phi_x_Plot_Set_131.png
+Generating CFF histogram plots for Set 131
+Plots saved to Comparison_Plots/CFFs_Histograms_Set_131.pdf
+Generating line plots
+Processing Kinematic Set: 133
+Generating F vs phi_x plot for Set 133
+F vs phi_x plot saved: Comparison_Plots/F_vs_phi_x_Plot_Set_133.png
+Generating CFF histogram plots for Set 133
+Plots saved to Comparison_Plots/CFFs_Histograms_Set_133.pdf
+Generating line plots
+Processing Kinematic Set: 134
+Generating F vs phi_x plot for Set 134
+F vs phi_x plot saved: Comparison_Plots/F_vs_phi_x_Plot_Set_134.png
+Generating CFF histogram plots for Set 134
+Plots saved to Comparison_Plots/CFFs_Histograms_Set_134.pdf
+Generating line plots
+Processing Kinematic Set: 135
+Generating F vs phi_x plot for Set 135
+F vs phi_x plot saved: Comparison_Plots/F_vs_phi_x_Plot_Set_135.png
+Generating CFF histogram plots for Set 135
+Plots saved to Comparison_Plots/CFFs_Histograms_Set_135.pdf
+Generating line plots
+Processing Kinematic Set: 136
+Generating F vs phi_x plot for Set 136
+F vs phi_x plot saved: Comparison_Plots/F_vs_phi_x_Plot_Set_136.png
+Generating CFF histogram plots for Set 136
+Plots saved to Comparison_Plots/CFFs_Histograms_Set_136.pdf
+Generating line plots
+Processing Kinematic Set: 137
+Generating F vs phi_x plot for Set 137
+F vs phi_x plot saved: Comparison_Plots/F_vs_phi_x_Plot_Set_137.png
+Generating CFF histogram plots for Set 137
+Plots saved to Comparison_Plots/CFFs_Histograms_Set_137.pdf
+Generating line plots
+Processing Kinematic Set: 139
+Generating F vs phi_x plot for Set 139
+F vs phi_x plot saved: Comparison_Plots/F_vs_phi_x_Plot_Set_139.png
+Generating CFF histogram plots for Set 139
+Plots saved to Comparison_Plots/CFFs_Histograms_Set_139.pdf
+Generating line plots
+Processing Kinematic Set: 140
+Generating F vs phi_x plot for Set 140
+F vs phi_x plot saved: Comparison_Plots/F_vs_phi_x_Plot_Set_140.png
+Generating CFF histogram plots for Set 140
+Plots saved to Comparison_Plots/CFFs_Histograms_Set_140.pdf
+Generating line plots
+Processing Kinematic Set: 141
+Generating F vs phi_x plot for Set 141
+F vs phi_x plot saved: Comparison_Plots/F_vs_phi_x_Plot_Set_141.png
+Generating CFF histogram plots for Set 141
+Plots saved to Comparison_Plots/CFFs_Histograms_Set_141.pdf
+Generating line plots
+Processing Kinematic Set: 142
+Generating F vs phi_x plot for Set 142
+F vs phi_x plot saved: Comparison_Plots/F_vs_phi_x_Plot_Set_142.png
+Generating CFF histogram plots for Set 142
+Plots saved to Comparison_Plots/CFFs_Histograms_Set_142.pdf
+Generating line plots
+Processing Kinematic Set: 143
+Generating F vs phi_x plot for Set 143
+F vs phi_x plot saved: Comparison_Plots/F_vs_phi_x_Plot_Set_143.png
+Generating CFF histogram plots for Set 143
+Plots saved to Comparison_Plots/CFFs_Histograms_Set_143.pdf
+Generating line plots
+Processing Kinematic Set: 145
+Generating F vs phi_x plot for Set 145
+F vs phi_x plot saved: Comparison_Plots/F_vs_phi_x_Plot_Set_145.png
+Generating CFF histogram plots for Set 145
+Plots saved to Comparison_Plots/CFFs_Histograms_Set_145.pdf
+Generating line plots
+Processing Kinematic Set: 146
+Generating F vs phi_x plot for Set 146
+F vs phi_x plot saved: Comparison_Plots/F_vs_phi_x_Plot_Set_146.png
+Generating CFF histogram plots for Set 146
+Plots saved to Comparison_Plots/CFFs_Histograms_Set_146.pdf
+Generating line plots
+Processing Kinematic Set: 147
+Generating F vs phi_x plot for Set 147
+F vs phi_x plot saved: Comparison_Plots/F_vs_phi_x_Plot_Set_147.png
+Generating CFF histogram plots for Set 147
+Plots saved to Comparison_Plots/CFFs_Histograms_Set_147.pdf
+Generating line plots
+Processing Kinematic Set: 148
+Generating F vs phi_x plot for Set 148
+F vs phi_x plot saved: Comparison_Plots/F_vs_phi_x_Plot_Set_148.png
+Generating CFF histogram plots for Set 148
+Plots saved to Comparison_Plots/CFFs_Histograms_Set_148.pdf
+Generating line plots
+Processing Kinematic Set: 150
+Generating F vs phi_x plot for Set 150
+F vs phi_x plot saved: Comparison_Plots/F_vs_phi_x_Plot_Set_150.png
+Generating CFF histogram plots for Set 150
+Plots saved to Comparison_Plots/CFFs_Histograms_Set_150.pdf
+Generating line plots
+All plots have been generated.
+ Saved: Summary_LowResidualCFFs_from_results.csv with 46 rows
+ Saved sets with all 4 CFFs under threshold to Sets_with_AllFourCFFs.txt
+ Saved CFF count summary with total to CFF_LowResidual_Counts.csv
