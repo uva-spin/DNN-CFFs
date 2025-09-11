@@ -1,0 +1,8 @@
+concurrent 20-20:
+158.77s user 33.58s system 196% cpu 1:37.81 total
+
+CPU serial 20:
+100.90s user 23.71s system 126% cpu 1:38.38 total
+
+GPU serial 20:
+184.92s user 42.83s system 146% cpu 2:35.54 total
