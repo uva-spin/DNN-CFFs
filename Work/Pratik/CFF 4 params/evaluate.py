@@ -1,9 +1,7 @@
-import config
 from bkm10 import BKM10
 from cff_fit_model import CFF_Fit_Model
 import os
 import gc
-import time
 import numpy as np
 import pyarrow as pa
 import pyarrow.parquet as pq
@@ -16,21 +14,21 @@ from sklearn.utils import shuffle
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import MinMaxScaler
 
-def run_replica(set_id, replica_id, kinematics, df_inputs, df_outputs):
+def run_replica(CONFIG, set_id, replica_id, kinematics, df_inputs, df_outputs):
     
     model_class = CFF_Fit_Model(
-        verbose =         config.CONFIG['verbose'],
-        LR =              config.CONFIG['learning_rate'],
-        mod_LR_factor =   config.CONFIG['modify_LR_factor'],
-        mod_LR_patience = config.CONFIG['modify_LR_patience'],
-        min_LR =          config.CONFIG['minimum_LR'],
-        ES_patience =     config.CONFIG['early_stop_patience'])
+        verbose =         CONFIG['verbose'],
+        LR =              CONFIG['learning_rate'],
+        mod_LR_factor =   CONFIG['modify_LR_factor'],
+        mod_LR_patience = CONFIG['modify_LR_patience'],
+        min_LR =          CONFIG['minimum_LR'],
+        ES_patience =     CONFIG['early_stop_patience'])
     
     model_class.create_model(
-        layers =      config.CONFIG['layers'],
-        activation =  config.CONFIG['activation'], 
-        initializer = config.CONFIG['initializer'], 
-        summary =     config.CONFIG['model_summary'])
+        layers =      CONFIG['layers'],
+        activation =  CONFIG['activation'], 
+        initializer = CONFIG['initializer'], 
+        summary =     CONFIG['model_summary'])
 
     sample_dsig = np.random.normal(loc=df_outputs['dsig_exp'], scale=df_outputs['dsig_err'])
 
@@ -50,8 +48,8 @@ def run_replica(set_id, replica_id, kinematics, df_inputs, df_outputs):
         kinematics_class = kinematics, 
         scaled_inputs = kins_train, 
         outputs_tensor = outs_train,
-        epochs = config.CONFIG['epochs'], 
-        batch = config.CONFIG['batch_size']
+        epochs = CONFIG['epochs'], 
+        batch = CONFIG['batch_size']
         )
     
     cffs_pred = model_class.model(kins_train, training=False).numpy()
@@ -75,7 +73,7 @@ def run_replica(set_id, replica_id, kinematics, df_inputs, df_outputs):
 
 def worker(args):
     
-    set_id, replica_id = args
+    CONFIG, set_id, replica_id = args
     
     if replica_id==1:
         os.system("clear")
@@ -119,17 +117,17 @@ def worker(args):
 
     df_kins = input_pipeline.fit_transform(df_kins)
 
-    history, result = run_replica(set_id, replica_id, kinematics, df_kins, df_dsig)
+    history, result = run_replica(CONFIG, set_id, replica_id, kinematics, df_kins, df_dsig)
 
     gc.collect()
     
     return history, result
 
-def run_set(set_id, num_replicas, threads):
+def run_set(CONFIG, folder_name, set_id, num_replicas, threads):
     
     ctx = mp.get_context("spawn")  # ensures new Python interpreters
 
-    args_list = [(set_id, j+1) for j in range(num_replicas)]
+    args_list = [(CONFIG, set_id, j+1) for j in range(num_replicas)]
 
     results = []
     with ProcessPoolExecutor(max_workers=threads, mp_context=ctx) as ex:
@@ -140,12 +138,12 @@ def run_set(set_id, num_replicas, threads):
     all_histories, all_results = zip(*results)
 
     result_writer = pq.ParquetWriter(
-        f'data/sample/set_{set_id}.parquet',
+        f'data/{folder_name}/sample/set_{set_id}.parquet',
         schema=pa.Table.from_pandas(all_results[0]).schema
     )
 
     history_writer = pq.ParquetWriter(
-        f'data/history/set_{set_id}.parquet',
+        f'data/{folder_name}/history/set_{set_id}.parquet',
         schema=pa.Table.from_pandas(all_histories[0]).schema
     )
 
@@ -154,31 +152,3 @@ def run_set(set_id, num_replicas, threads):
         history_writer.write_table(pa.Table.from_pandas(all_histories[i]))
     result_writer.close()
     history_writer.close()
-
-if __name__ == "__main__":
-    
-    os.makedirs('data', exist_ok=True)
-    os.makedirs('data/sample', exist_ok=True)
-    os.makedirs('data/history', exist_ok=True)
-    
-    sets = config.CONFIG['sets']
-    num_replicas = config.CONFIG['replicas']
-    threads = 40
-
-    if config.CONFIG['show_devices']:
-        print("Visible devices:", tf.config.get_visible_devices())
-        print("Intra threads:", tf.config.threading.get_intra_op_parallelism_threads())
-        print("Inter threads:", tf.config.threading.get_inter_op_parallelism_threads())
-    
-    start_time = time.time()
-
-    for set_id in sets:
-        run_set(set_id, num_replicas, threads)
-
-    end_time = time.time()
-
-    elapsed = int(end_time - start_time)
-    hours = elapsed // 3600
-    minutes = (elapsed % 3600) // 60
-    seconds = elapsed % 60
-    print(f'\nTotal runtime: {hours}h {minutes}m {seconds}s')
