@@ -1,0 +1,197 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import os
+import numpy as np
+from scipy.stats import norm
+from user_inputs import *
+import glob
+
+def create_folders(folder_name):
+    if not os.path.exists(folder_name):
+        os.makedirs(folder_name)
+        print(f"Folder '{folder_name}' created successfully!")
+    else:
+        print(f"Folder '{folder_name}' already exists!")
+
+def create_cff_residual_grid_plot(output_dir='Grid_Plots'):
+    """
+    Create stacked residual plots for ReH, ReHt, ReE, and DVCS using
+    precomputed residual (_res) and std (_std) columns in results.csv.
+    """
+    create_folders(output_dir)
+
+    results_csv = 'results.csv'
+    if not os.path.exists(results_csv):
+        print(f"Results CSV not found: {results_csv}")
+        return
+
+    df = pd.read_csv(results_csv)
+    unique_sets = sorted(df['set'].unique())
+
+    # Map CFF base names to titles
+    cff_labels = ['ReH', 'ReHt', 'ReE', 'dvcs']
+    cff_titles = [r"Res $\Re(H)$", r"Res $\Re(\tilde{H})$", r"Res $\Re(E)$", r"Res $|T_{DVCS}|^2$"]
+
+    fig, axes = plt.subplots(len(cff_labels), 1, figsize=(12, 14), sharex=True)
+
+    for i, (cff, title) in enumerate(zip(cff_labels, cff_titles)):
+        ax = axes[i]
+
+        # Pull the residuals and stds directly from the DataFrame
+        res_col = f"{cff}_res"
+        std_col = f"{cff}_std"
+
+        if res_col not in df.columns or std_col not in df.columns:
+            print(f"Missing expected columns {res_col} or {std_col} in results.csv")
+            continue
+
+        # Group by set to preserve order
+        grouped = df.groupby("set").first()  # take first row per set
+        residuals = grouped[res_col].reindex(unique_sets)
+        errors = grouped[std_col].reindex(unique_sets)
+
+        ax.errorbar(unique_sets, residuals, yerr=errors, fmt='o', capsize=3)
+        ax.set_ylabel(title)
+        if cff == 'dvcs':
+            ax.set_ylim(-0.02, 0.02)
+        else:
+            ax.set_ylim(-3, 3)
+        ax.grid(True, alpha=0.3)
+
+        # Hide x-axis tick labels for all but the last subplot
+        if i < len(cff_labels) - 1:
+            ax.tick_params(labelbottom=False)
+
+    axes[-1].set_xlabel("Set")
+
+    plt.suptitle(r"Residual = $CFF_{true} - CFF_{mean}$", fontsize=16, fontweight='bold')
+    plt.tight_layout(rect=[0, 0, 1, 0.96])
+
+    output_path = os.path.join(output_dir, 'CFF_Residuals_Stacked.png')
+    plt.savefig(output_path, dpi=300, bbox_inches='tight')
+    plt.close()
+    print(f"CFF residual stacked plot saved: {output_path}")
+
+
+def create_f_vs_phi_grid_plots(output_dir='Grid_Plots', plots_per_grid=20):
+    """
+    Create grid plots for F vs phi_x plots.
+    For sets 1-20: 2 grids with 20 plots each
+    For sets 180-195: 1 grid with 15 plots
+    """
+    create_folders(output_dir)
+    
+    # Determine the kinematic sets based on the current directory
+    if 'sets_1-20' in os.getcwd():
+        kinematic_sets = list(range(1, 21))
+        num_grids = 2
+        plots_per_grid = 20
+    elif 'sets_180-195' in os.getcwd():
+        kinematic_sets = list(range(180, 196))
+        num_grids = 1
+        plots_per_grid = 15
+    else:
+        # Fallback: try to determine from user_inputs
+        kinematic_sets = kinematic_sets
+        if len(kinematic_sets) <= 20:
+            num_grids = 1
+            plots_per_grid = len(kinematic_sets)
+        else:
+            num_grids = 3
+            plots_per_grid = 20
+    
+    print(f"Creating {num_grids} grid(s) with up to {plots_per_grid} plots each for sets: {kinematic_sets}")
+    
+    for grid_num in range(num_grids):
+        start_idx = grid_num * plots_per_grid
+        end_idx = min(start_idx + plots_per_grid, len(kinematic_sets))
+        grid_sets = kinematic_sets[start_idx:end_idx]
+        
+        if not grid_sets:
+            continue
+            
+        # Calculate grid dimensions (aim for roughly square grid)
+        num_plots = len(grid_sets)
+        cols = int(np.ceil(np.sqrt(num_plots)))
+        rows = int(np.ceil(num_plots / cols))
+        
+        # Create the grid
+        fig, axes = plt.subplots(rows, cols, figsize=(4*cols, 3*rows))
+        if num_plots == 1:
+            axes = [axes]
+        elif rows == 1:
+            axes = axes.reshape(1, -1)
+        else:
+            axes = axes.flatten()
+        
+        for i, set_num in enumerate(grid_sets):
+            ax = axes[i] if num_plots > 1 else axes[0]
+            
+            # Load F vs phi data for this set
+            csv_path = f'Comparison_Plots/F_vs_phi_x_Kinematic_Set_{set_num}.csv'
+            
+            if os.path.exists(csv_path):
+                df = pd.read_csv(csv_path)
+                
+                phi_x_values = df['phi_x']
+                real_F_values = df['Real F']
+                mean_f_predictions = df['Mean F Prediction']
+                std_f_predictions = df['Std Dev Prediction']
+                
+                # Plot the data
+                ax.scatter(phi_x_values, real_F_values, color='red', s=20, label='Real F', zorder=5)
+                ax.errorbar(phi_x_values, real_F_values, yerr=std_f_predictions, fmt='o', 
+                           color='red', ecolor='red', capsize=2, markersize=3, zorder=6)
+                ax.plot(phi_x_values, mean_f_predictions, color='blue', linewidth=1.5, label='Mean Prediction')
+                ax.fill_between(phi_x_values, mean_f_predictions - std_f_predictions, 
+                               mean_f_predictions + std_f_predictions, color='blue', alpha=0.2)
+                
+                ax.set_title(f'Set {set_num}', fontsize=10)
+                ax.set_xlabel('φ_x', fontsize=8)
+                ax.set_ylabel('F', fontsize=8)
+                ax.grid(True, alpha=0.3)
+                ax.tick_params(labelsize=6)
+                
+                # Only show legend for the first plot
+                if i == 0:
+                    ax.legend(fontsize=6)
+            else:
+                ax.text(0.5, 0.5, f'No data for Set {set_num}', ha='center', va='center', transform=ax.transAxes)
+                ax.set_title(f'Set {set_num} (No Data)', fontsize=10)
+        
+        # Hide unused subplots
+        for i in range(num_plots, len(axes)):
+            axes[i].set_visible(False)
+        
+        plt.suptitle(f'F vs φ_x Plots - Grid {grid_num + 1} (Sets {grid_sets[0]}-{grid_sets[-1]})', 
+                    fontsize=14, fontweight='bold')
+        plt.tight_layout()
+        
+        # Save the grid plot
+        output_path = os.path.join(output_dir, f'F_vs_Phi_Grid_{grid_num + 1}_Sets_{grid_sets[0]}_to_{grid_sets[-1]}.png')
+        plt.savefig(output_path, dpi=300, bbox_inches='tight')
+        plt.close()
+        print(f"F vs phi grid {grid_num + 1} saved: {output_path}")
+
+
+
+def main():
+    """
+    Main function to generate all grid plots.
+    """
+    print("Generating grid plots...")
+    
+    # Create CFF grid plot (all CFFs combined)
+    print("Creating CFF grid plot...")
+    create_cff_residual_grid_plot()
+    
+    # Create F vs phi grid plots
+    print("Creating F vs phi grid plots...")
+    create_f_vs_phi_grid_plots()
+    
+    print("All grid plots have been generated successfully!")
+
+if __name__ == "__main__":
+    main()
+
+
