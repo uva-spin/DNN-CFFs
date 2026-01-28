@@ -1,0 +1,886 @@
+
+================
+== TensorFlow ==
+================
+
+NVIDIA Release 24.11-tf2 (build 122403184)
+TensorFlow Version 2.17.0
+Container image Copyright (c) 2024, NVIDIA CORPORATION & AFFILIATES. All rights reserved.
+Copyright 2017-2024 The TensorFlow Authors.  All rights reserved.
+
+Various files include modifications (c) NVIDIA CORPORATION & AFFILIATES.  All rights reserved.
+
+This container image and its contents are governed by the NVIDIA Deep Learning Container License.
+By pulling and using the container, you accept the terms and conditions of this license:
+https://developer.nvidia.com/ngc/nvidia-deep-learning-container-license
+
+Folder 'Checks_for_Issues' already exists!
+
+=== Set 51.0, Row 1200 ===
+  F: 0.0017600000137463212
+  sigmaF (from AllJlabData): 0.00011999999696854502
+  calculated (tempF * varF): 0.00014487493899650872
+  subtraction: -1.0879011824727058e-07
+  difference (expected - actual): -1.0879011824727058e-07
+  sigmaF from km15_bkm10_dropped.csv: 0.00011999999696854502
+  percent difference (expected vs km15_bkm10_dropped): -0.0907%
+
+=== Set 51.0, Row 1201 ===
+  F: 0.0019499999471008778
+  sigmaF (from AllJlabData): 0.00013000000035390258
+  calculated (tempF * varF): 0.00013828462397214025
+  subtraction: -7.929920684546232e-07
+  difference (expected - actual): -7.929920684546232e-07
+  sigmaF from km15_bkm10_dropped.csv: 0.00013000000035390258
+  percent difference (expected vs km15_bkm10_dropped): -0.6100%
+
+=== Set 51.0, Row 1202 ===
+  F: 0.0017099999822676182
+  sigmaF (from AllJlabData): 0.00011000000085914508
+  calculated (tempF * varF): 0.00013006107474211603
+  subtraction: 4.1470048017799854e-07
+  difference (expected - actual): 4.1470048017799854e-07
+  sigmaF from km15_bkm10_dropped.csv: 0.00011000000085914508
+  percent difference (expected vs km15_bkm10_dropped): 0.3770%
+
+=== Set 51.0, Row 1203 ===
+  F: 0.0015899999998509884
+  sigmaF (from AllJlabData): 9.999999747378752e-05
+  calculated (tempF * varF): 0.00012441545550245792
+  subtraction: 3.0479059205390513e-06
+  difference (expected - actual): 3.0479059205390513e-06
+  sigmaF from km15_bkm10_dropped.csv: 9.999999747378752e-05
+  percent difference (expected vs km15_bkm10_dropped): 3.0479%
+
+=== Set 51.0, Row 1204 ===
+  F: 0.0014199999859556556
+  sigmaF (from AllJlabData): 9.000000136438757e-05
+  calculated (tempF * varF): 0.00012074446567567065
+  subtraction: 4.444198566488922e-06
+  difference (expected - actual): 4.444198566488922e-06
+  sigmaF from km15_bkm10_dropped.csv: 9.000000136438757e-05
+  percent difference (expected vs km15_bkm10_dropped): 4.9380%
+
+=== Set 51.0, Row 1205 ===
+  F: 0.00139999995008111
+  sigmaF (from AllJlabData): 9.000000136438757e-05
+  calculated (tempF * varF): 0.00011333138536429033
+  subtraction: 2.6799971237778664e-06
+  difference (expected - actual): 2.6799971237778664e-06
+  sigmaF from km15_bkm10_dropped.csv: 9.000000136438757e-05
+  percent difference (expected vs km15_bkm10_dropped): 2.9778%
+
+=== Set 51.0, Row 1206 ===
+  F: 0.001339999958872795
+  sigmaF (from AllJlabData): 9.000000136438757e-05
+  calculated (tempF * varF): 0.00010687368921935558
+  subtraction: -1.4260003808885813e-06
+  difference (expected - actual): -1.4260003808885813e-06
+  sigmaF from km15_bkm10_dropped.csv: 9.000000136438757e-05
+  percent difference (expected vs km15_bkm10_dropped): -1.5844%
+
+=== Set 51.0, Row 1207 ===
+  F: 0.0012199999764561653
+  sigmaF (from AllJlabData): 7.999999797903001e-05
+  calculated (tempF * varF): 0.00010573377221589908
+  subtraction: 4.045796231366694e-06
+  difference (expected - actual): 4.045796231366694e-06
+  sigmaF from km15_bkm10_dropped.csv: 7.999999797903001e-05
+  percent difference (expected vs km15_bkm10_dropped): 5.0572%
+
+=== Set 51.0, Row 1208 ===
+  F: 0.001290000043809414
+  sigmaF (from AllJlabData): 9.000000136438757e-05
+  calculated (tempF * varF): 0.00010360527812736109
+  subtraction: 1.0224030120298266e-06
+  difference (expected - actual): 1.0224030120298266e-06
+  sigmaF from km15_bkm10_dropped.csv: 9.000000136438757e-05
+  percent difference (expected vs km15_bkm10_dropped): 1.1360%
+
+=== Set 51.0, Row 1209 ===
+  F: 0.0013800000306218863
+  sigmaF (from AllJlabData): 9.000000136438757e-05
+  calculated (tempF * varF): 9.311643952969462e-05
+  subtraction: 5.969995982013643e-07
+  difference (expected - actual): 5.969995982013643e-07
+  sigmaF from km15_bkm10_dropped.csv: 9.000000136438757e-05
+  percent difference (expected vs km15_bkm10_dropped): 0.6633%
+
+=== Set 51.0, Row 1210 ===
+  F: 0.0011399999493733048
+  sigmaF (from AllJlabData): 9.000000136438757e-05
+  calculated (tempF * varF): 0.00010345888586016372
+  subtraction: -4.853405698668212e-06
+  difference (expected - actual): -4.853405698668212e-06
+  sigmaF from km15_bkm10_dropped.csv: 9.000000136438757e-05
+  percent difference (expected vs km15_bkm10_dropped): -5.3927%
+
+=== Set 51.0, Row 1211 ===
+  F: 0.0012100000167265534
+  sigmaF (from AllJlabData): 7.999999797903001e-05
+  calculated (tempF * varF): 9.524331107968464e-05
+  subtraction: 4.2039027903229e-06
+  difference (expected - actual): 4.2039027903229e-06
+  sigmaF from km15_bkm10_dropped.csv: 7.999999797903001e-05
+  percent difference (expected vs km15_bkm10_dropped): 5.2549%
+
+=== Set 51.0, Row 1212 ===
+  F: 0.0012100000167265534
+  sigmaF (from AllJlabData): 7.999999797903001e-05
+  calculated (tempF * varF): 9.59960525506176e-05
+  subtraction: 4.869398253504187e-06
+  difference (expected - actual): 4.869398253504187e-06
+  sigmaF from km15_bkm10_dropped.csv: 7.999999797903001e-05
+  percent difference (expected vs km15_bkm10_dropped): 6.0867%
+
+=== Set 51.0, Row 1213 ===
+  F: 0.0013299999991431832
+  sigmaF (from AllJlabData): 9.000000136438757e-05
+  calculated (tempF * varF): 9.338864765595645e-05
+  subtraction: -3.314053174108267e-07
+  difference (expected - actual): -3.314053174108267e-07
+  sigmaF from km15_bkm10_dropped.csv: 9.000000136438757e-05
+  percent difference (expected vs km15_bkm10_dropped): -0.3682%
+
+=== Set 51.0, Row 1214 ===
+  F: 0.0012499999720603228
+  sigmaF (from AllJlabData): 9.000000136438757e-05
+  calculated (tempF * varF): 0.00010249188198940828
+  subtraction: 3.249951987527311e-07
+  difference (expected - actual): 3.249951987527311e-07
+  sigmaF from km15_bkm10_dropped.csv: 9.000000136438757e-05
+  percent difference (expected vs km15_bkm10_dropped): 0.3611%
+
+=== Set 51.0, Row 1215 ===
+  F: 0.0013599999947473407
+  sigmaF (from AllJlabData): 9.000000136438757e-05
+  calculated (tempF * varF): 9.865701576927677e-05
+  subtraction: 1.3783937902189791e-06
+  difference (expected - actual): 1.3783937902189791e-06
+  sigmaF from km15_bkm10_dropped.csv: 9.000000136438757e-05
+  percent difference (expected vs km15_bkm10_dropped): 1.5315%
+
+=== Set 51.0, Row 1216 ===
+  F: 0.0013000000035390258
+  sigmaF (from AllJlabData): 9.000000136438757e-05
+  calculated (tempF * varF): 0.00010900288907578215
+  subtraction: 2.325999957975e-06
+  difference (expected - actual): 2.325999957975e-06
+  sigmaF from km15_bkm10_dropped.csv: 9.000000136438757e-05
+  percent difference (expected vs km15_bkm10_dropped): 2.5844%
+
+=== Set 51.0, Row 1217 ===
+  F: 0.0013800000306218863
+  sigmaF (from AllJlabData): 9.000000136438757e-05
+  calculated (tempF * varF): 0.00010655030200723559
+  subtraction: 9.419964044354856e-07
+  difference (expected - actual): 9.419964044354856e-07
+  sigmaF from km15_bkm10_dropped.csv: 9.000000136438757e-05
+  percent difference (expected vs km15_bkm10_dropped): 1.0467%
+
+=== Set 51.0, Row 1218 ===
+  F: 0.0016199999954551458
+  sigmaF (from AllJlabData): 9.999999747378752e-05
+  calculated (tempF * varF): 0.0001092226812033914
+  subtraction: 3.3559990697540343e-06
+  difference (expected - actual): 3.3559990697540343e-06
+  sigmaF from km15_bkm10_dropped.csv: 9.999999747378752e-05
+  percent difference (expected vs km15_bkm10_dropped): 3.3560%
+
+=== Set 51.0, Row 1219 ===
+  F: 0.0016199999954551458
+  sigmaF (from AllJlabData): 9.999999747378752e-05
+  calculated (tempF * varF): 0.00011429967707954347
+  subtraction: 1.9951985450461507e-06
+  difference (expected - actual): 1.9951985450461507e-06
+  sigmaF from km15_bkm10_dropped.csv: 9.999999747378752e-05
+  percent difference (expected vs km15_bkm10_dropped): 1.9952%
+
+=== Set 51.0, Row 1220 ===
+  F: 0.0017300000181421638
+  sigmaF (from AllJlabData): 0.00011000000085914508
+  calculated (tempF * varF): 0.00011834921315312386
+  subtraction: -3.3454998629167676e-06
+  difference (expected - actual): -3.3454998629167676e-06
+  sigmaF from km15_bkm10_dropped.csv: 0.00011000000085914508
+  percent difference (expected vs km15_bkm10_dropped): -3.0414%
+
+=== Set 51.0, Row 1221 ===
+  F: 0.0018899999558925629
+  sigmaF (from AllJlabData): 0.00011000000085914508
+  calculated (tempF * varF): 0.00012250756844878197
+  subtraction: 4.9497903091832995e-06
+  difference (expected - actual): 4.9497903091832995e-06
+  sigmaF from km15_bkm10_dropped.csv: 0.00011000000085914508
+  percent difference (expected vs km15_bkm10_dropped): 4.4998%
+
+=== Set 51.0, Row 1222 ===
+  F: 0.0019199999514967203
+  sigmaF (from AllJlabData): 0.00011999999696854502
+  calculated (tempF * varF): 0.00013452803250402212
+  subtraction: 3.7631980376318097e-06
+  difference (expected - actual): 3.7631980376318097e-06
+  sigmaF from km15_bkm10_dropped.csv: 0.00011999999696854502
+  percent difference (expected vs km15_bkm10_dropped): 3.1360%
+
+=== Set 51.0, Row 1223 ===
+  F: 0.0021200000774115324
+  sigmaF (from AllJlabData): 0.00013000000035390258
+  calculated (tempF * varF): 0.0001297323906328529
+  subtraction: -6.799964467063546e-07
+  difference (expected - actual): -6.799964467063546e-07
+  sigmaF from km15_bkm10_dropped.csv: 0.00013000000035390258
+  percent difference (expected vs km15_bkm10_dropped): -0.5231%
+
+=== Set 52.0, Row 1224 ===
+  F: 0.0018700000364333391
+  sigmaF (from AllJlabData): 0.00022000000171829015
+  calculated (tempF * varF): 0.00021081299928482622
+  subtraction: -5.18091837875545e-07
+  difference (expected - actual): -5.18091837875545e-07
+  sigmaF from km15_bkm10_dropped.csv: 0.00022000000171829015
+  percent difference (expected vs km15_bkm10_dropped): -0.2355%
+
+=== Set 52.0, Row 1225 ===
+  F: 0.0015200000489130616
+  sigmaF (from AllJlabData): 0.00015999999595806003
+  calculated (tempF * varF): 0.00017853880126494914
+  subtraction: -3.4247932489961386e-06
+  difference (expected - actual): -3.4247932489961386e-06
+  sigmaF from km15_bkm10_dropped.csv: 0.00015999999595806003
+  percent difference (expected vs km15_bkm10_dropped): -2.1405%
+
+=== Set 52.0, Row 1226 ===
+  F: 0.0014700000174343586
+  sigmaF (from AllJlabData): 0.00013000000035390258
+  calculated (tempF * varF): 0.0001416948507539928
+  subtraction: -1.742489985190332e-06
+  difference (expected - actual): -1.742489985190332e-06
+  sigmaF from km15_bkm10_dropped.csv: 0.00013000000035390258
+  percent difference (expected vs km15_bkm10_dropped): -1.3404%
+
+=== Set 52.0, Row 1227 ===
+  F: 0.001449999981559813
+  sigmaF (from AllJlabData): 0.00011000000085914508
+  calculated (tempF * varF): 0.00011520433326950297
+  subtraction: 1.9254948711022735e-06
+  difference (expected - actual): 1.9254948711022735e-06
+  sigmaF from km15_bkm10_dropped.csv: 0.00011000000085914508
+  percent difference (expected vs km15_bkm10_dropped): 1.7504%
+
+=== Set 52.0, Row 1228 ===
+  F: 0.0012000000569969416
+  sigmaF (from AllJlabData): 9.000000136438757e-05
+  calculated (tempF * varF): 9.970824612537399e-05
+  subtraction: -2.0039951778016984e-06
+  difference (expected - actual): -2.0039951778016984e-06
+  sigmaF from km15_bkm10_dropped.csv: 9.000000136438757e-05
+  percent difference (expected vs km15_bkm10_dropped): -2.2267%
+
+=== Set 52.0, Row 1229 ===
+  F: 0.0011699999449774623
+  sigmaF (from AllJlabData): 7.999999797903001e-05
+  calculated (tempF * varF): 8.721833728486672e-05
+  subtraction: 2.344597305636853e-06
+  difference (expected - actual): 2.344597305636853e-06
+  sigmaF from km15_bkm10_dropped.csv: 7.999999797903001e-05
+  percent difference (expected vs km15_bkm10_dropped): 2.9307%
+
+=== Set 52.0, Row 1230 ===
+  F: 0.0009800000116229057
+  sigmaF (from AllJlabData): 7.000000186963007e-05
+  calculated (tempF * varF): 8.486029400955886e-05
+  subtraction: 3.1177987693808973e-06
+  difference (expected - actual): 3.1177987693808973e-06
+  sigmaF from km15_bkm10_dropped.csv: 7.000000186963007e-05
+  percent difference (expected vs km15_bkm10_dropped): 4.4540%
+
+=== Set 52.0, Row 1231 ===
+  F: 0.001019999966956675
+  sigmaF (from AllJlabData): 7.999999797903001e-05
+  calculated (tempF * varF): 7.859663310227916e-05
+  subtraction: -4.060995706822723e-06
+  difference (expected - actual): -4.060995706822723e-06
+  sigmaF from km15_bkm10_dropped.csv: 7.999999797903001e-05
+  percent difference (expected vs km15_bkm10_dropped): -5.0762%
+
+=== Set 52.0, Row 1232 ===
+  F: 0.000910000002477318
+  sigmaF (from AllJlabData): 7.000000186963007e-05
+  calculated (tempF * varF): 8.102702122414485e-05
+  subtraction: 4.228699253872037e-06
+  difference (expected - actual): 4.228699253872037e-06
+  sigmaF from km15_bkm10_dropped.csv: 7.000000186963007e-05
+  percent difference (expected vs km15_bkm10_dropped): 6.0410%
+
+=== Set 52.0, Row 1233 ===
+  F: 0.0008900000248104334
+  sigmaF (from AllJlabData): 7.000000186963007e-05
+  calculated (tempF * varF): 7.88598190410994e-05
+  subtraction: 3.985704097431153e-06
+  difference (expected - actual): 3.985704097431153e-06
+  sigmaF from km15_bkm10_dropped.csv: 7.000000186963007e-05
+  percent difference (expected vs km15_bkm10_dropped): 5.6939%
+
+=== Set 52.0, Row 1234 ===
+  F: 0.0007999999797903001
+  sigmaF (from AllJlabData): 7.000000186963007e-05
+  calculated (tempF * varF): 7.782205648254603e-05
+  subtraction: -2.320004568900913e-06
+  difference (expected - actual): -2.320004568900913e-06
+  sigmaF from km15_bkm10_dropped.csv: 7.000000186963007e-05
+  percent difference (expected vs km15_bkm10_dropped): -3.3143%
+
+=== Set 52.0, Row 1235 ===
+  F: 0.0008299999753944576
+  sigmaF (from AllJlabData): 7.000000186963007e-05
+  calculated (tempF * varF): 7.563732651760802e-05
+  subtraction: -6.95006747264415e-07
+  difference (expected - actual): -6.95006747264415e-07
+  sigmaF from km15_bkm10_dropped.csv: 7.000000186963007e-05
+  percent difference (expected vs km15_bkm10_dropped): -0.9929%
+
+=== Set 52.0, Row 1236 ===
+  F: 0.0007999999797903001
+  sigmaF (from AllJlabData): 7.000000186963007e-05
+  calculated (tempF * varF): 7.59634276619181e-05
+  subtraction: -2.911998308263719e-06
+  difference (expected - actual): -2.911998308263719e-06
+  sigmaF from km15_bkm10_dropped.csv: 7.000000186963007e-05
+  percent difference (expected vs km15_bkm10_dropped): -4.1600%
+
+=== Set 52.0, Row 1237 ===
+  F: 0.000859999970998615
+  sigmaF (from AllJlabData): 7.000000186963007e-05
+  calculated (tempF * varF): 7.682854629820213e-05
+  subtraction: 1.8271966837346554e-06
+  difference (expected - actual): 1.8271966837346554e-06
+  sigmaF from km15_bkm10_dropped.csv: 7.000000186963007e-05
+  percent difference (expected vs km15_bkm10_dropped): 2.6103%
+
+=== Set 52.0, Row 1238 ===
+  F: 0.0009399999980814755
+  sigmaF (from AllJlabData): 7.999999797903001e-05
+  calculated (tempF * varF): 7.992226164788008e-05
+  subtraction: -8.049973985180259e-07
+  difference (expected - actual): -8.049973985180259e-07
+  sigmaF from km15_bkm10_dropped.csv: 7.999999797903001e-05
+  percent difference (expected vs km15_bkm10_dropped): -1.0062%
+
+=== Set 52.0, Row 1239 ===
+  F: 0.0008800000068731606
+  sigmaF (from AllJlabData): 7.000000186963007e-05
+  calculated (tempF * varF): 8.22488364065066e-05
+  subtraction: 2.863998815882951e-06
+  difference (expected - actual): 2.863998815882951e-06
+  sigmaF from km15_bkm10_dropped.csv: 7.000000186963007e-05
+  percent difference (expected vs km15_bkm10_dropped): 4.0914%
+
+=== Set 52.0, Row 1240 ===
+  F: 0.001069999998435378
+  sigmaF (from AllJlabData): 7.999999797903001e-05
+  calculated (tempF * varF): 7.948341954033822e-05
+  subtraction: 5.603069439530373e-07
+  difference (expected - actual): 5.603069439530373e-07
+  sigmaF from km15_bkm10_dropped.csv: 7.999999797903001e-05
+  percent difference (expected vs km15_bkm10_dropped): 0.7004%
+
+=== Set 52.0, Row 1241 ===
+  F: 0.0010300000431016088
+  sigmaF (from AllJlabData): 7.999999797903001e-05
+  calculated (tempF * varF): 8.920509571908042e-05
+  subtraction: 7.829003152437508e-07
+  difference (expected - actual): 7.829003152437508e-07
+  sigmaF from km15_bkm10_dropped.csv: 7.999999797903001e-05
+  percent difference (expected vs km15_bkm10_dropped): 0.9786%
+
+=== Set 52.0, Row 1242 ===
+  F: 0.0011699999449774623
+  sigmaF (from AllJlabData): 9.000000136438757e-05
+  calculated (tempF * varF): 9.055190457729623e-05
+  subtraction: -4.508110578171909e-06
+  difference (expected - actual): -4.508110578171909e-06
+  sigmaF from km15_bkm10_dropped.csv: 9.000000136438757e-05
+  percent difference (expected vs km15_bkm10_dropped): -5.0090%
+
+=== Set 52.0, Row 1243 ===
+  F: 0.0012000000569969416
+  sigmaF (from AllJlabData): 9.000000136438757e-05
+  calculated (tempF * varF): 9.919154399540275e-05
+  subtraction: -2.4600012693554163e-06
+  difference (expected - actual): -2.4600012693554163e-06
+  sigmaF from km15_bkm10_dropped.csv: 9.000000136438757e-05
+  percent difference (expected vs km15_bkm10_dropped): -2.7333%
+
+=== Set 52.0, Row 1244 ===
+  F: 0.0015300000086426735
+  sigmaF (from AllJlabData): 0.00011000000085914508
+  calculated (tempF * varF): 0.00010668228787835687
+  subtraction: -6.356058293022215e-07
+  difference (expected - actual): -6.356058293022215e-07
+  sigmaF from km15_bkm10_dropped.csv: 0.00011000000085914508
+  percent difference (expected vs km15_bkm10_dropped): -0.5778%
+
+=== Set 52.0, Row 1245 ===
+  F: 0.0015899999998509884
+  sigmaF (from AllJlabData): 0.00013000000035390258
+  calculated (tempF * varF): 0.00013292519724927843
+  subtraction: 1.4150282368063927e-07
+  difference (expected - actual): 1.4150282368063927e-07
+  sigmaF from km15_bkm10_dropped.csv: 0.00013000000035390258
+  percent difference (expected vs km15_bkm10_dropped): 0.1088%
+
+=== Set 52.0, Row 1246 ===
+  F: 0.00203999993391335
+  sigmaF (from AllJlabData): 0.00018000000272877514
+  calculated (tempF * varF): 0.0001526618580101058
+  subtraction: -3.1680974643677473e-07
+  difference (expected - actual): -3.1680974643677473e-07
+  sigmaF from km15_bkm10_dropped.csv: 0.00018000000272877514
+  percent difference (expected vs km15_bkm10_dropped): -0.1760%
+
+=== Set 52.0, Row 1247 ===
+  F: 0.0018899999558925629
+  sigmaF (from AllJlabData): 0.00019999999494757503
+  calculated (tempF * varF): 0.00019094768504146487
+  subtraction: 9.25909262150526e-07
+  difference (expected - actual): 9.25909262150526e-07
+  sigmaF from km15_bkm10_dropped.csv: 0.00019999999494757503
+  percent difference (expected vs km15_bkm10_dropped): 0.4630%
+************************* ATTENTION!!!  **************************************
+Please check the Checks_for_Issues folder to see which kinematic sets produce either very large cross-section values or negative cross-section values.
+ Note: In the files starts with filename *ATTENTION*, we haven't set F (cross-section) values to zero as it was done in the original data file AllJlabData_from_Zulkaida_and_Liliet.csv.
+In the 'Pseudo_data_with_sampling.csv' file, F values were set to zero if the correspondin ones were set to zero in the file AllJlabData_from_Zulkaida_and_Liliet.csv 
+******************************************************************************
+
+=== GeneratePseudoData: Set 51.0, Row 1200 ===
+  F: 0.0017600000137463212
+  sigmaF (from AllJlabData): 0.00011999999696854502
+  calculated (tempF * varF): 0.00014487493899650872
+  subtraction: -1.0879011824727058e-07
+  difference (expected - actual): -1.0879011824727058e-07
+  sigmaF from km15_bkm10_dropped.csv: 0.00011999999696854502
+  percent difference (expected vs km15_bkm10_dropped): -0.0907%
+
+=== GeneratePseudoData: Set 51.0, Row 1201 ===
+  F: 0.0019499999471008778
+  sigmaF (from AllJlabData): 0.00013000000035390258
+  calculated (tempF * varF): 0.00013828462397214025
+  subtraction: -7.929920684546232e-07
+  difference (expected - actual): -7.929920684546232e-07
+  sigmaF from km15_bkm10_dropped.csv: 0.00013000000035390258
+  percent difference (expected vs km15_bkm10_dropped): -0.6100%
+
+=== GeneratePseudoData: Set 51.0, Row 1202 ===
+  F: 0.0017099999822676182
+  sigmaF (from AllJlabData): 0.00011000000085914508
+  calculated (tempF * varF): 0.00013006107474211603
+  subtraction: 4.1470048017799854e-07
+  difference (expected - actual): 4.1470048017799854e-07
+  sigmaF from km15_bkm10_dropped.csv: 0.00011000000085914508
+  percent difference (expected vs km15_bkm10_dropped): 0.3770%
+
+=== GeneratePseudoData: Set 51.0, Row 1203 ===
+  F: 0.0015899999998509884
+  sigmaF (from AllJlabData): 9.999999747378752e-05
+  calculated (tempF * varF): 0.00012441545550245792
+  subtraction: 3.0479059205390513e-06
+  difference (expected - actual): 3.0479059205390513e-06
+  sigmaF from km15_bkm10_dropped.csv: 9.999999747378752e-05
+  percent difference (expected vs km15_bkm10_dropped): 3.0479%
+
+=== GeneratePseudoData: Set 51.0, Row 1204 ===
+  F: 0.0014199999859556556
+  sigmaF (from AllJlabData): 9.000000136438757e-05
+  calculated (tempF * varF): 0.00012074446567567065
+  subtraction: 4.444198566488922e-06
+  difference (expected - actual): 4.444198566488922e-06
+  sigmaF from km15_bkm10_dropped.csv: 9.000000136438757e-05
+  percent difference (expected vs km15_bkm10_dropped): 4.9380%
+
+=== GeneratePseudoData: Set 51.0, Row 1205 ===
+  F: 0.00139999995008111
+  sigmaF (from AllJlabData): 9.000000136438757e-05
+  calculated (tempF * varF): 0.00011333138536429033
+  subtraction: 2.6799971237778664e-06
+  difference (expected - actual): 2.6799971237778664e-06
+  sigmaF from km15_bkm10_dropped.csv: 9.000000136438757e-05
+  percent difference (expected vs km15_bkm10_dropped): 2.9778%
+
+=== GeneratePseudoData: Set 51.0, Row 1206 ===
+  F: 0.001339999958872795
+  sigmaF (from AllJlabData): 9.000000136438757e-05
+  calculated (tempF * varF): 0.00010687368921935558
+  subtraction: -1.4260003808885813e-06
+  difference (expected - actual): -1.4260003808885813e-06
+  sigmaF from km15_bkm10_dropped.csv: 9.000000136438757e-05
+  percent difference (expected vs km15_bkm10_dropped): -1.5844%
+
+=== GeneratePseudoData: Set 51.0, Row 1207 ===
+  F: 0.0012199999764561653
+  sigmaF (from AllJlabData): 7.999999797903001e-05
+  calculated (tempF * varF): 0.00010573377221589908
+  subtraction: 4.045796231366694e-06
+  difference (expected - actual): 4.045796231366694e-06
+  sigmaF from km15_bkm10_dropped.csv: 7.999999797903001e-05
+  percent difference (expected vs km15_bkm10_dropped): 5.0572%
+
+=== GeneratePseudoData: Set 51.0, Row 1208 ===
+  F: 0.001290000043809414
+  sigmaF (from AllJlabData): 9.000000136438757e-05
+  calculated (tempF * varF): 0.00010360527812736109
+  subtraction: 1.0224030120298266e-06
+  difference (expected - actual): 1.0224030120298266e-06
+  sigmaF from km15_bkm10_dropped.csv: 9.000000136438757e-05
+  percent difference (expected vs km15_bkm10_dropped): 1.1360%
+
+=== GeneratePseudoData: Set 51.0, Row 1209 ===
+  F: 0.0013800000306218863
+  sigmaF (from AllJlabData): 9.000000136438757e-05
+  calculated (tempF * varF): 9.311643952969462e-05
+  subtraction: 5.969995982013643e-07
+  difference (expected - actual): 5.969995982013643e-07
+  sigmaF from km15_bkm10_dropped.csv: 9.000000136438757e-05
+  percent difference (expected vs km15_bkm10_dropped): 0.6633%
+
+=== GeneratePseudoData: Set 51.0, Row 1210 ===
+  F: 0.0011399999493733048
+  sigmaF (from AllJlabData): 9.000000136438757e-05
+  calculated (tempF * varF): 0.00010345888586016372
+  subtraction: -4.853405698668212e-06
+  difference (expected - actual): -4.853405698668212e-06
+  sigmaF from km15_bkm10_dropped.csv: 9.000000136438757e-05
+  percent difference (expected vs km15_bkm10_dropped): -5.3927%
+
+=== GeneratePseudoData: Set 51.0, Row 1211 ===
+  F: 0.0012100000167265534
+  sigmaF (from AllJlabData): 7.999999797903001e-05
+  calculated (tempF * varF): 9.524331107968464e-05
+  subtraction: 4.2039027903229e-06
+  difference (expected - actual): 4.2039027903229e-06
+  sigmaF from km15_bkm10_dropped.csv: 7.999999797903001e-05
+  percent difference (expected vs km15_bkm10_dropped): 5.2549%
+
+=== GeneratePseudoData: Set 51.0, Row 1212 ===
+  F: 0.0012100000167265534
+  sigmaF (from AllJlabData): 7.999999797903001e-05
+  calculated (tempF * varF): 9.59960525506176e-05
+  subtraction: 4.869398253504187e-06
+  difference (expected - actual): 4.869398253504187e-06
+  sigmaF from km15_bkm10_dropped.csv: 7.999999797903001e-05
+  percent difference (expected vs km15_bkm10_dropped): 6.0867%
+
+=== GeneratePseudoData: Set 51.0, Row 1213 ===
+  F: 0.0013299999991431832
+  sigmaF (from AllJlabData): 9.000000136438757e-05
+  calculated (tempF * varF): 9.338864765595645e-05
+  subtraction: -3.314053174108267e-07
+  difference (expected - actual): -3.314053174108267e-07
+  sigmaF from km15_bkm10_dropped.csv: 9.000000136438757e-05
+  percent difference (expected vs km15_bkm10_dropped): -0.3682%
+
+=== GeneratePseudoData: Set 51.0, Row 1214 ===
+  F: 0.0012499999720603228
+  sigmaF (from AllJlabData): 9.000000136438757e-05
+  calculated (tempF * varF): 0.00010249188198940828
+  subtraction: 3.249951987527311e-07
+  difference (expected - actual): 3.249951987527311e-07
+  sigmaF from km15_bkm10_dropped.csv: 9.000000136438757e-05
+  percent difference (expected vs km15_bkm10_dropped): 0.3611%
+
+=== GeneratePseudoData: Set 51.0, Row 1215 ===
+  F: 0.0013599999947473407
+  sigmaF (from AllJlabData): 9.000000136438757e-05
+  calculated (tempF * varF): 9.865701576927677e-05
+  subtraction: 1.3783937902189791e-06
+  difference (expected - actual): 1.3783937902189791e-06
+  sigmaF from km15_bkm10_dropped.csv: 9.000000136438757e-05
+  percent difference (expected vs km15_bkm10_dropped): 1.5315%
+
+=== GeneratePseudoData: Set 51.0, Row 1216 ===
+  F: 0.0013000000035390258
+  sigmaF (from AllJlabData): 9.000000136438757e-05
+  calculated (tempF * varF): 0.00010900288907578215
+  subtraction: 2.325999957975e-06
+  difference (expected - actual): 2.325999957975e-06
+  sigmaF from km15_bkm10_dropped.csv: 9.000000136438757e-05
+  percent difference (expected vs km15_bkm10_dropped): 2.5844%
+
+=== GeneratePseudoData: Set 51.0, Row 1217 ===
+  F: 0.0013800000306218863
+  sigmaF (from AllJlabData): 9.000000136438757e-05
+  calculated (tempF * varF): 0.00010655030200723559
+  subtraction: 9.419964044354856e-07
+  difference (expected - actual): 9.419964044354856e-07
+  sigmaF from km15_bkm10_dropped.csv: 9.000000136438757e-05
+  percent difference (expected vs km15_bkm10_dropped): 1.0467%
+
+=== GeneratePseudoData: Set 51.0, Row 1218 ===
+  F: 0.0016199999954551458
+  sigmaF (from AllJlabData): 9.999999747378752e-05
+  calculated (tempF * varF): 0.0001092226812033914
+  subtraction: 3.3559990697540343e-06
+  difference (expected - actual): 3.3559990697540343e-06
+  sigmaF from km15_bkm10_dropped.csv: 9.999999747378752e-05
+  percent difference (expected vs km15_bkm10_dropped): 3.3560%
+
+=== GeneratePseudoData: Set 51.0, Row 1219 ===
+  F: 0.0016199999954551458
+  sigmaF (from AllJlabData): 9.999999747378752e-05
+  calculated (tempF * varF): 0.00011429967707954347
+  subtraction: 1.9951985450461507e-06
+  difference (expected - actual): 1.9951985450461507e-06
+  sigmaF from km15_bkm10_dropped.csv: 9.999999747378752e-05
+  percent difference (expected vs km15_bkm10_dropped): 1.9952%
+
+=== GeneratePseudoData: Set 51.0, Row 1220 ===
+  F: 0.0017300000181421638
+  sigmaF (from AllJlabData): 0.00011000000085914508
+  calculated (tempF * varF): 0.00011834921315312386
+  subtraction: -3.3454998629167676e-06
+  difference (expected - actual): -3.3454998629167676e-06
+  sigmaF from km15_bkm10_dropped.csv: 0.00011000000085914508
+  percent difference (expected vs km15_bkm10_dropped): -3.0414%
+
+=== GeneratePseudoData: Set 51.0, Row 1221 ===
+  F: 0.0018899999558925629
+  sigmaF (from AllJlabData): 0.00011000000085914508
+  calculated (tempF * varF): 0.00012250756844878197
+  subtraction: 4.9497903091832995e-06
+  difference (expected - actual): 4.9497903091832995e-06
+  sigmaF from km15_bkm10_dropped.csv: 0.00011000000085914508
+  percent difference (expected vs km15_bkm10_dropped): 4.4998%
+
+=== GeneratePseudoData: Set 51.0, Row 1222 ===
+  F: 0.0019199999514967203
+  sigmaF (from AllJlabData): 0.00011999999696854502
+  calculated (tempF * varF): 0.00013452803250402212
+  subtraction: 3.7631980376318097e-06
+  difference (expected - actual): 3.7631980376318097e-06
+  sigmaF from km15_bkm10_dropped.csv: 0.00011999999696854502
+  percent difference (expected vs km15_bkm10_dropped): 3.1360%
+
+=== GeneratePseudoData: Set 51.0, Row 1223 ===
+  F: 0.0021200000774115324
+  sigmaF (from AllJlabData): 0.00013000000035390258
+  calculated (tempF * varF): 0.0001297323906328529
+  subtraction: -6.799964467063546e-07
+  difference (expected - actual): -6.799964467063546e-07
+  sigmaF from km15_bkm10_dropped.csv: 0.00013000000035390258
+  percent difference (expected vs km15_bkm10_dropped): -0.5231%
+
+=== GeneratePseudoData: Set 52.0, Row 1224 ===
+  F: 0.0018700000364333391
+  sigmaF (from AllJlabData): 0.00022000000171829015
+  calculated (tempF * varF): 0.00021081299928482622
+  subtraction: -5.18091837875545e-07
+  difference (expected - actual): -5.18091837875545e-07
+  sigmaF from km15_bkm10_dropped.csv: 0.00022000000171829015
+  percent difference (expected vs km15_bkm10_dropped): -0.2355%
+
+=== GeneratePseudoData: Set 52.0, Row 1225 ===
+  F: 0.0015200000489130616
+  sigmaF (from AllJlabData): 0.00015999999595806003
+  calculated (tempF * varF): 0.00017853880126494914
+  subtraction: -3.4247932489961386e-06
+  difference (expected - actual): -3.4247932489961386e-06
+  sigmaF from km15_bkm10_dropped.csv: 0.00015999999595806003
+  percent difference (expected vs km15_bkm10_dropped): -2.1405%
+
+=== GeneratePseudoData: Set 52.0, Row 1226 ===
+  F: 0.0014700000174343586
+  sigmaF (from AllJlabData): 0.00013000000035390258
+  calculated (tempF * varF): 0.0001416948507539928
+  subtraction: -1.742489985190332e-06
+  difference (expected - actual): -1.742489985190332e-06
+  sigmaF from km15_bkm10_dropped.csv: 0.00013000000035390258
+  percent difference (expected vs km15_bkm10_dropped): -1.3404%
+
+=== GeneratePseudoData: Set 52.0, Row 1227 ===
+  F: 0.001449999981559813
+  sigmaF (from AllJlabData): 0.00011000000085914508
+  calculated (tempF * varF): 0.00011520433326950297
+  subtraction: 1.9254948711022735e-06
+  difference (expected - actual): 1.9254948711022735e-06
+  sigmaF from km15_bkm10_dropped.csv: 0.00011000000085914508
+  percent difference (expected vs km15_bkm10_dropped): 1.7504%
+
+=== GeneratePseudoData: Set 52.0, Row 1228 ===
+  F: 0.0012000000569969416
+  sigmaF (from AllJlabData): 9.000000136438757e-05
+  calculated (tempF * varF): 9.970824612537399e-05
+  subtraction: -2.0039951778016984e-06
+  difference (expected - actual): -2.0039951778016984e-06
+  sigmaF from km15_bkm10_dropped.csv: 9.000000136438757e-05
+  percent difference (expected vs km15_bkm10_dropped): -2.2267%
+
+=== GeneratePseudoData: Set 52.0, Row 1229 ===
+  F: 0.0011699999449774623
+  sigmaF (from AllJlabData): 7.999999797903001e-05
+  calculated (tempF * varF): 8.721833728486672e-05
+  subtraction: 2.344597305636853e-06
+  difference (expected - actual): 2.344597305636853e-06
+  sigmaF from km15_bkm10_dropped.csv: 7.999999797903001e-05
+  percent difference (expected vs km15_bkm10_dropped): 2.9307%
+
+=== GeneratePseudoData: Set 52.0, Row 1230 ===
+  F: 0.0009800000116229057
+  sigmaF (from AllJlabData): 7.000000186963007e-05
+  calculated (tempF * varF): 8.486029400955886e-05
+  subtraction: 3.1177987693808973e-06
+  difference (expected - actual): 3.1177987693808973e-06
+  sigmaF from km15_bkm10_dropped.csv: 7.000000186963007e-05
+  percent difference (expected vs km15_bkm10_dropped): 4.4540%
+
+=== GeneratePseudoData: Set 52.0, Row 1231 ===
+  F: 0.001019999966956675
+  sigmaF (from AllJlabData): 7.999999797903001e-05
+  calculated (tempF * varF): 7.859663310227916e-05
+  subtraction: -4.060995706822723e-06
+  difference (expected - actual): -4.060995706822723e-06
+  sigmaF from km15_bkm10_dropped.csv: 7.999999797903001e-05
+  percent difference (expected vs km15_bkm10_dropped): -5.0762%
+
+=== GeneratePseudoData: Set 52.0, Row 1232 ===
+  F: 0.000910000002477318
+  sigmaF (from AllJlabData): 7.000000186963007e-05
+  calculated (tempF * varF): 8.102702122414485e-05
+  subtraction: 4.228699253872037e-06
+  difference (expected - actual): 4.228699253872037e-06
+  sigmaF from km15_bkm10_dropped.csv: 7.000000186963007e-05
+  percent difference (expected vs km15_bkm10_dropped): 6.0410%
+
+=== GeneratePseudoData: Set 52.0, Row 1233 ===
+  F: 0.0008900000248104334
+  sigmaF (from AllJlabData): 7.000000186963007e-05
+  calculated (tempF * varF): 7.88598190410994e-05
+  subtraction: 3.985704097431153e-06
+  difference (expected - actual): 3.985704097431153e-06
+  sigmaF from km15_bkm10_dropped.csv: 7.000000186963007e-05
+  percent difference (expected vs km15_bkm10_dropped): 5.6939%
+
+=== GeneratePseudoData: Set 52.0, Row 1234 ===
+  F: 0.0007999999797903001
+  sigmaF (from AllJlabData): 7.000000186963007e-05
+  calculated (tempF * varF): 7.782205648254603e-05
+  subtraction: -2.320004568900913e-06
+  difference (expected - actual): -2.320004568900913e-06
+  sigmaF from km15_bkm10_dropped.csv: 7.000000186963007e-05
+  percent difference (expected vs km15_bkm10_dropped): -3.3143%
+
+=== GeneratePseudoData: Set 52.0, Row 1235 ===
+  F: 0.0008299999753944576
+  sigmaF (from AllJlabData): 7.000000186963007e-05
+  calculated (tempF * varF): 7.563732651760802e-05
+  subtraction: -6.95006747264415e-07
+  difference (expected - actual): -6.95006747264415e-07
+  sigmaF from km15_bkm10_dropped.csv: 7.000000186963007e-05
+  percent difference (expected vs km15_bkm10_dropped): -0.9929%
+
+=== GeneratePseudoData: Set 52.0, Row 1236 ===
+  F: 0.0007999999797903001
+  sigmaF (from AllJlabData): 7.000000186963007e-05
+  calculated (tempF * varF): 7.59634276619181e-05
+  subtraction: -2.911998308263719e-06
+  difference (expected - actual): -2.911998308263719e-06
+  sigmaF from km15_bkm10_dropped.csv: 7.000000186963007e-05
+  percent difference (expected vs km15_bkm10_dropped): -4.1600%
+
+=== GeneratePseudoData: Set 52.0, Row 1237 ===
+  F: 0.000859999970998615
+  sigmaF (from AllJlabData): 7.000000186963007e-05
+  calculated (tempF * varF): 7.682854629820213e-05
+  subtraction: 1.8271966837346554e-06
+  difference (expected - actual): 1.8271966837346554e-06
+  sigmaF from km15_bkm10_dropped.csv: 7.000000186963007e-05
+  percent difference (expected vs km15_bkm10_dropped): 2.6103%
+
+=== GeneratePseudoData: Set 52.0, Row 1238 ===
+  F: 0.0009399999980814755
+  sigmaF (from AllJlabData): 7.999999797903001e-05
+  calculated (tempF * varF): 7.992226164788008e-05
+  subtraction: -8.049973985180259e-07
+  difference (expected - actual): -8.049973985180259e-07
+  sigmaF from km15_bkm10_dropped.csv: 7.999999797903001e-05
+  percent difference (expected vs km15_bkm10_dropped): -1.0062%
+
+=== GeneratePseudoData: Set 52.0, Row 1239 ===
+  F: 0.0008800000068731606
+  sigmaF (from AllJlabData): 7.000000186963007e-05
+  calculated (tempF * varF): 8.22488364065066e-05
+  subtraction: 2.863998815882951e-06
+  difference (expected - actual): 2.863998815882951e-06
+  sigmaF from km15_bkm10_dropped.csv: 7.000000186963007e-05
+  percent difference (expected vs km15_bkm10_dropped): 4.0914%
+
+=== GeneratePseudoData: Set 52.0, Row 1240 ===
+  F: 0.001069999998435378
+  sigmaF (from AllJlabData): 7.999999797903001e-05
+  calculated (tempF * varF): 7.948341954033822e-05
+  subtraction: 5.603069439530373e-07
+  difference (expected - actual): 5.603069439530373e-07
+  sigmaF from km15_bkm10_dropped.csv: 7.999999797903001e-05
+  percent difference (expected vs km15_bkm10_dropped): 0.7004%
+
+=== GeneratePseudoData: Set 52.0, Row 1241 ===
+  F: 0.0010300000431016088
+  sigmaF (from AllJlabData): 7.999999797903001e-05
+  calculated (tempF * varF): 8.920509571908042e-05
+  subtraction: 7.829003152437508e-07
+  difference (expected - actual): 7.829003152437508e-07
+  sigmaF from km15_bkm10_dropped.csv: 7.999999797903001e-05
+  percent difference (expected vs km15_bkm10_dropped): 0.9786%
+
+=== GeneratePseudoData: Set 52.0, Row 1242 ===
+  F: 0.0011699999449774623
+  sigmaF (from AllJlabData): 9.000000136438757e-05
+  calculated (tempF * varF): 9.055190457729623e-05
+  subtraction: -4.508110578171909e-06
+  difference (expected - actual): -4.508110578171909e-06
+  sigmaF from km15_bkm10_dropped.csv: 9.000000136438757e-05
+  percent difference (expected vs km15_bkm10_dropped): -5.0090%
+
+=== GeneratePseudoData: Set 52.0, Row 1243 ===
+  F: 0.0012000000569969416
+  sigmaF (from AllJlabData): 9.000000136438757e-05
+  calculated (tempF * varF): 9.919154399540275e-05
+  subtraction: -2.4600012693554163e-06
+  difference (expected - actual): -2.4600012693554163e-06
+  sigmaF from km15_bkm10_dropped.csv: 9.000000136438757e-05
+  percent difference (expected vs km15_bkm10_dropped): -2.7333%
+
+=== GeneratePseudoData: Set 52.0, Row 1244 ===
+  F: 0.0015300000086426735
+  sigmaF (from AllJlabData): 0.00011000000085914508
+  calculated (tempF * varF): 0.00010668228787835687
+  subtraction: -6.356058293022215e-07
+  difference (expected - actual): -6.356058293022215e-07
+  sigmaF from km15_bkm10_dropped.csv: 0.00011000000085914508
+  percent difference (expected vs km15_bkm10_dropped): -0.5778%
+
+=== GeneratePseudoData: Set 52.0, Row 1245 ===
+  F: 0.0015899999998509884
+  sigmaF (from AllJlabData): 0.00013000000035390258
+  calculated (tempF * varF): 0.00013292519724927843
+  subtraction: 1.4150282368063927e-07
+  difference (expected - actual): 1.4150282368063927e-07
+  sigmaF from km15_bkm10_dropped.csv: 0.00013000000035390258
+  percent difference (expected vs km15_bkm10_dropped): 0.1088%
+
+=== GeneratePseudoData: Set 52.0, Row 1246 ===
+  F: 0.00203999993391335
+  sigmaF (from AllJlabData): 0.00018000000272877514
+  calculated (tempF * varF): 0.0001526618580101058
+  subtraction: -3.1680974643677473e-07
+  difference (expected - actual): -3.1680974643677473e-07
+  sigmaF from km15_bkm10_dropped.csv: 0.00018000000272877514
+  percent difference (expected vs km15_bkm10_dropped): -0.1760%
+
+=== GeneratePseudoData: Set 52.0, Row 1247 ===
+  F: 0.0018899999558925629
+  sigmaF (from AllJlabData): 0.00019999999494757503
+  calculated (tempF * varF): 0.00019094768504146487
+  subtraction: 9.25909262150526e-07
+  difference (expected - actual): 9.25909262150526e-07
+  sigmaF from km15_bkm10_dropped.csv: 0.00019999999494757503
+  percent difference (expected vs km15_bkm10_dropped): 0.4630%

@@ -1,0 +1,252 @@
+############################################################################
+#####  Written by Ishara Fernando, Ani Venkatapuram                  #######
+##############  Revised Date: 10/23/2024    ################################
+##### Rivanna usage: Run the following commands on your Rivanna terminal####
+## source /home/lba9wf/miniconda3/etc/profile.d/conda.sh         ###########
+## conda activate env                                            ###########
+## pip3 install --user tensorflow-addons==0.21.0                 ###########
+############################################################################
+############################################################################
+### This can be used to run local fits individually,         ###############
+### or in parallel on rivanna                                ###############
+### Include following lines to submit parallel jobs on rivanna  ############
+###  #SBATCH --array=0-300 (or any number of replicas )         ############
+### python (file name) $SLURM_ARRAY_TASK_ID                     ############
+### User needs to define the Kinematic Set Number               ############
+### That means user will need to copy this code with different j ###########
+### Also, user can arrange the range of replicas using the slurm file ######
+############################################################################
+
+import numpy as np
+import pandas as pd
+import tensorflow as tf
+from definitions import *  # Replaces BHDVCS_tf_modified - contains TotalFLayer, BHDVCStf, F1F2, F_calc, etc.
+from user_inputs import *
+import matplotlib.pyplot as plt
+import os
+import sys
+from scipy.stats import norm
+from DNN_model import *
+from datetime import datetime
+
+
+def create_folders(folder_name):
+    if not os.path.exists(folder_name):
+        os.makedirs(folder_name)
+        print(f"Folder '{folder_name}' created successfully!")
+    else:
+        print(f"Folder '{folder_name}' already exists!")
+        
+
+
+df = pd.read_csv(initial_data_file)
+df['set'] = df['set'].astype(int)
+df = df.rename(columns={"sigmaF": "errF"})
+df = df[df["F"] != 0]
+
+scratch_path = str(scratch_path) + '/'
+## Remember to update the following line
+create_folders(scratch_path+'Replica_Cross_Sections')
+
+
+
+## Here define the Kinematic Set with the parameter j ##
+# j = 3 # Previously, we had a single set `j`. Now we will use a list of sets.
+
+# You can modify the following list to include the sets you want to run
+# This list can be modified dynamically
+
+
+modify_LR = tf.keras.callbacks.ReduceLROnPlateau(monitor='loss', factor=modify_LR_factor, patience=modify_LR_patience, mode='auto')
+EarlyStopping = tf.keras.callbacks.EarlyStopping(monitor='loss', patience=EarlyStop_patience, restore_best_weights=True)
+
+callbacks = [modify_LR,EarlyStopping]
+
+def chisquare(y, yhat, err):
+    return np.sum(((y - yhat)/err)**2)
+
+def split_data(X, y, yerr, split=0.1):
+    temp = np.random.choice(list(range(len(y))), size=int(len(y) * split), replace=False)
+
+    test_X = pd.DataFrame.from_dict({k: v[temp] for k, v in X.items()})
+    train_X = pd.DataFrame.from_dict({k: v.drop(temp) for k, v in X.items()})
+
+    test_y = y[temp]
+    train_y = y.drop(temp)
+
+    test_yerr = yerr[temp]
+    train_yerr = yerr.drop(temp)
+
+    return train_X, test_X, train_y, test_y, train_yerr, test_yerr
+
+
+####### Here we define a function that can sample F within sigmaF ###
+def GenerateReplicaData(df):
+    pseudodata_df = {'k': [],
+                     'QQ': [],
+                     'x_b': [],
+                     't': [],
+                     'phi_x': [],
+                     'True_F': [],
+                     'F': [],
+                     'errF': []}
+    pseudodata_df['k'] = df['k']
+    pseudodata_df['QQ'] = df['QQ']
+    pseudodata_df['x_b'] = df['x_b']
+    pseudodata_df['t'] = df['t']
+    pseudodata_df['phi_x'] = df['phi_x']
+    pseudodata_df['errF'] = df['errF']
+    pseudodata_df['dvcs'] = df['dvcs']
+    pseudodata_df['True_F'] = df['F']
+    tempF = np.array(df['F'])
+    tempFerr = np.abs(np.array(df['errF']))  # Had to do abs due to a run-time error
+    #ReplicaF = np.random.normal(loc=tempF, scale=tempFerr)
+    while True:
+        ReplicaF = np.random.normal(loc=tempF, scale=tempFerr)
+        if ReplicaF.all() > 0:
+            break
+    pseudodata_df['F'] = ReplicaF
+    return pd.DataFrame(pseudodata_df)
+
+def gen_F_sanity_check(df_1, kinset, replica_id):
+    plt.figure(figsize=(10, 6))
+    
+    # Plot the original data points
+    plt.errorbar(df_1['phi_x'], df_1['True_F'], df_1['errF'], fmt='o', label="True_F", color='red', markersize=5)
+    plt.plot(df_1['phi_x'], df_1['F'], marker='o', linestyle='', label="Replica_F", color='blue')
+
+    plt.title(f'F vs Phi for Kinematic Set {kinset}')
+    plt.xlabel(r'$\phi_x$')
+    plt.ylabel('F')
+    plt.legend(loc='best', fontsize='small')
+    
+    create_folders(scratch_path + 'Replica_Cross_Sections/' + f'Kinematic_Set_{kinset}')
+    
+    output_file = scratch_path + 'Replica_Cross_Sections/' + f'Kinematic_Set_{kinset}/' + f'F_vs_Phi_Kinematic_Set_{kinset}_replica_{replica_id}.pdf'
+    plt.savefig(output_file)
+    plt.close()
+
+
+
+def absolute_residual(tr, prd):
+    temp_diff = tr - prd
+    temp_abs_diff = np.abs(temp_diff)
+    return temp_abs_diff
+
+
+def run_replica(kinset, i, xdf):
+    replica_number = i
+    tempdf = GenerateReplicaData(xdf)
+    gen_F_sanity_check(tempdf, kinset, replica_number)  
+    trainKin, testKin, trainY, testY, trainYerr, testYerr = split_data(tempdf[['QQ', 'x_b', 't', 'phi_x', 'k']],
+                                                                       tempdf['F'], tempdf['errF'], split=0.1)
+
+    tfModel = DNNmodel()
+    history = tfModel.fit(trainKin, trainY, validation_data=(testKin, testY), epochs=EPOCHS, callbacks=callbacks,
+                          batch_size=BATCH, verbose=2)
+
+    # tfModel.save(str(scratch_path) + 'DNNmodels_Kin_Set_' + str(kinset) + '/' + 'model' + str(replica_number) + '.h5', save_format='h5')
+    tfModel.save(str(scratch_path) + 'DNNmodels_Kin_Set_' + str(kinset) + '/' + 'model' + str(replica_number) + '.keras')
+
+
+    # Create subplots for loss plots
+    plt.figure(1, figsize=(12, 5))
+    plt.plot(history.history['loss'], label='Train loss')
+    plt.plot(history.history['val_loss'], label='Val. loss')
+    plt.title(f'Losses for Kinematic Set {kinset}')
+    plt.xlabel('Epochs')
+    plt.ylabel('Loss')
+    plt.yscale('log')
+    plt.legend()
+    plt.savefig(str(scratch_path) + 'Losses_Plots_Kin_Set_' + str(kinset) + '/' + 'loss_plots_' + str(replica_number) + '.pdf')
+    plt.close()
+
+
+running_locally = True    
+num_replicas_local = 20      
+time_file = "time_taken.txt"
+
+def run_local(df, kinematic_sets, scratch_path, num_replicas=10):
+    """Run locally (multiple replicas sequentially per kinematic set)."""
+    if not scratch_path.endswith('/'):
+        scratch_path += '/'
+
+    # Initialize timing file
+    if not os.path.exists(time_file):
+        with open(time_file, 'w') as f:
+            f.write("Time taken for set number and replica\n")
+
+    for set_number in kinematic_sets:
+        print(f"Running locally for kinematic set {set_number}")
+        kin_df = df[df['set'] == int(set_number)].reset_index(drop=True)
+
+        if len(kin_df) < 10:
+            print(f"Skipping set {set_number} (only {len(kin_df)} data points)")
+            continue
+
+        # Create per-set directories
+        create_folders(os.path.join(scratch_path, f"DNNmodels_Kin_Set_{set_number}"))
+        create_folders(os.path.join(scratch_path, f"Losses_Plots_Kin_Set_{set_number}"))
+
+        for replica_id in range(num_replicas):
+            print(f"  Running replica {replica_id} for set {set_number}")
+            start_time = datetime.now()
+
+            try:
+                run_replica(set_number, replica_id, kin_df)
+            except Exception as e:
+                print(f"    Replica {replica_id} failed: {e}")
+                continue
+
+            end_time = datetime.now()
+            elapsed = end_time - start_time
+
+            with open(time_file, "a") as f:
+                f.write(f"Kinematic set {set_number}, replica {replica_id} | "
+                        f"Start: {start_time} | End: {end_time} | Elapsed: {elapsed}\n")
+
+            print(f"    Completed replica {replica_id} in {elapsed}")
+
+        print(f"Completed all replicas for kinematic set {set_number}\n")
+
+def run_rivanna(df, kinematic_sets, scratch_path):
+    """Run using Rivanna (expects replica_id from sys.argv)."""
+    if len(sys.argv) < 2:
+        raise ValueError("Please provide replica_id as command-line argument for Rivanna mode.")
+
+    replica_id = sys.argv[1]
+
+    if not scratch_path.endswith('/'):
+        scratch_path += '/'
+
+    if not os.path.exists(time_file):
+        with open(time_file, 'w') as f:
+            f.write("Time taken for set number and replica\n")
+
+    for set_number in kinematic_sets:
+        print(f"Running on Rivanna for kinematic set {set_number}")
+        kin_df = df[df['set'] == int(set_number)].reset_index(drop=True)
+
+        if len(kin_df) < 10:
+            print(f"Skipping set {set_number} (only {len(kin_df)} data points)")
+            continue
+
+        create_folders(os.path.join(scratch_path, f"DNNmodels_Kin_Set_{set_number}"))
+        create_folders(os.path.join(scratch_path, f"Losses_Plots_Kin_Set_{set_number}"))
+
+        start_time = datetime.now()
+        run_replica(set_number, replica_id, kin_df)
+        end_time = datetime.now()
+        elapsed = end_time - start_time
+
+        with open(time_file, "a") as f:
+            f.write(f"Kinematic set {set_number}, replica {replica_id} | "
+                    f"Start: {start_time} | End: {end_time} | Elapsed: {elapsed}\n")
+
+        print(f"Completed Rivanna run for kinematic set {set_number} in {elapsed}\n")
+
+    
+if running_locally:
+    run_local(df, kinematic_sets, scratch_path, num_replicas=num_replicas_local)
+else:
+    run_rivanna(df, kinematic_sets, scratch_path)

@@ -1,0 +1,2 @@
+Time taken for set number and replica
+Kinematic set 55, replica 0 | Start: 2026-01-26 17:43:27.803389 | End: 2026-01-26 18:26:05.487365 | Elapsed: 0:42:37.683976

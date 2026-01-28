@@ -1,0 +1,2 @@
+Kinematic Set	Chi-Square Error
+55	inf
